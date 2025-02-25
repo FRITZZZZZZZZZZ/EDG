@@ -1,0 +1,4 @@
+HEADER,
+'Jobname', 'Status', 'Blank Thickness', 'Die Radius', 'Binder Friction', 'Binder Pressure', 'Scale X', 'Scale Y' 
+CONTENT,
+'kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0', 'in progress', 1.0, 1.0, 1.0, -4.0, 1.0, 1.0 

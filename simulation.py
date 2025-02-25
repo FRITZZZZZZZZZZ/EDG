@@ -38,7 +38,6 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None):
             else:
                 interpreter = "python"
                 os.system(f"{interpreter} {command} {value} {jobname}")
-                print(f"{interpreter} {command} {value} {jobname}")
         except:
             # if the program call did not work, something was not edited, dont continue the simulation and waste time
             success = False
@@ -115,19 +114,20 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
     solve_data = solve_tuple[0]
     start_command = solve_data[solve_data_names[0]]
     done_keyword = solve_data[solve_data_names[1]]
-    stop_command = solve_tuple = solve_data[solve_data_names[2]]
+    stop_command  = solve_data[solve_data_names[2]]
+    cleanup_list = solve_data[solve_data_names[3]]
     jobname = job['Jobname']
 
-    inf_file == None
-    log_file == None
+    inf_file = None
+    log_file = None
 
     # change the working directory to the one taking care of solving the simulation
-    curent_working_directory = os.getcwd()
-    os.chdir(f"{curent_working_directory}/simulation_solving_programs/")
+    current_working_directory = os.getcwd()
+    os.chdir(f"{current_working_directory}/simulation_solving_programs/")
 
     # start the simulation
     os.system(f"python {start_command} {jobname}")
-    print("here alterLJBSFLJADSBFLJSKADBSADLJKFHBSADLJFFJSAJKFHB")
+
     # wait for files to be available
     while inf_file == None or log_file == None:
         time.sleep(1)
@@ -141,7 +141,6 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
         except:
             pass
 
-    print("here nach dem wechsel")
     # keep track of simulation 
     done = None
     loops_passed = 0
@@ -157,7 +156,7 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
             done = True
         
         # check wheather the simulation exceeded its loop limit
-        check_loops_result = check_loops(jobname, loop_limit, termination_keyword, loops_passed, current_length, last_length, last_increment)
+        check_loops_result = check_loops(jobname, loop_limit, loops_passed, current_length, last_length, last_increment)
         if type(check_loops_result) == tuple:
             loops_passed, current_length, last_length, last_increment = check_loops_result
 
@@ -170,10 +169,14 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
                 done = False
             else:
                 time_passed += 1
-        print(done, loops_passed, time_passed)
 
     if done == False:
         os.system(f"{stop_command}")
+        os.system(f"python move_data.py {cleanup_list} {current_working_directory}/post_processing_programs {jobname}")
+        os.chdir(f"{current_working_directory}/")
+
+    os.system(f"python move_data.py {cleanup_list} {current_working_directory}/post_processing_programs {jobname}")
+    os.chdir(f"{current_working_directory}/")
 
     return done
   
@@ -196,11 +199,10 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
         job['Status'] = "in progress"
         create_jobs.update_joblist_files(base_name, joblist, full_header)
         try:
-            print("\n", pre_processing(job, pre_tuple, interpreter_tuple))
-            print(solving_simulation(job, solve_tuple, time_limit, loop_limit))
-            #print(post_processing(job, post_tuple))
+            pre_processing(job, pre_tuple, interpreter_tuple)
+            solving_simulation(job, solve_tuple, time_limit, loop_limit)
+            post_processing(job, post_tuple)
         except:
-            print("das hier ist passiert")
             error_report_list.append(job['Jobname'])
 
     if not len(error_report_list) == 0:

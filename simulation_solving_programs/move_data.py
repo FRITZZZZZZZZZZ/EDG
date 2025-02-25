@@ -17,11 +17,13 @@ def move_data(argument_vector):
         print("Not all variables defined")
     
     file_type_list = file_types[1:-1].split(' ')
-    try:
-        for file_type in file_type_list:
+
+    for file_type in file_type_list:
+        try:
             shutil.move(f"{jobname}.{file_type}", f"{target_folder_path}")
-    except:
-        pass
-    
+        except:
+            #print(f"Could not move {jobname}.{file_type}, the file may not exist.")
+            pass
+        
 instructions = sys.argv
 move_data(instructions)
