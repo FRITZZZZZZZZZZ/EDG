@@ -2,7 +2,7 @@ import sys
 import os
 
 def start_simulation(instructions): 
-    print("hjere")
+
     try:
         jobname = instructions[1]
     except:

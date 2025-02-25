@@ -1,5 +1,3 @@
- Die eventuell vorhandenen Ausgabe-Datetein "kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.*" wurden geloescht !
- Die eventuell vorhandenen Post-Dateien in  "kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg wurden geloescht !
  Ein Verzeichnis "./matlib" mit Material-Dateien wurde nicht gefunden !
  Moeglicherweise muss die Umgebungsvariable <OFSOLVMAT> entsprechend gesetz werden.
  
@@ -24,7 +22,7 @@
 
  The Post-files will be stored in directory "kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg".
 
- Start der Berechnung am : Tue Feb 25 20:20:12 2025
+ Start der Berechnung am : Tue Feb 25 22:04:43 2025
 
  DER INKREMENTBLOCK  1 WIRD BEENDET, DA ALLE INKREMENTE ABGEARBEITET SIND.
 
@@ -49,4 +47,4 @@
  CRAY - SOLVER - ERROR 2-1
  ******************************************************************************
 
- Ende  der Berechnung am : Tue Feb 25 20:23:47 2025
+ Ende  der Berechnung am : Tue Feb 25 22:08:30 2025

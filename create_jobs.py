@@ -83,8 +83,8 @@ def create_jobs(job_base_name : str, valuelist_list: list, header : list, header
         return (joblist, full_header)
     else:
         return joblist
-    
-def update_joblist_files(job_base_name, joblist, full_header, update=True, force=False):
+
+def update_joblist_files(job_base_name, joblist, full_header, joblist_archive_path="joblist_archive",update=True, force=False):
     """
     The Function will look for the joblist carrying the job_base_name in its path.
         if the file already exists
@@ -103,8 +103,8 @@ def update_joblist_files(job_base_name, joblist, full_header, update=True, force
         if the file does not exist already
             the function will create the file and fill it with the joblist
     """
-    target_joblist = f"{job_base_name}_joblist.txt"
-    inter_target_joblist = f"inter_{target_joblist}"
+    target_joblist = f"{joblist_archive_path}/{job_base_name}_joblist.txt"
+    inter_target_joblist = f"{joblist_archive_path}/inter_{job_base_name}_joblist.txt"
 
     # check wheater the joblist already exists and make content list
     if os.path.isfile(target_joblist):

@@ -232,7 +232,7 @@ p["Presentation"]:pre edi off
 p["Presentation"]:!pre sel taf B1 1
 p["Presentation"]:!pre use taf B1 1
 p["Presentation"]:!pre edi obj tit
-p["Presentation"]:!pre set str "00:03:32"
+p["Presentation"]:!pre set str "00:03:43"
 p["Presentation"]:pre edi off
 p["Presentation"]:!pre sel taf B2 1
 p["Presentation"]:!pre use taf B2 1
@@ -1409,7 +1409,7 @@ p["Presentation"]:pre edi off
 p["Presentation"]:!pre sel taf B6 1
 p["Presentation"]:!pre use taf B6 1
 p["Presentation"]:!pre edi obj tit
-p["Presentation"]:!pre set str "00:03:32"
+p["Presentation"]:!pre set str "00:03:43"
 p["Presentation"]:pre edi off
 p["Presentation"]:!pre sel taf B7 1
 p["Presentation"]:!pre use taf B7 1

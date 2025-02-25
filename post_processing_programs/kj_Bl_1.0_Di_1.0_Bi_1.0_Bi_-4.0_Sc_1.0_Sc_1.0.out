@@ -41,7 +41,7 @@
  Material:	ZStE340 (210000,0.30,365.0,19.0,462.0,0.60,1.66,0.94)
 
 
- START DER BERECHNUNG                        20:20:12    :    25.02.2025
+ START DER BERECHNUNG                        22:04:43    :    25.02.2025
  --------------------
 
 
@@ -520,10 +520,10 @@
  OPTIMALER WERT DER LINE-SEARCH METHODE                     1.000000E+00
 
  MAXIMALER ABSOLUTWERT DER INKREMENTELLEN VERSCHIEBUNGEN    3.778680E-04
- MAXIMALER ABSOLUTWERT DER ITERATIVEN     VERSCHIEBUNGEN    7.923874E-09
+ MAXIMALER ABSOLUTWERT DER ITERATIVEN     VERSCHIEBUNGEN    7.923875E-09
  MAXIMALER ABSOLUTWERT DER REAKTIONSKRAEFTE                 1.824115E+01
- MAXIMALER ABSOLUTWERT DER RESTKRAEFTE                      5.818045E-08
- QUOTIENT                                                   3.189516E-09
+ MAXIMALER ABSOLUTWERT DER RESTKRAEFTE                      5.810706E-08
+ QUOTIENT                                                   3.185493E-09
  DAS ABBRUCHKRITERIUM IST ERFUELLT.
   PRAREA  : PRESSA  0.911676E+04 UMGEB  0.565500E+01
 
@@ -538,10 +538,10 @@
  DAS ABBRUCHKRITERIUM FUER Binder IST ERFUELLT.
 
  MAXIMALER ABSOLUTWERT DER INKREMENTELLEN VERSCHIEBUNGEN    3.778680E-04
- MAXIMALER ABSOLUTWERT DER ITERATIVEN     VERSCHIEBUNGEN    7.923874E-09
+ MAXIMALER ABSOLUTWERT DER ITERATIVEN     VERSCHIEBUNGEN    7.923875E-09
  MAXIMALER ABSOLUTWERT DER REAKTIONSKRAEFTE                 1.824115E+01
- MAXIMALER ABSOLUTWERT DER RESTKRAEFTE                      5.818045E-08
- QUOTIENT                                                   3.189516E-09
+ MAXIMALER ABSOLUTWERT DER RESTKRAEFTE                      5.810706E-08
+ QUOTIENT                                                   3.185493E-09
  DAS ABBRUCHKRITERIUM IST ERFUELLT.
  
  ANZAHL GEFESSELTER KNOTEN AUF WERKZEUG Die              :             0
@@ -552,8 +552,8 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -3.534684E-09 -2.080974E-09  3.646603E+04
- DURCHSCHNITTLICHER DRUCK       6.890963E+00 -3.544308E-12 -1.303709E-12  6.890963E+00
+ LAST                                        -1.578266E-08 -1.835831E-08  3.646603E+04
+ DURCHSCHNITTLICHER DRUCK       6.890963E+00 -7.967565E-12 -6.815381E-12  6.890963E+00
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -563,8 +563,8 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         3.332127E-08 -1.814070E-08 -3.646603E+04
- DURCHSCHNITTLICHER DRUCK       6.890963E+00  3.224885E-12 -5.067731E-12 -6.890963E+00
+ LAST                                         3.502708E-08 -2.980753E-09 -3.646603E+04
+ DURCHSCHNITTLICHER DRUCK       6.890963E+00  4.003736E-13 -5.207680E-12 -6.890963E+00
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -3.000262E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -2.620073E-05
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    3.000262E-01/ 2.620073E-05
@@ -573,11 +573,11 @@
  GESAMTANZAHL GEFESSELTER KNOTEN AUF WERKZEUG Binder                   :          5289
 
  REAKTIONSKRAFT IN FESSELN                    0.000000E+00  0.000000E+00  0.000000E+00
- DAEMPFUNGSKRAEFTE                            1.873379E-15 -9.283615E-16  9.411214E-05
+ DAEMPFUNGSKRAEFTE                            5.345849E-15  2.122972E-15  9.411214E-05
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          2.978659E-08 -2.022168E-08  1.229637E-09
+ SUMME ALLER KRAEFTE                          1.924443E-08 -2.133906E-08  5.085894E-09
 
  VERSTRICHENE PROZESSZEIT NACH INKR.     1 :  1.000000E+00 (100.000000%) (100.000000%)
 
@@ -593,7 +593,7 @@
  DIE POST DATEN  FUER DAS INKREMENT      1 IN kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg/ink0001.bin GESICHERT.
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        1 :          1.37  (   0: 0: 1)
+ CPU-ZEIT AM ENDE DES INKREMENTES        1 :          1.34  (   0: 0: 1)
 
  E N D E    D E S    I N K R E M E N T E S               :             1
  -----------------------------------------------------------------------
@@ -1022,7 +1022,7 @@
 
  GEFORDERTE    LAST AUF Binder                              3.646703E+04
  TATSAECHLICHE LAST AUF Binder                              3.646693E+04
- RELATIVER FEHLER                                           2.700712E-06
+ RELATIVER FEHLER                                           2.700710E-06
  DAS ABBRUCHKRITERIUM FUER Binder IST ERFUELLT.
 
  MAXIMALER ABSOLUTWERT DER INKREMENTELLEN VERSCHIEBUNGEN    1.180584E-01
@@ -1160,8 +1160,8 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         4.897739E-03 -2.638548E+00  3.955322E+04
- DURCHSCHNITTLICHER DRUCK       8.817507E+00  3.390730E-06 -7.231437E-04  8.817758E+00
+ LAST                                         4.897745E-03 -2.638548E+00  3.955322E+04
+ DURCHSCHNITTLICHER DRUCK       8.817507E+00  3.390728E-06 -7.231437E-04  8.817758E+00
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -1177,8 +1177,8 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                        -5.485952E-02  7.512507E-01 -3.611509E+04
- DURCHSCHNITTLICHER DRUCK       7.297351E+00  2.400410E-06 -4.732910E-04 -7.297351E+00
+ LAST                                        -5.485953E-02  7.512506E-01 -3.611509E+04
+ DURCHSCHNITTLICHER DRUCK       7.297351E+00  2.400408E-06 -4.732910E-04 -7.297351E+00
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -3.000162E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  9.991342E-06
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    3.000162E-01/ 9.991342E-06
@@ -1192,7 +1192,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                         -1.814444E-03 -1.697343E+00 -2.351509E+01
+ SUMME ALLER KRAEFTE                         -1.814450E-03 -1.697343E+00 -2.351509E+01
 
  VERSTRICHENE PROZESSZEIT NACH INKR.     2 :  1.100000E+00 (  0.500000%) (  5.238095%)
 
@@ -1280,7 +1280,7 @@
 
  GEFORDERTE    LAST AUF Binder                              3.646703E+04
  TATSAECHLICHE LAST AUF Binder                              3.646692E+04
- RELATIVER FEHLER                                           2.877003E-06
+ RELATIVER FEHLER                                           2.877002E-06
  DAS ABBRUCHKRITERIUM FUER Binder IST ERFUELLT.
 
  MAXIMALER ABSOLUTWERT DER INKREMENTELLEN VERSCHIEBUNGEN    3.445089E-01
@@ -1308,16 +1308,16 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -9.338204E-03  6.119765E+00  4.252291E+04
- DURCHSCHNITTLICHER DRUCK       9.838478E+00 -2.605623E-06  1.347157E-03  9.836572E+00
+ LAST                                        -9.338216E-03  6.119765E+00  4.252291E+04
+ DURCHSCHNITTLICHER DRUCK       9.838478E+00 -2.605628E-06  1.347157E-03  9.836572E+00
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                         9.212111E-03  7.510717E+00 -5.395713E+03
- DURCHSCHNITTLICHER DRUCK       2.494800E+01  4.625093E-05  2.677160E-02 -2.488240E+01
+ LAST                                         9.212109E-03  7.510717E+00 -5.395713E+03
+ DURCHSCHNITTLICHER DRUCK       2.494800E+01  4.625091E-05  2.677160E-02 -2.488240E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -5.500133E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.500000E-01
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    5.500133E-01/ 1.500000E-01
@@ -1325,8 +1325,8 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         3.353117E-03 -1.396995E+00 -3.697006E+04
- DURCHSCHNITTLICHER DRUCK       8.121685E+00 -5.619491E-06 -4.688058E-04 -8.121685E+00
+ LAST                                         3.353093E-03 -1.396995E+00 -3.697006E+04
+ DURCHSCHNITTLICHER DRUCK       8.121685E+00 -5.619500E-06 -4.688058E-04 -8.121685E+00
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -3.000128E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  3.454574E-06
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    3.000128E-01/ 3.454574E-06
@@ -1340,7 +1340,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          3.227025E-03  1.223349E+01  1.571390E+02
+ SUMME ALLER KRAEFTE                          3.226986E-03  1.223349E+01  1.571390E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.     3 :  1.250000E+00 (  1.250000%) (  5.952381%)
 
@@ -1350,7 +1350,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT     3 :   2 /      14
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        3 :          5.07  (   0: 0: 5)
+ CPU-ZEIT AM ENDE DES INKREMENTES        3 :          5.10  (   0: 0: 5)
 
  E N D E    D E S    I N K R E M E N T E S               :             3
  -----------------------------------------------------------------------
@@ -1406,7 +1406,7 @@
 
  GEFORDERTE    LAST AUF Binder                              3.646703E+04
  TATSAECHLICHE LAST AUF Binder                              3.646545E+04
- RELATIVER FEHLER                                           4.315715E-05
+ RELATIVER FEHLER                                           4.315716E-05
  DAS ABBRUCHKRITERIUM FUER Binder IST ERFUELLT.
 
  MAXIMALER ABSOLUTWERT DER INKREMENTELLEN VERSCHIEBUNGEN    2.641959E-01
@@ -1465,7 +1465,7 @@
 
  GEFORDERTE    LAST AUF Binder                              3.646703E+04
  TATSAECHLICHE LAST AUF Binder                              3.646660E+04
- RELATIVER FEHLER                                           1.167575E-05
+ RELATIVER FEHLER                                           1.167574E-05
  DAS ABBRUCHKRITERIUM FUER Binder IST ERFUELLT.
 
  MAXIMALER ABSOLUTWERT DER INKREMENTELLEN VERSCHIEBUNGEN    3.509632E-01
@@ -1493,16 +1493,16 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         1.285195E-02  3.948160E+00  4.535311E+04
- DURCHSCHNITTLICHER DRUCK       1.911343E+01  4.965976E-06  2.672740E-03  1.910125E+01
+ LAST                                         1.285199E-02  3.948160E+00  4.535311E+04
+ DURCHSCHNITTLICHER DRUCK       1.911343E+01  4.965990E-06  2.672740E-03  1.910125E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                         2.977284E-03 -3.110115E+00 -8.090204E+03
- DURCHSCHNITTLICHER DRUCK       7.321039E+01  3.728537E-05  7.766349E-01 -7.181724E+01
+ LAST                                         2.977280E-03 -3.110115E+00 -8.090204E+03
+ DURCHSCHNITTLICHER DRUCK       7.321039E+01  3.728533E-05  7.766349E-01 -7.181724E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -7.750133E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -2.250000E-01
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    7.750133E-01/ 2.250000E-01
@@ -1511,7 +1511,7 @@
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
  LAST                                         1.596937E-01  9.945516E+00 -3.740516E+04
- DURCHSCHNITTLICHER DRUCK       1.417408E+01  6.335063E-05  5.496593E-03 -1.417408E+01
+ DURCHSCHNITTLICHER DRUCK       1.417408E+01  6.335064E-05  5.496593E-03 -1.417408E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.999746E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  3.814285E-05
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.999746E-01/ 3.814285E-05
@@ -1535,7 +1535,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT     4 :   2 /      16
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        4 :          6.47  (   0: 0: 6)
+ CPU-ZEIT AM ENDE DES INKREMENTES        4 :          6.62  (   0: 0: 7)
 
  E N D E    D E S    I N K R E M E N T E S               :             4
  -----------------------------------------------------------------------
@@ -1659,16 +1659,16 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         1.925474E-02  1.676571E+01  4.885624E+04
- DURCHSCHNITTLICHER DRUCK       4.642275E+01 -1.576755E-05 -9.574084E-03  4.637719E+01
+ LAST                                         1.925475E-02  1.676571E+01  4.885624E+04
+ DURCHSCHNITTLICHER DRUCK       4.642275E+01 -1.576751E-05 -9.574084E-03  4.637719E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                        -4.938128E-04 -2.075363E+01 -1.120949E+04
- DURCHSCHNITTLICHER DRUCK       8.291445E+01  2.163214E-05  5.789111E-01 -8.228985E+01
+ LAST                                        -4.938124E-04 -2.075363E+01 -1.120949E+04
+ DURCHSCHNITTLICHER DRUCK       8.291445E+01  2.163215E-05  5.789111E-01 -8.228985E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.112513E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -3.375000E-01
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    1.112513E+00/ 3.375000E-01
@@ -1677,7 +1677,7 @@
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
  LAST                                         2.309593E-01  6.037336E+00 -3.804736E+04
- DURCHSCHNITTLICHER DRUCK       3.769082E+01  2.183478E-04  1.734180E-02 -3.769082E+01
+ DURCHSCHNITTLICHER DRUCK       3.769082E+01  2.183479E-04  1.734180E-02 -3.769082E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.998407E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  1.338843E-04
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.998407E-01/ 1.338843E-04
@@ -1701,7 +1701,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT     5 :   2 /      18
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        5 :          7.54  (   0: 0: 8)
+ CPU-ZEIT AM ENDE DES INKREMENTES        5 :          7.71  (   0: 0: 8)
 
  E N D E    D E S    I N K R E M E N T E S               :             5
  -----------------------------------------------------------------------
@@ -1871,16 +1871,16 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         1.758716E-02 -4.644147E-01  5.182360E+04
- DURCHSCHNITTLICHER DRUCK       6.173681E+01  1.763725E-05 -3.348150E-02  6.172342E+01
+ LAST                                         1.758714E-02 -4.644148E-01  5.182360E+04
+ DURCHSCHNITTLICHER DRUCK       6.173681E+01  1.763723E-05 -3.348150E-02  6.172342E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                         4.714784E-03  2.360750E+00 -1.451524E+04
- DURCHSCHNITTLICHER DRUCK       8.239614E+01  5.382892E-05 -2.308171E-01 -8.135536E+01
+ LAST                                         4.714783E-03  2.360750E+00 -1.451524E+04
+ DURCHSCHNITTLICHER DRUCK       8.239614E+01  5.382893E-05 -2.308171E-01 -8.135536E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.512513E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -4.000000E-01
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    1.512513E+00/ 4.000000E-01
@@ -1888,8 +1888,8 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                        -2.683851E-02 -3.375880E+01 -3.689628E+04
- DURCHSCHNITTLICHER DRUCK       5.864987E+01 -6.118517E-05 -4.145435E-02 -5.864987E+01
+ LAST                                        -2.683853E-02 -3.375880E+01 -3.689628E+04
+ DURCHSCHNITTLICHER DRUCK       5.864987E+01 -6.118516E-05 -4.145435E-02 -5.864987E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.993232E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  5.174796E-04
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.993232E-01/ 5.174796E-04
@@ -1903,7 +1903,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                         -4.536565E-03 -3.186246E+01  4.120704E+02
+ SUMME ALLER KRAEFTE                         -4.536608E-03 -3.186246E+01  4.120704E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.     6 :  2.212500E+00 (  6.062500%) ( 10.535714%)
 
@@ -1913,7 +1913,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT     6 :   2 /      20
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        6 :          9.55  (   0: 0:10)
+ CPU-ZEIT AM ENDE DES INKREMENTES        6 :          9.67  (   0: 0:10)
 
  E N D E    D E S    I N K R E M E N T E S               :             6
  -----------------------------------------------------------------------
@@ -2073,7 +2073,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         5.469432E-01 -7.637069E+00  5.751769E+04
+ LAST                                         5.469433E-01 -7.637069E+00  5.751769E+04
  DURCHSCHNITTLICHER DRUCK       3.653132E+01  2.118312E-04 -5.378041E-02  3.650949E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -2105,7 +2105,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          2.681641E-01  2.094857E+00 -4.474523E+02
+ SUMME ALLER KRAEFTE                          2.681642E-01  2.094857E+00 -4.474523E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.     7 :  2.612500E+00 (  8.062500%) ( 12.440476%)
 
@@ -2115,7 +2115,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT     7 :   2 /      22
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        7 :         11.41  (   0: 0:11)
+ CPU-ZEIT AM ENDE DES INKREMENTES        7 :         11.59  (   0: 0:12)
 
  E N D E    D E S    I N K R E M E N T E S               :             7
  -----------------------------------------------------------------------
@@ -2283,7 +2283,7 @@
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                         3.176007E-01  4.864453E+00 -2.658487E+04
+ LAST                                         3.176008E-01  4.864453E+00 -2.658487E+04
  DURCHSCHNITTLICHER DRUCK       1.147687E+02  1.511097E-03 -1.230164E-01 -1.091930E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.312513E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -4.000000E-01
@@ -2317,7 +2317,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT     8 :   2 /      24
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        8 :         13.39  (   0: 0:13)
+ CPU-ZEIT AM ENDE DES INKREMENTES        8 :         13.79  (   0: 0:14)
 
  E N D E    D E S    I N K R E M E N T E S               :             8
  -----------------------------------------------------------------------
@@ -2527,7 +2527,7 @@
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                         6.396543E-01 -2.315926E+01 -3.304078E+04
+ LAST                                         6.396542E-01 -2.315926E+01 -3.304078E+04
  DURCHSCHNITTLICHER DRUCK       1.702056E+02  2.806734E-03  5.129753E-01 -1.529374E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.712513E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -4.000000E-01
@@ -2561,7 +2561,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT     9 :   3 /      27
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES        9 :         15.81  (   0: 0:16)
+ CPU-ZEIT AM ENDE DES INKREMENTES        9 :         16.33  (   0: 0:16)
 
  E N D E    D E S    I N K R E M E N T E S               :             9
  -----------------------------------------------------------------------
@@ -2763,7 +2763,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    10 :   2 /      29
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       10 :         17.84  (   0: 0:18)
+ CPU-ZEIT AM ENDE DES INKREMENTES       10 :         18.35  (   0: 0:18)
 
  E N D E    D E S    I N K R E M E N T E S               :            10
  -----------------------------------------------------------------------
@@ -3006,7 +3006,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    11 :   3 /      32
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       11 :         20.28  (   0: 0:20)
+ CPU-ZEIT AM ENDE DES INKREMENTES       11 :         20.93  (   0: 0:21)
 
  E N D E    D E S    I N K R E M E N T E S               :            11
  -----------------------------------------------------------------------
@@ -3272,7 +3272,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    12 :   4 /      36
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       12 :         22.90  (   0: 0:23)
+ CPU-ZEIT AM ENDE DES INKREMENTES       12 :         24.01  (   0: 0:24)
 
  E N D E    D E S    I N K R E M E N T E S               :            12
  -----------------------------------------------------------------------
@@ -3520,7 +3520,7 @@
  DIE POST DATEN  FUER DAS INKREMENT     13 IN kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg/ink0013.bin GESICHERT.
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       13 :         25.23  (   0: 0:25)
+ CPU-ZEIT AM ENDE DES INKREMENTES       13 :         26.51  (   0: 0:27)
 
  E N D E    D E S    I N K R E M E N T E S               :            13
  -----------------------------------------------------------------------
@@ -3795,7 +3795,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    14 :   4 /      43
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       14 :         27.80  (   0: 0:28)
+ CPU-ZEIT AM ENDE DES INKREMENTES       14 :         29.12  (   0: 0:29)
 
  E N D E    D E S    I N K R E M E N T E S               :            14
  -----------------------------------------------------------------------
@@ -4023,7 +4023,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    15 :   3 /      46
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       15 :         29.97  (   0: 0:30)
+ CPU-ZEIT AM ENDE DES INKREMENTES       15 :         31.29  (   0: 0:31)
 
  E N D E    D E S    I N K R E M E N T E S               :            15
  -----------------------------------------------------------------------
@@ -4305,7 +4305,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    16 :   3 /      49
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       16 :         32.88  (   0: 0:33)
+ CPU-ZEIT AM ENDE DES INKREMENTES       16 :         34.49  (   0: 0:34)
 
  E N D E    D E S    I N K R E M E N T E S               :            16
  -----------------------------------------------------------------------
@@ -4528,7 +4528,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    17 :   2 /      51
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       17 :         35.25  (   0: 0:35)
+ CPU-ZEIT AM ENDE DES INKREMENTES       17 :         37.01  (   0: 0:37)
 
  E N D E    D E S    I N K R E M E N T E S               :            17
  -----------------------------------------------------------------------
@@ -4802,7 +4802,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    18 :   2 /      53
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       18 :         38.47  (   0: 0:38)
+ CPU-ZEIT AM ENDE DES INKREMENTES       18 :         40.32  (   0: 0:40)
 
  E N D E    D E S    I N K R E M E N T E S               :            18
  -----------------------------------------------------------------------
@@ -5056,7 +5056,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    19 :   2 /      55
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       19 :         41.46  (   0: 0:41)
+ CPU-ZEIT AM ENDE DES INKREMENTES       19 :         43.56  (   0: 0:44)
 
  E N D E    D E S    I N K R E M E N T E S               :            19
  -----------------------------------------------------------------------
@@ -5380,7 +5380,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    20 :   6 /      61
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       20 :         45.05  (   0: 0:45)
+ CPU-ZEIT AM ENDE DES INKREMENTES       20 :         47.01  (   0: 0:47)
 
  E N D E    D E S    I N K R E M E N T E S               :            20
  -----------------------------------------------------------------------
@@ -5627,7 +5627,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    21 :   2 /      63
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       21 :         47.87  (   0: 0:48)
+ CPU-ZEIT AM ENDE DES INKREMENTES       21 :         49.77  (   0: 0:50)
 
  E N D E    D E S    I N K R E M E N T E S               :            21
  -----------------------------------------------------------------------
@@ -5922,7 +5922,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    22 :   3 /      66
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       22 :         51.23  (   0: 0:51)
+ CPU-ZEIT AM ENDE DES INKREMENTES       22 :         53.09  (   0: 0:53)
 
  E N D E    D E S    I N K R E M E N T E S               :            22
  -----------------------------------------------------------------------
@@ -6179,7 +6179,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    23 :   3 /      69
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       23 :         53.95  (   0: 0:54)
+ CPU-ZEIT AM ENDE DES INKREMENTES       23 :         55.77  (   0: 0:56)
 
  E N D E    D E S    I N K R E M E N T E S               :            23
  -----------------------------------------------------------------------
@@ -6408,7 +6408,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    24 :   2 /      71
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       24 :         56.57  (   0: 0:57)
+ CPU-ZEIT AM ENDE DES INKREMENTES       24 :         58.48  (   0: 0:58)
 
  E N D E    D E S    I N K R E M E N T E S               :            24
  -----------------------------------------------------------------------
@@ -6656,7 +6656,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    25 :   2 /      73
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       25 :         59.54  (   0: 0:60)
+ CPU-ZEIT AM ENDE DES INKREMENTES       25 :         61.48  (   0: 1: 1)
 
  E N D E    D E S    I N K R E M E N T E S               :            25
  -----------------------------------------------------------------------
@@ -6887,7 +6887,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    26 :   3 /      76
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       26 :         61.95  (   0: 1: 2)
+ CPU-ZEIT AM ENDE DES INKREMENTES       26 :         64.22  (   0: 1: 4)
 
  E N D E    D E S    I N K R E M E N T E S               :            26
  -----------------------------------------------------------------------
@@ -7106,7 +7106,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    27 :   2 /      78
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       27 :         64.37  (   0: 1: 4)
+ CPU-ZEIT AM ENDE DES INKREMENTES       27 :         66.73  (   0: 1: 7)
 
  E N D E    D E S    I N K R E M E N T E S               :            27
  -----------------------------------------------------------------------
@@ -7344,7 +7344,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    28 :   3 /      81
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       28 :         67.01  (   0: 1: 7)
+ CPU-ZEIT AM ENDE DES INKREMENTES       28 :         69.39  (   0: 1: 9)
 
  E N D E    D E S    I N K R E M E N T E S               :            28
  -----------------------------------------------------------------------
@@ -7519,7 +7519,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          8.640654E+00  7.186378E+00 -1.461991E+03
+ SUMME ALLER KRAEFTE                          8.640654E+00  7.186377E+00 -1.461991E+03
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    29 :  1.006435E+01 ( 45.321759%) ( 47.925485%)
 
@@ -7531,7 +7531,7 @@
  DIE POST DATEN  FUER DAS INKREMENT     29 IN kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg/ink0029.bin GESICHERT.
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       29 :         69.00  (   0: 1: 9)
+ CPU-ZEIT AM ENDE DES INKREMENTES       29 :         71.54  (   0: 1:12)
 
  E N D E    D E S    I N K R E M E N T E S               :            29
  -----------------------------------------------------------------------
@@ -7711,7 +7711,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    30 :   1 /      83
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       30 :         70.86  (   0: 1:11)
+ CPU-ZEIT AM ENDE DES INKREMENTES       30 :         73.66  (   0: 1:14)
 
  E N D E    D E S    I N K R E M E N T E S               :            30
  -----------------------------------------------------------------------
@@ -7914,7 +7914,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    31 :   2 /      85
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       31 :         73.10  (   0: 1:13)
+ CPU-ZEIT AM ENDE DES INKREMENTES       31 :         75.98  (   0: 1:16)
 
  E N D E    D E S    I N K R E M E N T E S               :            31
  -----------------------------------------------------------------------
@@ -8052,8 +8052,8 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -2.670986E+00 -1.642977E+02  9.534970E+04
- DURCHSCHNITTLICHER DRUCK       1.802777E+02 -7.205425E-03 -2.577111E-01  1.618595E+02
+ LAST                                        -2.670987E+00 -1.642977E+02  9.534970E+04
+ DURCHSCHNITTLICHER DRUCK       1.802777E+02 -7.205426E-03 -2.577111E-01  1.618595E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -8094,7 +8094,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    32 :   1 /      86
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       32 :         74.97  (   0: 1:15)
+ CPU-ZEIT AM ENDE DES INKREMENTES       32 :         78.02  (   0: 1:18)
 
  E N D E    D E S    I N K R E M E N T E S               :            32
  -----------------------------------------------------------------------
@@ -8274,7 +8274,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    33 :   1 /      87
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       33 :         76.86  (   0: 1:17)
+ CPU-ZEIT AM ENDE DES INKREMENTES       33 :         80.00  (   0: 1:20)
 
  E N D E    D E S    I N K R E M E N T E S               :            33
  -----------------------------------------------------------------------
@@ -8454,7 +8454,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    34 :   1 /      88
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       34 :         78.78  (   0: 1:19)
+ CPU-ZEIT AM ENDE DES INKREMENTES       34 :         81.92  (   0: 1:22)
 
  E N D E    D E S    I N K R E M E N T E S               :            34
  -----------------------------------------------------------------------
@@ -8634,7 +8634,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    35 :   1 /      89
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       35 :         80.67  (   0: 1:21)
+ CPU-ZEIT AM ENDE DES INKREMENTES       35 :         83.90  (   0: 1:24)
 
  E N D E    D E S    I N K R E M E N T E S               :            35
  -----------------------------------------------------------------------
@@ -8792,7 +8792,7 @@
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  LAST                                         2.730131E+00 -2.392520E+01 -6.841375E+04
- DURCHSCHNITTLICHER DRUCK       1.499545E+02  6.822879E-03  7.309946E-01 -1.043647E+02
+ DURCHSCHNITTLICHER DRUCK       1.499545E+02  6.822878E-03  7.309946E-01 -1.043647E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.019399E+01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.185185E-01
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    1.019399E+01/ 1.185185E-01
@@ -8815,7 +8815,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          6.912934E+00 -9.031290E-01 -2.691953E+03
+ SUMME ALLER KRAEFTE                          6.912934E+00 -9.031291E-01 -2.691953E+03
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    36 :  1.089398E+01 ( 49.469907%) ( 51.876102%)
 
@@ -8825,7 +8825,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    36 :   2 /      91
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       36 :         82.64  (   0: 1:23)
+ CPU-ZEIT AM ENDE DES INKREMENTES       36 :         85.99  (   0: 1:26)
 
  E N D E    D E S    I N K R E M E N T E S               :            36
  -----------------------------------------------------------------------
@@ -9005,7 +9005,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    37 :   1 /      92
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       37 :         84.54  (   0: 1:25)
+ CPU-ZEIT AM ENDE DES INKREMENTES       37 :         87.85  (   0: 1:28)
 
  E N D E    D E S    I N K R E M E N T E S               :            37
  -----------------------------------------------------------------------
@@ -9134,7 +9134,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         3.240133E-01 -9.232577E+01  9.341205E+04
- DURCHSCHNITTLICHER DRUCK       1.734554E+02  7.280074E-04 -1.371931E-01  1.563072E+02
+ DURCHSCHNITTLICHER DRUCK       1.734554E+02  7.280075E-04 -1.371931E-01  1.563072E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -9175,7 +9175,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    38 :   1 /      93
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       38 :         86.32  (   0: 1:26)
+ CPU-ZEIT AM ENDE DES INKREMENTES       38 :         89.68  (   0: 1:30)
 
  E N D E    D E S    I N K R E M E N T E S               :            38
  -----------------------------------------------------------------------
@@ -9355,7 +9355,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    39 :   1 /      94
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       39 :         88.18  (   0: 1:28)
+ CPU-ZEIT AM ENDE DES INKREMENTES       39 :         91.59  (   0: 1:32)
 
  E N D E    D E S    I N K R E M E N T E S               :            39
  -----------------------------------------------------------------------
@@ -9534,7 +9534,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    40 :   1 /      95
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       40 :         90.19  (   0: 1:30)
+ CPU-ZEIT AM ENDE DES INKREMENTES       40 :         93.63  (   0: 1:34)
 
  E N D E    D E S    I N K R E M E N T E S               :            40
  -----------------------------------------------------------------------
@@ -9714,7 +9714,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    41 :   1 /      96
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       41 :         92.11  (   0: 1:32)
+ CPU-ZEIT AM ENDE DES INKREMENTES       41 :         95.55  (   0: 1:36)
 
  E N D E    D E S    I N K R E M E N T E S               :            41
  -----------------------------------------------------------------------
@@ -9893,7 +9893,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    42 :   1 /      97
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       42 :         94.13  (   0: 1:34)
+ CPU-ZEIT AM ENDE DES INKREMENTES       42 :         97.62  (   0: 1:38)
 
  E N D E    D E S    I N K R E M E N T E S               :            42
  -----------------------------------------------------------------------
@@ -10063,7 +10063,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    43 :   1 /      98
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       43 :         95.94  (   0: 1:36)
+ CPU-ZEIT AM ENDE DES INKREMENTES       43 :         99.52  (   0: 1:40)
 
  E N D E    D E S    I N K R E M E N T E S               :            43
  -----------------------------------------------------------------------
@@ -10243,7 +10243,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    44 :   1 /      99
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       44 :         97.78  (   0: 1:38)
+ CPU-ZEIT AM ENDE DES INKREMENTES       44 :        101.40  (   0: 1:41)
 
  E N D E    D E S    I N K R E M E N T E S               :            44
  -----------------------------------------------------------------------
@@ -10413,7 +10413,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    45 :   1 /     100
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       45 :         99.67  (   0: 1:40)
+ CPU-ZEIT AM ENDE DES INKREMENTES       45 :        103.55  (   0: 1:44)
 
  E N D E    D E S    I N K R E M E N T E S               :            45
  -----------------------------------------------------------------------
@@ -10582,7 +10582,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    46 :   1 /     101
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       46 :        101.47  (   0: 1:41)
+ CPU-ZEIT AM ENDE DES INKREMENTES       46 :        105.49  (   0: 1:45)
 
  E N D E    D E S    I N K R E M E N T E S               :            46
  -----------------------------------------------------------------------
@@ -10761,7 +10761,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    47 :   1 /     102
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       47 :        103.37  (   0: 1:43)
+ CPU-ZEIT AM ENDE DES INKREMENTES       47 :        107.62  (   0: 1:48)
 
  E N D E    D E S    I N K R E M E N T E S               :            47
  -----------------------------------------------------------------------
@@ -10931,7 +10931,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    48 :   1 /     103
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       48 :        105.16  (   0: 1:45)
+ CPU-ZEIT AM ENDE DES INKREMENTES       48 :        109.56  (   0: 1:50)
 
  E N D E    D E S    I N K R E M E N T E S               :            48
  -----------------------------------------------------------------------
@@ -11111,7 +11111,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    49 :   1 /     104
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       49 :        107.05  (   0: 1:47)
+ CPU-ZEIT AM ENDE DES INKREMENTES       49 :        111.53  (   0: 1:52)
 
  E N D E    D E S    I N K R E M E N T E S               :            49
  -----------------------------------------------------------------------
@@ -11281,7 +11281,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    50 :   1 /     105
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       50 :        108.82  (   0: 1:49)
+ CPU-ZEIT AM ENDE DES INKREMENTES       50 :        113.31  (   0: 1:53)
 
  E N D E    D E S    I N K R E M E N T E S               :            50
  -----------------------------------------------------------------------
@@ -11410,7 +11410,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                        -7.267441E-01 -3.634072E+01  8.032240E+04
- DURCHSCHNITTLICHER DRUCK       1.855669E+02  2.397730E-04 -5.011848E-02  1.646250E+02
+ DURCHSCHNITTLICHER DRUCK       1.855669E+02  2.397731E-04 -5.011848E-02  1.646250E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -11451,7 +11451,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    51 :   1 /     106
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       51 :        110.64  (   0: 1:51)
+ CPU-ZEIT AM ENDE DES INKREMENTES       51 :        115.10  (   0: 1:55)
 
  E N D E    D E S    I N K R E M E N T E S               :            51
  -----------------------------------------------------------------------
@@ -11580,7 +11580,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         2.857863E+00 -1.049042E+02  7.953490E+04
- DURCHSCHNITTLICHER DRUCK       1.867711E+02  4.588344E-03 -1.620536E-01  1.656412E+02
+ DURCHSCHNITTLICHER DRUCK       1.867711E+02  4.588343E-03 -1.620536E-01  1.656412E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -11621,7 +11621,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    52 :   1 /     107
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       52 :        112.36  (   0: 1:52)
+ CPU-ZEIT AM ENDE DES INKREMENTES       52 :        117.01  (   0: 1:57)
 
  E N D E    D E S    I N K R E M E N T E S               :            52
  -----------------------------------------------------------------------
@@ -11782,7 +11782,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    53 :   1 /     108
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       53 :        113.92  (   0: 1:54)
+ CPU-ZEIT AM ENDE DES INKREMENTES       53 :        118.63  (   0: 1:59)
 
  E N D E    D E S    I N K R E M E N T E S               :            53
  -----------------------------------------------------------------------
@@ -11933,7 +11933,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                         -5.851207E+00 -7.055443E+01 -1.330757E+03
+ SUMME ALLER KRAEFTE                         -5.851206E+00 -7.055443E+01 -1.330757E+03
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    54 :  1.302731E+01 ( 60.136574%) ( 62.034832%)
 
@@ -11943,7 +11943,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    54 :   1 /     109
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       54 :        115.46  (   0: 1:55)
+ CPU-ZEIT AM ENDE DES INKREMENTES       54 :        120.26  (   0: 2: 0)
 
  E N D E    D E S    I N K R E M E N T E S               :            54
  -----------------------------------------------------------------------
@@ -12104,7 +12104,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    55 :   1 /     110
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       55 :        116.99  (   0: 1:57)
+ CPU-ZEIT AM ENDE DES INKREMENTES       55 :        121.98  (   0: 2: 2)
 
  E N D E    D E S    I N K R E M E N T E S               :            55
  -----------------------------------------------------------------------
@@ -12265,7 +12265,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    56 :   1 /     111
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       56 :        118.50  (   0: 1:59)
+ CPU-ZEIT AM ENDE DES INKREMENTES       56 :        123.74  (   0: 2: 4)
 
  E N D E    D E S    I N K R E M E N T E S               :            56
  -----------------------------------------------------------------------
@@ -12384,7 +12384,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                        -3.482436E+00 -1.486746E+02  7.479475E+04
- DURCHSCHNITTLICHER DRUCK       1.813626E+02 -9.096364E-03 -3.464986E-01  1.611578E+02
+ DURCHSCHNITTLICHER DRUCK       1.813626E+02 -9.096365E-03 -3.464986E-01  1.611578E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -12425,7 +12425,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    57 :   1 /     112
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       57 :        120.06  (   0: 2: 0)
+ CPU-ZEIT AM ENDE DES INKREMENTES       57 :        125.38  (   0: 2: 5)
 
  E N D E    D E S    I N K R E M E N T E S               :            57
  -----------------------------------------------------------------------
@@ -12576,7 +12576,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                         -1.519373E-01 -2.628762E+02 -8.409408E+02
+ SUMME ALLER KRAEFTE                         -1.519372E-01 -2.628762E+02 -8.409408E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    58 :  1.350139E+01 ( 62.506944%) ( 64.292328%)
 
@@ -12586,7 +12586,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    58 :   1 /     113
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       58 :        121.56  (   0: 2: 2)
+ CPU-ZEIT AM ENDE DES INKREMENTES       58 :        127.04  (   0: 2: 7)
 
  E N D E    D E S    I N K R E M E N T E S               :            58
  -----------------------------------------------------------------------
@@ -12747,7 +12747,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    59 :   1 /     114
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       59 :        123.03  (   0: 2: 3)
+ CPU-ZEIT AM ENDE DES INKREMENTES       59 :        128.60  (   0: 2: 9)
 
  E N D E    D E S    I N K R E M E N T E S               :            59
  -----------------------------------------------------------------------
@@ -12867,7 +12867,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         3.039875E+00 -8.854707E-01  7.164383E+04
- DURCHSCHNITTLICHER DRUCK       1.758229E+02  3.614576E-03  9.723087E-04  1.558159E+02
+ DURCHSCHNITTLICHER DRUCK       1.758229E+02  3.614576E-03  9.723086E-04  1.558159E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -12908,7 +12908,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    60 :   1 /     115
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       60 :        124.63  (   0: 2: 5)
+ CPU-ZEIT AM ENDE DES INKREMENTES       60 :        130.25  (   0: 2:10)
 
  E N D E    D E S    I N K R E M E N T E S               :            60
  -----------------------------------------------------------------------
@@ -13069,7 +13069,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    61 :   1 /     116
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       61 :        126.23  (   0: 2: 6)
+ CPU-ZEIT AM ENDE DES INKREMENTES       61 :        131.86  (   0: 2:12)
 
  E N D E    D E S    I N K R E M E N T E S               :            61
  -----------------------------------------------------------------------
@@ -13179,8 +13179,8 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -8.130522E-01 -1.374978E+02  6.972286E+04
- DURCHSCHNITTLICHER DRUCK       1.747540E+02  3.706220E-04 -1.050834E-01  1.555093E+02
+ LAST                                        -8.130523E-01 -1.374978E+02  6.972286E+04
+ DURCHSCHNITTLICHER DRUCK       1.747540E+02  3.706219E-04 -1.050834E-01  1.555093E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -13221,7 +13221,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    62 :   1 /     117
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       62 :        127.58  (   0: 2: 8)
+ CPU-ZEIT AM ENDE DES INKREMENTES       62 :        133.23  (   0: 2:13)
 
  E N D E    D E S    I N K R E M E N T E S               :            62
  -----------------------------------------------------------------------
@@ -13347,7 +13347,7 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         7.854597E-01  8.915180E+00 -2.339787E+04
+ LAST                                         7.854598E-01  8.915180E+00 -2.339787E+04
  DURCHSCHNITTLICHER DRUCK       6.465156E+01  1.597614E-03  3.798313E-02 -6.465156E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.664714E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -13372,7 +13372,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    63 :   1 /     118
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       63 :        128.93  (   0: 2: 9)
+ CPU-ZEIT AM ENDE DES INKREMENTES       63 :        134.55  (   0: 2:15)
 
  E N D E    D E S    I N K R E M E N T E S               :            63
  -----------------------------------------------------------------------
@@ -13509,8 +13509,8 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         7.334521E-02 -9.696123E+00 -2.579561E+04
- DURCHSCHNITTLICHER DRUCK       6.925388E+01  1.919026E-04 -2.652996E-02 -6.925388E+01
+ LAST                                         7.334524E-02 -9.696123E+00 -2.579561E+04
+ DURCHSCHNITTLICHER DRUCK       6.925388E+01  1.919027E-04 -2.652996E-02 -6.925388E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.667316E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -2.602766E-04
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.667316E-01/ 2.602766E-04
@@ -13534,7 +13534,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    64 :   1 /     119
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       64 :        130.39  (   0: 2:10)
+ CPU-ZEIT AM ENDE DES INKREMENTES       64 :        135.95  (   0: 2:16)
 
  E N D E    D E S    I N K R E M E N T E S               :            64
  -----------------------------------------------------------------------
@@ -13686,7 +13686,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    65 :   1 /     120
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       65 :        131.71  (   0: 2:12)
+ CPU-ZEIT AM ENDE DES INKREMENTES       65 :        137.39  (   0: 2:17)
 
  E N D E    D E S    I N K R E M E N T E S               :            65
  -----------------------------------------------------------------------
@@ -13838,7 +13838,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    66 :   1 /     121
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       66 :        133.04  (   0: 2:13)
+ CPU-ZEIT AM ENDE DES INKREMENTES       66 :        138.82  (   0: 2:19)
 
  E N D E    D E S    I N K R E M E N T E S               :            66
  -----------------------------------------------------------------------
@@ -13990,7 +13990,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    67 :   1 /     122
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       67 :        134.44  (   0: 2:14)
+ CPU-ZEIT AM ENDE DES INKREMENTES       67 :        140.18  (   0: 2:20)
 
  E N D E    D E S    I N K R E M E N T E S               :            67
  -----------------------------------------------------------------------
@@ -14172,7 +14172,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    68 :   2 /     124
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       68 :        136.12  (   0: 2:16)
+ CPU-ZEIT AM ENDE DES INKREMENTES       68 :        141.94  (   0: 2:22)
 
  E N D E    D E S    I N K R E M E N T E S               :            68
  -----------------------------------------------------------------------
@@ -14282,7 +14282,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                        -4.578920E+00  2.651890E+02  6.640571E+04
- DURCHSCHNITTLICHER DRUCK       1.677365E+02 -2.015867E-02  7.133137E-01  1.486981E+02
+ DURCHSCHNITTLICHER DRUCK       1.677365E+02 -2.015868E-02  7.133137E-01  1.486981E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -14298,7 +14298,7 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         9.477579E-01 -4.842415E+01 -2.395047E+04
+ LAST                                         9.477578E-01 -4.842415E+01 -2.395047E+04
  DURCHSCHNITTLICHER DRUCK       6.604165E+01  2.932560E-03 -1.224002E-01 -6.604165E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.667316E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -14323,7 +14323,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    69 :   1 /     125
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       69 :        137.46  (   0: 2:17)
+ CPU-ZEIT AM ENDE DES INKREMENTES       69 :        143.29  (   0: 2:23)
 
  E N D E    D E S    I N K R E M E N T E S               :            69
  -----------------------------------------------------------------------
@@ -14450,7 +14450,7 @@
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
  LAST                                        -1.030360E+00 -5.003011E+01 -2.361872E+04
- DURCHSCHNITTLICHER DRUCK       6.498052E+01 -2.267861E-03 -1.306263E-01 -6.498052E+01
+ DURCHSCHNITTLICHER DRUCK       6.498052E+01 -2.267862E-03 -1.306263E-01 -6.498052E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.667316E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.667316E-01/ 0.000000E+00
@@ -14474,7 +14474,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    70 :   1 /     126
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       70 :        138.85  (   0: 2:19)
+ CPU-ZEIT AM ENDE DES INKREMENTES       70 :        144.71  (   0: 2:25)
 
  E N D E    D E S    I N K R E M E N T E S               :            70
  -----------------------------------------------------------------------
@@ -14628,7 +14628,7 @@
  DIE POST DATEN  FUER DAS INKREMENT     71 IN kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg/ink0071.bin GESICHERT.
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       71 :        140.28  (   0: 2:20)
+ CPU-ZEIT AM ENDE DES INKREMENTES       71 :        146.13  (   0: 2:26)
 
  E N D E    D E S    I N K R E M E N T E S               :            71
  -----------------------------------------------------------------------
@@ -14720,7 +14720,7 @@
 
  GEFORDERTE    LAST AUF Binder                              2.559467E+04
  TATSAECHLICHE LAST AUF Binder                              2.559242E+04
- RELATIVER FEHLER                                           8.767334E-05
+ RELATIVER FEHLER                                           8.767333E-05
  DAS ABBRUCHKRITERIUM FUER Binder IST ERFUELLT.
 
  MAXIMALER ABSOLUTWERT DER INKREMENTELLEN VERSCHIEBUNGEN    1.221699E-01
@@ -14790,7 +14790,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    72 :   1 /     128
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       72 :        141.62  (   0: 2:22)
+ CPU-ZEIT AM ENDE DES INKREMENTES       72 :        147.58  (   0: 2:28)
 
  E N D E    D E S    I N K R E M E N T E S               :            72
  -----------------------------------------------------------------------
@@ -14917,7 +14917,7 @@
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
  LAST                                         1.125521E+00 -5.693263E+01 -2.568625E+04
- DURCHSCHNITTLICHER DRUCK       6.581972E+01  4.040465E-03 -1.439511E-01 -6.581972E+01
+ DURCHSCHNITTLICHER DRUCK       6.581972E+01  4.040466E-03 -1.439511E-01 -6.581972E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.669299E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.669299E-01/ 0.000000E+00
@@ -14941,7 +14941,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    73 :   1 /     129
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       73 :        142.92  (   0: 2:23)
+ CPU-ZEIT AM ENDE DES INKREMENTES       73 :        149.09  (   0: 2:29)
 
  E N D E    D E S    I N K R E M E N T E S               :            73
  -----------------------------------------------------------------------
@@ -15093,7 +15093,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    74 :   1 /     130
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       74 :        144.21  (   0: 2:24)
+ CPU-ZEIT AM ENDE DES INKREMENTES       74 :        150.54  (   0: 2:31)
 
  E N D E    D E S    I N K R E M E N T E S               :            74
  -----------------------------------------------------------------------
@@ -15211,7 +15211,7 @@
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                        -9.389578E+01 -5.907031E-01 -4.077892E+04
+ LAST                                        -9.389578E+01 -5.907032E-01 -4.077892E+04
  DURCHSCHNITTLICHER DRUCK       1.140496E+02 -2.531717E-01 -1.745926E-01 -7.041444E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.481622E+01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.185185E-01
@@ -15245,7 +15245,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    75 :   1 /     131
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       75 :        145.51  (   0: 2:26)
+ CPU-ZEIT AM ENDE DES INKREMENTES       75 :        152.06  (   0: 2:32)
 
  E N D E    D E S    I N K R E M E N T E S               :            75
  -----------------------------------------------------------------------
@@ -15397,7 +15397,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    76 :   1 /     132
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       76 :        146.81  (   0: 2:27)
+ CPU-ZEIT AM ENDE DES INKREMENTES       76 :        153.51  (   0: 2:34)
 
  E N D E    D E S    I N K R E M E N T E S               :            76
  -----------------------------------------------------------------------
@@ -15533,7 +15533,7 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         2.527653E+00 -5.758090E+00 -2.404357E+04
+ LAST                                         2.527654E+00 -5.758090E+00 -2.404357E+04
  DURCHSCHNITTLICHER DRUCK       6.469018E+01  7.505345E-03 -1.494544E-02 -6.469018E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.669299E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -15558,7 +15558,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    77 :   1 /     133
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       77 :        148.26  (   0: 2:28)
+ CPU-ZEIT AM ENDE DES INKREMENTES       77 :        155.04  (   0: 2:35)
 
  E N D E    D E S    I N K R E M E N T E S               :            77
  -----------------------------------------------------------------------
@@ -15710,7 +15710,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    78 :   1 /     134
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       78 :        149.60  (   0: 2:30)
+ CPU-ZEIT AM ENDE DES INKREMENTES       78 :        156.37  (   0: 2:36)
 
  E N D E    D E S    I N K R E M E N T E S               :            78
  -----------------------------------------------------------------------
@@ -15883,7 +15883,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    79 :   2 /     136
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       79 :        151.14  (   0: 2:31)
+ CPU-ZEIT AM ENDE DES INKREMENTES       79 :        157.89  (   0: 2:38)
 
  E N D E    D E S    I N K R E M E N T E S               :            79
  -----------------------------------------------------------------------
@@ -16035,7 +16035,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    80 :   1 /     137
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       80 :        152.47  (   0: 2:32)
+ CPU-ZEIT AM ENDE DES INKREMENTES       80 :        159.33  (   0: 2:39)
 
  E N D E    D E S    I N K R E M E N T E S               :            80
  -----------------------------------------------------------------------
@@ -16196,7 +16196,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    81 :   1 /     138
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       81 :        153.80  (   0: 2:34)
+ CPU-ZEIT AM ENDE DES INKREMENTES       81 :        160.75  (   0: 2:41)
 
  E N D E    D E S    I N K R E M E N T E S               :            81
  -----------------------------------------------------------------------
@@ -16347,7 +16347,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    82 :   1 /     139
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       82 :        155.07  (   0: 2:35)
+ CPU-ZEIT AM ENDE DES INKREMENTES       82 :        162.09  (   0: 2:42)
 
  E N D E    D E S    I N K R E M E N T E S               :            82
  -----------------------------------------------------------------------
@@ -16498,7 +16498,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    83 :   1 /     140
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       83 :        156.35  (   0: 2:36)
+ CPU-ZEIT AM ENDE DES INKREMENTES       83 :        163.42  (   0: 2:43)
 
  E N D E    D E S    I N K R E M E N T E S               :            83
  -----------------------------------------------------------------------
@@ -16640,7 +16640,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          4.226058E-01  7.716359E+01 -9.463033E+02
+ SUMME ALLER KRAEFTE                          4.226057E-01  7.716359E+01 -9.463033E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    84 :  1.658287E+01 ( 77.914352%) ( 78.966049%)
 
@@ -16650,7 +16650,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    84 :   1 /     141
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       84 :        157.62  (   0: 2:38)
+ CPU-ZEIT AM ENDE DES INKREMENTES       84 :        164.72  (   0: 2:45)
 
  E N D E    D E S    I N K R E M E N T E S               :            84
  -----------------------------------------------------------------------
@@ -16801,7 +16801,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    85 :   1 /     142
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       85 :        158.90  (   0: 2:39)
+ CPU-ZEIT AM ENDE DES INKREMENTES       85 :        166.02  (   0: 2:46)
 
  E N D E    D E S    I N K R E M E N T E S               :            85
  -----------------------------------------------------------------------
@@ -16942,7 +16942,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          3.829839E+00  6.594398E+01 -8.382105E+02
+ SUMME ALLER KRAEFTE                          3.829840E+00  6.594398E+01 -8.382105E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    86 :  1.681991E+01 ( 79.099537%) ( 80.094797%)
 
@@ -16952,7 +16952,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    86 :   1 /     143
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       86 :        160.20  (   0: 2:40)
+ CPU-ZEIT AM ENDE DES INKREMENTES       86 :        167.42  (   0: 2:47)
 
  E N D E    D E S    I N K R E M E N T E S               :            86
  -----------------------------------------------------------------------
@@ -17063,7 +17063,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         6.997316E+00  3.037600E+01  5.957010E+04
- DURCHSCHNITTLICHER DRUCK       1.452519E+02  3.494787E-03  3.235700E-01  1.273747E+02
+ DURCHSCHNITTLICHER DRUCK       1.452519E+02  3.494786E-03  3.235700E-01  1.273747E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -17104,7 +17104,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    87 :   1 /     144
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       87 :        161.48  (   0: 2:41)
+ CPU-ZEIT AM ENDE DES INKREMENTES       87 :        168.76  (   0: 2:49)
 
  E N D E    D E S    I N K R E M E N T E S               :            87
  -----------------------------------------------------------------------
@@ -17255,7 +17255,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    88 :   1 /     145
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       88 :        162.75  (   0: 2:43)
+ CPU-ZEIT AM ENDE DES INKREMENTES       88 :        170.09  (   0: 2:50)
 
  E N D E    D E S    I N K R E M E N T E S               :            88
  -----------------------------------------------------------------------
@@ -17407,7 +17407,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    89 :   1 /     146
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       89 :        164.02  (   0: 2:44)
+ CPU-ZEIT AM ENDE DES INKREMENTES       89 :        171.46  (   0: 2:51)
 
  E N D E    D E S    I N K R E M E N T E S               :            89
  -----------------------------------------------------------------------
@@ -17517,7 +17517,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         3.419898E+00  3.454824E+01  5.787358E+04
+ LAST                                         3.419899E+00  3.454824E+01  5.787358E+04
  DURCHSCHNITTLICHER DRUCK       1.429832E+02 -5.338444E-03  3.373735E-01  1.251434E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -17549,7 +17549,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                         -2.469102E+00  4.908457E+01 -7.520587E+02
+ SUMME ALLER KRAEFTE                         -2.469101E+00  4.908457E+01 -7.520587E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    90 :  1.729398E+01 ( 81.469907%) ( 82.352293%)
 
@@ -17559,7 +17559,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    90 :   1 /     147
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       90 :        165.29  (   0: 2:45)
+ CPU-ZEIT AM ENDE DES INKREMENTES       90 :        172.93  (   0: 2:53)
 
  E N D E    D E S    I N K R E M E N T E S               :            90
  -----------------------------------------------------------------------
@@ -17710,7 +17710,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    91 :   1 /     148
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       91 :        166.60  (   0: 2:47)
+ CPU-ZEIT AM ENDE DES INKREMENTES       91 :        174.26  (   0: 2:54)
 
  E N D E    D E S    I N K R E M E N T E S               :            91
  -----------------------------------------------------------------------
@@ -17861,7 +17861,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          3.380946E+00 -4.393114E+00 -6.853293E+02
+ SUMME ALLER KRAEFTE                          3.380947E+00 -4.393114E+00 -6.853293E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.    92 :  1.753102E+01 ( 82.655093%) ( 83.481041%)
 
@@ -17871,7 +17871,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    92 :   1 /     149
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       92 :        167.91  (   0: 2:48)
+ CPU-ZEIT AM ENDE DES INKREMENTES       92 :        175.69  (   0: 2:56)
 
  E N D E    D E S    I N K R E M E N T E S               :            92
  -----------------------------------------------------------------------
@@ -18022,7 +18022,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    93 :   1 /     150
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       93 :        169.19  (   0: 2:49)
+ CPU-ZEIT AM ENDE DES INKREMENTES       93 :        177.09  (   0: 2:57)
 
  E N D E    D E S    I N K R E M E N T E S               :            93
  -----------------------------------------------------------------------
@@ -18133,7 +18133,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         5.384040E+00  1.986482E+00  5.854545E+04
- DURCHSCHNITTLICHER DRUCK       1.440969E+02  5.742490E-04  2.194118E-01  1.257442E+02
+ DURCHSCHNITTLICHER DRUCK       1.440969E+02  5.742488E-04  2.194118E-01  1.257442E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -18174,7 +18174,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    94 :   1 /     151
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       94 :        170.46  (   0: 2:50)
+ CPU-ZEIT AM ENDE DES INKREMENTES       94 :        178.44  (   0: 2:58)
 
  E N D E    D E S    I N K R E M E N T E S               :            94
  -----------------------------------------------------------------------
@@ -18326,7 +18326,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    95 :   1 /     152
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       95 :        171.73  (   0: 2:52)
+ CPU-ZEIT AM ENDE DES INKREMENTES       95 :        179.72  (   0: 2:60)
 
  E N D E    D E S    I N K R E M E N T E S               :            95
  -----------------------------------------------------------------------
@@ -18499,7 +18499,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    96 :   2 /     154
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       96 :        173.15  (   0: 2:53)
+ CPU-ZEIT AM ENDE DES INKREMENTES       96 :        181.27  (   0: 3: 1)
 
  E N D E    D E S    I N K R E M E N T E S               :            96
  -----------------------------------------------------------------------
@@ -18626,8 +18626,8 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                        -7.739940E-01 -3.135481E+01 -2.427733E+04
- DURCHSCHNITTLICHER DRUCK       6.839966E+01 -1.993549E-03 -9.416651E-02 -6.839966E+01
+ LAST                                        -7.739941E-01 -3.135481E+01 -2.427733E+04
+ DURCHSCHNITTLICHER DRUCK       6.839966E+01 -1.993550E-03 -9.416651E-02 -6.839966E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.671810E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.671810E-01/ 0.000000E+00
@@ -18651,7 +18651,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    97 :   1 /     155
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       97 :        174.43  (   0: 2:54)
+ CPU-ZEIT AM ENDE DES INKREMENTES       97 :        182.72  (   0: 3: 3)
 
  E N D E    D E S    I N K R E M E N T E S               :            97
  -----------------------------------------------------------------------
@@ -18778,8 +18778,8 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         6.791524E-01 -3.135995E+01 -2.407176E+04
- DURCHSCHNITTLICHER DRUCK       6.822761E+01  2.014033E-03 -9.537616E-02 -6.822761E+01
+ LAST                                         6.791523E-01 -3.135995E+01 -2.407176E+04
+ DURCHSCHNITTLICHER DRUCK       6.822761E+01  2.014033E-03 -9.537615E-02 -6.822761E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.671810E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.671810E-01/ 0.000000E+00
@@ -18803,7 +18803,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    98 :   1 /     156
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       98 :        175.71  (   0: 2:56)
+ CPU-ZEIT AM ENDE DES INKREMENTES       98 :        184.12  (   0: 3: 4)
 
  E N D E    D E S    I N K R E M E N T E S               :            98
  -----------------------------------------------------------------------
@@ -18914,7 +18914,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         3.468717E+00 -3.211120E+01  5.615106E+04
- DURCHSCHNITTLICHER DRUCK       1.405350E+02 -7.345720E-04  1.580916E-01  1.216115E+02
+ DURCHSCHNITTLICHER DRUCK       1.405350E+02 -7.345718E-04  1.580916E-01  1.216115E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -18955,7 +18955,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT    99 :   1 /     157
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES       99 :        176.99  (   0: 2:57)
+ CPU-ZEIT AM ENDE DES INKREMENTES       99 :        185.47  (   0: 3: 5)
 
  E N D E    D E S    I N K R E M E N T E S               :            99
  -----------------------------------------------------------------------
@@ -19064,8 +19064,8 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         7.490209E-01  4.709966E+01  5.568248E+04
- DURCHSCHNITTLICHER DRUCK       1.411889E+02 -6.931850E-03  2.951602E-01  1.219921E+02
+ LAST                                         7.490205E-01  4.709966E+01  5.568248E+04
+ DURCHSCHNITTLICHER DRUCK       1.411889E+02 -6.931851E-03  2.951602E-01  1.219921E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -19096,7 +19096,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                         -6.810459E+00 -7.966683E+01 -5.522485E+02
+ SUMME ALLER KRAEFTE                         -6.810460E+00 -7.966683E+01 -5.522485E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.   100 :  1.847917E+01 ( 87.395833%) ( 87.996032%)
 
@@ -19106,7 +19106,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   100 :   1 /     158
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      100 :        178.25  (   0: 2:58)
+ CPU-ZEIT AM ENDE DES INKREMENTES      100 :        186.80  (   0: 3: 7)
 
  E N D E    D E S    I N K R E M E N T E S               :           100
  -----------------------------------------------------------------------
@@ -19258,7 +19258,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   101 :   1 /     159
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      101 :        179.52  (   0: 2:60)
+ CPU-ZEIT AM ENDE DES INKREMENTES      101 :        188.16  (   0: 3: 8)
 
  E N D E    D E S    I N K R E M E N T E S               :           101
  -----------------------------------------------------------------------
@@ -19367,7 +19367,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         1.525197E-01 -1.519741E+01  5.485611E+04
+ LAST                                         1.525198E-01 -1.519741E+01  5.485611E+04
  DURCHSCHNITTLICHER DRUCK       1.410880E+02 -9.493740E-03  2.255094E-01  1.215521E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -19375,7 +19375,7 @@
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                         6.693932E-01 -1.244609E+02 -3.206991E+04
+ LAST                                         6.693931E-01 -1.244609E+02 -3.206991E+04
  DURCHSCHNITTLICHER DRUCK       1.120064E+02  2.657450E-02 -4.850590E-01 -6.813275E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.801622E+01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.185185E-01
@@ -19399,7 +19399,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          7.847898E-02 -1.714430E+02 -4.389866E+02
+ SUMME ALLER KRAEFTE                          7.847911E-02 -1.714430E+02 -4.389866E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.   102 :  1.871620E+01 ( 88.581019%) ( 89.124780%)
 
@@ -19409,7 +19409,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   102 :   1 /     160
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      102 :        180.83  (   0: 3: 1)
+ CPU-ZEIT AM ENDE DES INKREMENTES      102 :        189.48  (   0: 3: 9)
 
  E N D E    D E S    I N K R E M E N T E S               :           102
  -----------------------------------------------------------------------
@@ -19518,7 +19518,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -1.669745E-01 -4.123564E+01  5.447285E+04
+ LAST                                        -1.669746E-01 -4.123564E+01  5.447285E+04
  DURCHSCHNITTLICHER DRUCK       1.421653E+02 -1.032467E-02  1.581040E-01  1.222686E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -19560,7 +19560,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   103 :   1 /     161
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      103 :        182.10  (   0: 3: 2)
+ CPU-ZEIT AM ENDE DES INKREMENTES      103 :        191.22  (   0: 3:11)
 
  E N D E    D E S    I N K R E M E N T E S               :           103
  -----------------------------------------------------------------------
@@ -19688,7 +19688,7 @@
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                        -9.307260E-01  8.006849E+01 -3.163712E+04
+ LAST                                        -9.307259E-01  8.006849E+01 -3.163712E+04
  DURCHSCHNITTLICHER DRUCK       1.150500E+02  1.950107E-02  2.984699E-01 -6.859545E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.825325E+01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.185185E-01
@@ -19697,7 +19697,7 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                        -8.118043E-02 -3.157777E+01 -2.547483E+04
+ LAST                                        -8.118042E-02 -3.157777E+01 -2.547483E+04
  DURCHSCHNITTLICHER DRUCK       7.270240E+01 -3.805614E-04 -9.438509E-02 -7.270240E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.672901E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.091936E-04
@@ -19722,7 +19722,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   104 :   1 /     162
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      104 :        183.41  (   0: 3: 3)
+ CPU-ZEIT AM ENDE DES INKREMENTES      104 :        192.67  (   0: 3:13)
 
  E N D E    D E S    I N K R E M E N T E S               :           104
  -----------------------------------------------------------------------
@@ -19840,7 +19840,7 @@
 
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
- LAST                                         4.541706E-02  8.576597E+01 -3.141304E+04
+ LAST                                         4.541707E-02  8.576597E+01 -3.141304E+04
  DURCHSCHNITTLICHER DRUCK       1.157024E+02  2.345665E-02  2.911338E-01 -6.889823E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.837177E+01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.185185E-01
@@ -19850,7 +19850,7 @@
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
  LAST                                        -1.702317E-01 -3.017459E+01 -2.541292E+04
- DURCHSCHNITTLICHER DRUCK       7.370935E+01 -4.068945E-04 -9.368426E-02 -7.370935E+01
+ DURCHSCHNITTLICHER DRUCK       7.370935E+01 -4.068944E-04 -9.368426E-02 -7.370935E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.672901E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.672901E-01/ 0.000000E+00
@@ -19874,7 +19874,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   105 :   1 /     163
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      105 :        184.69  (   0: 3: 5)
+ CPU-ZEIT AM ENDE DES INKREMENTES      105 :        194.01  (   0: 3:14)
 
  E N D E    D E S    I N K R E M E N T E S               :           105
  -----------------------------------------------------------------------
@@ -20026,7 +20026,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   106 :   1 /     164
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      106 :        185.96  (   0: 3: 6)
+ CPU-ZEIT AM ENDE DES INKREMENTES      106 :        195.38  (   0: 3:15)
 
  E N D E    D E S    I N K R E M E N T E S               :           106
  -----------------------------------------------------------------------
@@ -20178,7 +20178,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   107 :   1 /     165
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      107 :        187.22  (   0: 3: 7)
+ CPU-ZEIT AM ENDE DES INKREMENTES      107 :        196.76  (   0: 3:17)
 
  E N D E    D E S    I N K R E M E N T E S               :           107
  -----------------------------------------------------------------------
@@ -20288,7 +20288,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         3.858397E+00  5.493968E+01  5.530824E+04
+ LAST                                         3.858396E+00  5.493968E+01  5.530824E+04
  DURCHSCHNITTLICHER DRUCK       1.411030E+02 -3.615076E-03  3.329902E-01  1.213457E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -20330,7 +20330,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   108 :   1 /     166
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      108 :        188.49  (   0: 3: 8)
+ CPU-ZEIT AM ENDE DES INKREMENTES      108 :        198.08  (   0: 3:18)
 
  E N D E    D E S    I N K R E M E N T E S               :           108
  -----------------------------------------------------------------------
@@ -20482,7 +20482,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   109 :   1 /     167
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      109 :        189.79  (   0: 3:10)
+ CPU-ZEIT AM ENDE DES INKREMENTES      109 :        199.39  (   0: 3:19)
 
  E N D E    D E S    I N K R E M E N T E S               :           109
  -----------------------------------------------------------------------
@@ -20557,7 +20557,7 @@
  MAXIMALER ABSOLUTWERT DER ITERATIVEN     VERSCHIEBUNGEN    3.954876E-03
  MAXIMALER ABSOLUTWERT DER REAKTIONSKRAEFTE                 2.102473E+03
  MAXIMALER ABSOLUTWERT DER RESTKRAEFTE                      1.727751E+02
- QUOTIENT                                                   8.217708E-02
+ QUOTIENT                                                   8.217709E-02
  DAS ABBRUCHKRITERIUM IST NICHT ERFUELLT.
 
  OPTIMALER WERT DER LINE-SEARCH METHODE                     1.000000E+00
@@ -20610,7 +20610,7 @@
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
  LAST                                         1.652402E-01 -2.410468E+01 -2.465210E+04
- DURCHSCHNITTLICHER DRUCK       7.376439E+01  4.493212E-04 -7.632631E-02 -7.376439E+01
+ DURCHSCHNITTLICHER DRUCK       7.376439E+01  4.493211E-04 -7.632631E-02 -7.376439E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.672901E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.672901E-01/ 0.000000E+00
@@ -20634,7 +20634,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   110 :   1 /     168
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      110 :        191.05  (   0: 3:11)
+ CPU-ZEIT AM ENDE DES INKREMENTES      110 :        200.75  (   0: 3:21)
 
  E N D E    D E S    I N K R E M E N T E S               :           110
  -----------------------------------------------------------------------
@@ -20752,7 +20752,7 @@
  STARRER KOERPER  Punch                    IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  LAST                                        -1.713540E+00 -2.967754E+02 -2.944982E+04
- DURCHSCHNITTLICHER DRUCK       1.170716E+02 -5.264515E-04 -8.987886E-01 -6.867187E+01
+ DURCHSCHNITTLICHER DRUCK       1.170716E+02 -5.264516E-04 -8.987886E-01 -6.867187E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -1.908288E+01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00 -1.185185E-01
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    1.908288E+01/ 1.185185E-01
@@ -20785,7 +20785,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   111 :   1 /     169
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      111 :        192.32  (   0: 3:12)
+ CPU-ZEIT AM ENDE DES INKREMENTES      111 :        202.04  (   0: 3:22)
 
  E N D E    D E S    I N K R E M E N T E S               :           111
  -----------------------------------------------------------------------
@@ -20911,7 +20911,7 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                         2.686013E+00 -2.037882E+01 -2.438779E+04
+ LAST                                         2.686013E+00 -2.037883E+01 -2.438779E+04
  DURCHSCHNITTLICHER DRUCK       7.304940E+01  7.848073E-03 -6.526970E-02 -7.304940E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.672901E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -20936,7 +20936,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   112 :   1 /     170
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      112 :        193.59  (   0: 3:14)
+ CPU-ZEIT AM ENDE DES INKREMENTES      112 :        203.35  (   0: 3:23)
 
  E N D E    D E S    I N K R E M E N T E S               :           112
  -----------------------------------------------------------------------
@@ -21089,7 +21089,7 @@
  DIE POST DATEN  FUER DAS INKREMENT    113 IN kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg/ink0113.bin GESICHERT.
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      113 :        195.03  (   0: 3:15)
+ CPU-ZEIT AM ENDE DES INKREMENTES      113 :        204.78  (   0: 3:25)
 
  E N D E    D E S    I N K R E M E N T E S               :           113
  -----------------------------------------------------------------------
@@ -21139,7 +21139,7 @@
  MAXIMALER ABSOLUTWERT DER ITERATIVEN     VERSCHIEBUNGEN    2.053351E-03
  MAXIMALER ABSOLUTWERT DER REAKTIONSKRAEFTE                 2.117864E+03
  MAXIMALER ABSOLUTWERT DER RESTKRAEFTE                      3.924348E+02
- QUOTIENT                                                   1.852974E-01
+ QUOTIENT                                                   1.852975E-01
  DAS ABBRUCHKRITERIUM IST NICHT ERFUELLT.
 
  OPTIMALER WERT DER LINE-SEARCH METHODE                     1.000000E+00
@@ -21183,7 +21183,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         2.482242E+00  3.857385E+01  5.378117E+04
- DURCHSCHNITTLICHER DRUCK       1.432522E+02  6.834502E-04  2.633347E-01  1.228692E+02
+ DURCHSCHNITTLICHER DRUCK       1.432522E+02  6.834497E-04  2.633347E-01  1.228692E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -21224,7 +21224,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   114 :   1 /     172
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      114 :        195.98  (   0: 3:16)
+ CPU-ZEIT AM ENDE DES INKREMENTES      114 :        205.82  (   0: 3:26)
 
  E N D E    D E S    I N K R E M E N T E S               :           114
  -----------------------------------------------------------------------
@@ -21356,7 +21356,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   115 :   1 /     173
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      115 :        196.94  (   0: 3:17)
+ CPU-ZEIT AM ENDE DES INKREMENTES      115 :        206.79  (   0: 3:27)
 
  E N D E    D E S    I N K R E M E N T E S               :           115
  -----------------------------------------------------------------------
@@ -21448,7 +21448,7 @@
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
  LAST                                         6.779310E+00  5.432401E+01  5.353263E+04
- DURCHSCHNITTLICHER DRUCK       1.451517E+02 -6.067995E-06  3.085672E-01  1.245520E+02
+ DURCHSCHNITTLICHER DRUCK       1.451517E+02 -6.067720E-06  3.085673E-01  1.245520E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -21489,7 +21489,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   116 :   1 /     174
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      116 :        197.88  (   0: 3:18)
+ CPU-ZEIT AM ENDE DES INKREMENTES      116 :        207.75  (   0: 3:28)
 
  E N D E    D E S    I N K R E M E N T E S               :           116
  -----------------------------------------------------------------------
@@ -21589,7 +21589,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         9.381369E-01  4.774574E+01  5.331133E+04
+ LAST                                         9.381371E-01  4.774574E+01  5.331133E+04
  DURCHSCHNITTLICHER DRUCK       1.442113E+02 -3.023503E-03  2.973120E-01  1.234998E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -21631,7 +21631,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   117 :   1 /     175
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      117 :        199.01  (   0: 3:19)
+ CPU-ZEIT AM ENDE DES INKREMENTES      117 :        208.97  (   0: 3:29)
 
  E N D E    D E S    I N K R E M E N T E S               :           117
  -----------------------------------------------------------------------
@@ -21724,8 +21724,8 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                         4.275766E-01  4.790338E+01  5.312598E+04
- DURCHSCHNITTLICHER DRUCK       1.439077E+02 -8.752608E-03  2.953831E-01  1.231702E+02
+ LAST                                         4.275765E-01  4.790338E+01  5.312598E+04
+ DURCHSCHNITTLICHER DRUCK       1.439077E+02 -8.752609E-03  2.953831E-01  1.231702E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -21766,7 +21766,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   118 :   1 /     176
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      118 :        200.15  (   0: 3:20)
+ CPU-ZEIT AM ENDE DES INKREMENTES      118 :        210.17  (   0: 3:30)
 
  E N D E    D E S    I N K R E M E N T E S               :           118
  -----------------------------------------------------------------------
@@ -21866,7 +21866,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -9.131871E-01  4.372388E+01  5.295246E+04
+ LAST                                        -9.131870E-01  4.372388E+01  5.295246E+04
  DURCHSCHNITTLICHER DRUCK       1.452909E+02 -1.505096E-02  2.898802E-01  1.242745E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -21908,7 +21908,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   119 :   1 /     177
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      119 :        201.27  (   0: 3:21)
+ CPU-ZEIT AM ENDE DES INKREMENTES      119 :        211.42  (   0: 3:31)
 
  E N D E    D E S    I N K R E M E N T E S               :           119
  -----------------------------------------------------------------------
@@ -22007,7 +22007,7 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -5.433493E-01  4.545507E+01  5.277240E+04
+ LAST                                        -5.433491E-01  4.545507E+01  5.277240E+04
  DURCHSCHNITTLICHER DRUCK       1.449799E+02 -9.432641E-03  2.956972E-01  1.239407E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -22049,7 +22049,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   120 :   1 /     178
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      120 :        202.39  (   0: 3:22)
+ CPU-ZEIT AM ENDE DES INKREMENTES      120 :        212.62  (   0: 3:33)
 
  E N D E    D E S    I N K R E M E N T E S               :           120
  -----------------------------------------------------------------------
@@ -22190,7 +22190,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   121 :   1 /     179
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      121 :        203.54  (   0: 3:24)
+ CPU-ZEIT AM ENDE DES INKREMENTES      121 :        213.77  (   0: 3:34)
 
  E N D E    D E S    I N K R E M E N T E S               :           121
  -----------------------------------------------------------------------
@@ -22306,7 +22306,7 @@
  STARRER KOERPER  Binder                   IST DRUCKGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
- LAST                                        -3.213747E-01 -1.824618E+01 -2.385651E+04
+ LAST                                        -3.213748E-01 -1.824618E+01 -2.385651E+04
  DURCHSCHNITTLICHER DRUCK       7.159647E+01 -9.660258E-04 -6.097725E-02 -7.159647E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.672901E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
@@ -22321,7 +22321,7 @@
  KNOTENLASTEN                                 0.000000E+00  0.000000E+00  0.000000E+00
  DRUCKLASTEN                                  0.000000E+00  0.000000E+00  0.000000E+00
  VOLUMENLASTEN                                0.000000E+00  0.000000E+00  0.000000E+00
- SUMME ALLER KRAEFTE                          1.279776E+00 -3.120295E+02  5.522014E+02
+ SUMME ALLER KRAEFTE                          1.279777E+00 -3.120295E+02  5.522014E+02
 
  VERSTRICHENE PROZESSZEIT NACH INKR.   122 :  2.057331E+01 ( 97.866549%) ( 97.968142%)
 
@@ -22331,7 +22331,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   122 :   1 /     180
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      122 :        204.66  (   0: 3:25)
+ CPU-ZEIT AM ENDE DES INKREMENTES      122 :        214.92  (   0: 3:35)
 
  E N D E    D E S    I N K R E M E N T E S               :           122
  -----------------------------------------------------------------------
@@ -22473,7 +22473,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   123 :   1 /     181
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      123 :        205.82  (   0: 3:26)
+ CPU-ZEIT AM ENDE DES INKREMENTES      123 :        216.07  (   0: 3:36)
 
  E N D E    D E S    I N K R E M E N T E S               :           123
  -----------------------------------------------------------------------
@@ -22614,7 +22614,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   124 :   1 /     182
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      124 :        207.05  (   0: 3:27)
+ CPU-ZEIT AM ENDE DES INKREMENTES      124 :        217.21  (   0: 3:37)
 
  E N D E    D E S    I N K R E M E N T E S               :           124
  -----------------------------------------------------------------------
@@ -22756,7 +22756,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   125 :   1 /     183
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      125 :        208.20  (   0: 3:28)
+ CPU-ZEIT AM ENDE DES INKREMENTES      125 :        218.39  (   0: 3:38)
 
  E N D E    D E S    I N K R E M E N T E S               :           125
  -----------------------------------------------------------------------
@@ -22898,7 +22898,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   126 :   1 /     184
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      126 :        209.30  (   0: 3:29)
+ CPU-ZEIT AM ENDE DES INKREMENTES      126 :        219.59  (   0: 3:40)
 
  E N D E    D E S    I N K R E M E N T E S               :           126
  -----------------------------------------------------------------------
@@ -23041,7 +23041,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   127 :   1 /     185
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      127 :        210.43  (   0: 3:30)
+ CPU-ZEIT AM ENDE DES INKREMENTES      127 :        220.74  (   0: 3:41)
 
  E N D E    D E S    I N K R E M E N T E S               :           127
  -----------------------------------------------------------------------
@@ -23132,8 +23132,8 @@
 
  STARRER KOERPER  Die                      IST WEGGESTEUERT :
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00  1.000000E+00
- LAST                                        -1.477564E+00  2.756511E+01  5.207564E+04
- DURCHSCHNITTLICHER DRUCK       1.459142E+02  1.606223E-03  2.624540E-01  1.245666E+02
+ LAST                                        -1.477563E+00  2.756511E+01  5.207564E+04
+ DURCHSCHNITTLICHER DRUCK       1.459142E+02  1.606224E-03  2.624540E-01  1.245666E+02
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00  0.000000E+00
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    0.000000E+00/ 0.000000E+00
@@ -23150,7 +23150,7 @@
  BEWEGUNGSRICHTUNG DES WERKZEUGES             0.000000E+00  0.000000E+00 -1.000000E+00
  DRUCK                                        4.000000E+00
  LAST                                        -1.244672E+00 -2.484815E+01 -2.410406E+04
- DURCHSCHNITTLICHER DRUCK       7.236534E+01 -4.046092E-03 -7.972360E-02 -7.236534E+01
+ DURCHSCHNITTLICHER DRUCK       7.236534E+01 -4.046093E-03 -7.972360E-02 -7.236534E+01
  GESAMTER VORSCHUB                            0.000000E+00  0.000000E+00 -2.672901E-01
  INKREMENTELLER VORSCHUB                      0.000000E+00  0.000000E+00  0.000000E+00
  BETRAG GESAMTER / INKREMENTELLER VORSCHUB    2.672901E-01/ 0.000000E+00
@@ -23174,7 +23174,7 @@
  ANZAHL DER KONTAKT-ITERATIONEN FUER DAS INKREMENT   128 :   1 /     186
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      128 :        211.44  (   0: 3:31)
+ CPU-ZEIT AM ENDE DES INKREMENTES      128 :        221.75  (   0: 3:42)
 
  E N D E    D E S    I N K R E M E N T E S               :           128
  -----------------------------------------------------------------------
@@ -23299,7 +23299,7 @@
  DIE POST DATEN  FUER DAS INKREMENT    129 IN kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg/ink0129.bin GESICHERT.
 
 
- CPU-ZEIT AM ENDE DES INKREMENTES      129 :        212.38  (   0: 3:32)
+ CPU-ZEIT AM ENDE DES INKREMENTES      129 :        222.78  (   0: 3:43)
 
  E N D E    D E S    I N K R E M E N T E S               :           129
  -----------------------------------------------------------------------
@@ -23307,7 +23307,7 @@
 
  DER INKREMENTBLOCK  2 WIRD BEENDET, DA DIE VORGEGEBENE ZEIT ERREICHT IST.
 
- GESAMTE LAUFZEIT (IN HH:MM:SS)                   00:03:35
+ GESAMTE LAUFZEIT (IN HH:MM:SS)                   00:03:46
 
 
  ZULETZT GELESENE ZEILE        144 IN kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.dat

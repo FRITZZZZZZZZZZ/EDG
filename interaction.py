@@ -355,7 +355,6 @@ def retrieve_control_data(file_control, data_name, export_calls=True):
         return editing_commands, keys
     else:
         return editing_commands
-    
 
 
 ######### machine / human interaction ##########

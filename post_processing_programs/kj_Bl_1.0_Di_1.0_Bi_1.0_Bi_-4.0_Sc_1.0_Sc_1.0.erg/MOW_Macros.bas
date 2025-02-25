@@ -1031,7 +1031,7 @@ Selection.Find.ClearFormatting
 Selection.Find.Replacement.ClearFormatting
 With Selection.Find
     .Text = "$CpuTime"
-    .Replacement.Text = "  00:03:32"
+    .Replacement.Text = "  00:03:43"
     .Forward = True
     .Wrap = wdFindContinue
     .Format = False

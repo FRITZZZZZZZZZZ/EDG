@@ -184,21 +184,38 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
 
     return done
   
-def post_processing(job, post_processing_tuple, clean_up_tuple):
+def post_processing(job, post_tuple, clean_up_tuple):
 
     jobname = job['Jobname']
-    post_commands, post_command_names = post_processing_tuple   
+    post_commands, post_command_names = post_tuple   
+    item_category, suffix_destination_data = clean_up_tuple
+    print(item_category, file_suffix, destination)
+
 
     current_working_directory = os.getcwd()
     os.chdir(f"{current_working_directory}/post_processing_programs/")
+    new_working_directory = os.getcwd()
+
+    current_files_n = len(os.listdir(new_working_directory))
+    new_files_n = current_files_n
 
     for post_command_name in post_command_names:
         command = post_commands[post_command_name]
-        os.system(f"python {command}")
+        #os.system(f"python {command} {jobname}")
+        while not new_files_n > current_files_n:
+            new_files_n = len(os.listdir(new_working_directory))
+            time.sleep(1)
+            if new_files_n > current_files_n:
+                break
+
+    
+        
 
 
 
-def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, time_limit=900, loop_limit=10, interpreter_tuple=None):
+
+
+def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple, time_limit=900, loop_limit=10, interpreter_tuple=None, joblist_archive_path="joblist_archive"):
 
     error_report_list = []
 
@@ -207,13 +224,13 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
     for job_index in range(len(joblist)):
         job = joblist[job_index]
         job['Status'] = "in progress"
-        create_jobs.update_joblist_files(base_name, joblist, full_header)
-        try:
-            pre_processing(job, pre_tuple, interpreter_tuple)
-            solving_simulation(job, solve_tuple, time_limit, loop_limit)
-            post_processing(job, post_tuple)
-        except:
-            error_report_list.append(job['Jobname'])
+        create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path)
+#    try:
+        #pre_processing(job, pre_tuple, interpreter_tuple)
+        #solving_simulation(job, solve_tuple, time_limit, loop_limit)
+        post_processing(job, post_tuple, clean_up_tuple)
+ #   except:
+        error_report_list.append(job['Jobname'])
 
     if not len(error_report_list) == 0:
         with open(f"{base_name}_error_report.txt", 'a') as error_report:
@@ -228,9 +245,9 @@ control_file = "control_file.tsv"
 pre_tuple = interaction.retrieve_control_data(control_file, "PRE PROCESSING")
 solve_tuple = interaction.retrieve_control_data(control_file, "SIMULATION SOLVING")
 post_tuple = interaction.retrieve_control_data(control_file, "POST PROCESSING")
-clean_up_tuple = interaction.retrieve_control_data(control_file, "")
+clean_up_tuple = interaction.retrieve_control_data(control_file, "CLEAN UP")
 
 design_parameter_names = pre_tuple[1]
 joblist_tuple = create_jobs.create_jobs("kj", [[1.0], [1.0], [1.0], [-4.0], [1.0], [1.0]], design_parameter_names)
 
-run_simulation_series("hallo", joblist_tuple, pre_tuple, solve_tuple, post_tuple)
+run_simulation_series("hallo", joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple)

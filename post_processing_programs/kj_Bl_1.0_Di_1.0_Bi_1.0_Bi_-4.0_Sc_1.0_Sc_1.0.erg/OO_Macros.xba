@@ -2826,7 +2826,7 @@ args69(9).Value = 65536
 args69(10).Name = "SearchItem.SearchString"
 args69(10).Value = "$CpuTime"
 args69(11).Name = "SearchItem.ReplaceString"
-args69(11).Value = "  00:03:32"
+args69(11).Value = "  00:03:43"
 args69(12).Name = "SearchItem.Locale"
 args69(12).Value = 255
 args69(13).Name = "SearchItem.ChangedChars"
@@ -4361,7 +4361,7 @@ Next I
 
 ReplaceDescriptor = Page.createReplaceDescriptor()
 ReplaceDescriptor.SearchString = "$CpuTime"
-ReplaceDescriptor.ReplaceString = "  00:03:32"
+ReplaceDescriptor.ReplaceString = "  00:03:43"
 
 For I = 0 to Doc.DrawPages.Count - 1
    Page = Doc.DrawPages(I)
@@ -5267,7 +5267,7 @@ Next I
 
 ReplaceDescriptor = Page.createReplaceDescriptor()
 ReplaceDescriptor.SearchString = "$CpuTime"
-ReplaceDescriptor.ReplaceString = "  00:03:32"
+ReplaceDescriptor.ReplaceString = "  00:03:43"
 
 For I = 0 to Doc.Sheets.Count - 1
    Page = Doc.Sheets(I)
