@@ -1,0 +1,56 @@
+START FILE				
+				
+NAME				
+REQUIERED FILES				
+HEADER				
+EXTENTION	NAME			
+START				
+.t51	geometrie			
+.dat	rectangular_cup			
+END DATA				
+				
+NAME				
+INTERPRETER SELECTION				
+HEADER				
+LANGUAGE SUFFIX	INTERPRETER			
+START				
+py	python			
+java	javac			
+END DATA				
+				
+				
+				
+				
+NAME				
+PRE PROCESSING				
+HEADER				
+DESIGN_PARAMETER_NAME	EDITING_METHOD	SETTINGS DISTRIBUTION INDIPENDENT	SETTINGS DISTRIBUTION DEPENDENT GERMAN	REQUIERED FILE
+START				
+Blank Thickness	edit_csv.py	'[index x y z]' z 0.8	KNOTENGEOMETRIE LISTENGESTEUERT	geometrie.t51
+Die Radius	make_tools.py			
+Binder Friction	edit_dat.py	[Fr] 0	Binder	rectangular_cup.dat
+Binder Pressure	edit_dat.py	[p] 3	Binder	rectangular_cup.dat
+Scale X	scale.py	x		
+Scale Y	scale.py	y
+END DATA
+
+NAME
+SIMULATION SOLVING
+HEADER
+ITEM NAME	CONTENT			
+START
+Start Simulation Method	start_simulation.py			
+Termination Keyword	 Ende  der Berechnung am	
+Stop Simulation Keyword	ofd SIGNAL STOP
+END DATA
+
+NAME				
+POST PROCESSING				
+HEADER				
+ACTION NAME	METHOD	OPTIONS		
+START				
+Start Simulation	start_simulation.py			
+Export Screenshot	export_screenshot.py	/results_png		
+END DATA			
+
+END FILE				

@@ -1,0 +1,130 @@
+$
+$
+$ ================ INDEED-MATERIAL-BIBLIOTHEK INPRO-BERLIN ================
+$
+$
+$     M-A-T-E-R-I-A-L  :  ZSTE340
+$
+$     ERHALTEN VON     :  
+$               AM     :  
+$     EXPERIMENT       :  ZUG- UND BIAXVERSUCHE DER DLR IN KOELN
+$     ABGLEICH         :  TYP 1 -> INPRO BERLIN
+$                         TYP 2 -> INPRO BERLIN
+$                         TYP 3 -> NICHT ABGEGLICHEN
+$                         TYP 4 -> NICHT ABGEGLICHEN
+$                         TYP 5 -> INPRO BERLIN
+$     ANMERKUNGEN      :  ORIGINAL-ABGLEICH AUS UMATER.F
+$ 
+$     LETZTE AENDERUNG :  28.NOV.1995 & 31.JUL.1996 & 11.FEB.1997
+$
+$---------------------------------------------------------------------------
+
+WERKSTOFFKLASSE -I-
+
+BEGINN SIMULATION
+
+LINEAR ELASTISCHE EIGENSCHAFTEN / ISOTROP
+$ EMODUL      POISSON
+  210000.0,   0.3,   
+
+HILL-MODELL MIT KONSTANTER KINEMATISCHER VERFESTIGUNG [1]
+$ SA1         SA2         SA3         ZSNULL      WALZWK
+  1.0,        22156.0,    -0.335,     113057.6,   0.0,
+$ ALPHA1      ALPHA2      SB11        SB22        SB12        SBS12       
+  26.817,     3.677,      1.0,        0.881,      -0.332,     1.856,       
+
+HILL-MODELL MIT VARIABLER KINEMATISCHER VERFESTIGUNG [2]
+$ ZA1         ZA2         ZA3         ZZNULL     WALZWK
+  1.0,        4.2628E+5,  -0.114,     121841.3,  0.0,
+$ Z110        Z220        XMUE        Y1          
+  23.08,      17.93,      372.6,      239.0,      
+$ ZB11        ZB22        ZB12        ZBS12       
+  1.202,      1.057,      -0.388,     2.078,
+
+MITTLERE FLIESSKURVE
+$ ANZAHL<100
+  26,
+$ LOGARITMISCHE (HENKYSCHE) VERZERRUNG , CAUCHY SPANNUNG
+           .000,                         366.000,
+           .010,                         369.333,
+           .020,                         379.545,
+           .030,                         402.435,
+           .040,                         421.820,
+           .050,                         438.375,
+           .060,                         452.413,
+           .070,                         464.642,
+           .080,                         475.012,
+           .090,                         485.903,
+           .100,                         495.270,
+           .110,                         502.253,
+           .120,                         510.108,
+           .130,                         517.186,
+           .140,                         523.885,
+           .150,                         529.764,
+           .160,                         534.457,
+           .170,                         539.845,
+           .180,                         544.459,
+           .190,                         549.960,
+           .200,                         553.687,
+           .210,                         557.850,
+           .220,                         561.553,
+           .230,                         564.782,
+           .240,                         566.876,
+          5.000,                        1563.000,
+
+HILL48-MODELL MIT ISOTROPER VERFESTIGUNG [7]
+R-WERTE
+$  WALZWK      R00         R45         R90
+     0.0000,    0.60,    1.66,    0.94
+
+MITTLERE FLIESSKURVE
+$ ANZAHL<100
+  26,
+$ LOGARITMISCHE (HENKYSCHE) VERZERRUNG , CAUCHY SPANNUNG
+           .000,                         366.000,
+           .010,                         369.333,
+           .020,                         379.545,
+           .030,                         402.435,
+           .040,                         421.820,
+           .050,                         438.375,
+           .060,                         452.413,
+           .070,                         464.642,
+           .080,                         475.012,
+           .090,                         485.903,
+           .100,                         495.270,
+           .110,                         502.253,
+           .120,                         510.108,
+           .130,                         517.186,
+           .140,                         523.885,
+           .150,                         529.764,
+           .160,                         534.457,
+           .170,                         539.845,
+           .180,                         544.459,
+           .190,                         549.960,
+           .200,                         553.687,
+           .210,                         557.850,
+           .220,                         561.553,
+           .230,                         564.782,
+           .240,                         566.876,
+          5.000,                        1563.000,
+ENDE SIMULATION
+
+
+$-------------------------------------------------------------------
+
+
+BEGINN EXPERIMENT
+
+MECHANISCHE KENNGROESSEN DER MITTLEREN FLIESSKURVE
+$ RP_02    AG[%]    ZUG-FEST    R_MITTEL    DELTA_R    A_80   EXPO_N  FLIES1
+   365.,    19.0,       462.,      1.215,     -0.89,       ,        ,       ,
+
+MECHANISCHE KENNGROESSEN DER FLIESSKURVE IM WINKEL ALPHA ZUR WR
+$ANZAHL DER EINZULESENDEN WINKEL ALPHA
+3
+$ ALPHA   E-MODUL   RP_02    AG[%]   ZUG-FEST   R-WERT   A_80   EXPO_N  FLIES1
+    0.0,         ,        ,       ,         ,     0.60,      ,        ,       ,
+   45.0,         ,        ,       ,         ,     1.66,      ,        ,       ,
+   90.0,         ,        ,       ,         ,     0.94,      ,        ,       ,
+
+ENDE EXPERIMENT
