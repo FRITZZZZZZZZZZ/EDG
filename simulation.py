@@ -45,6 +45,10 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None):
 
     # move all generated files to the next step, next directory
     os.system(f"python move_data.py '[dat t51 t52]' {current_working_directory}/simulation_solving_programs {jobname}")
+    
+    clean_up_types = ["dat", "t51", "t52"]
+    for file_type in clean_up_types:
+        os.remove(f"{jobname}.{file_type}")
     os.chdir(f"{current_working_directory}/")
     return True
 
@@ -180,13 +184,19 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
 
     return done
   
-def post_processing(job, post_processing_tuple):
+def post_processing(job, post_processing_tuple, clean_up_tuple):
+
     jobname = job['Jobname']
     post_commands, post_command_names = post_processing_tuple   
+
+    current_working_directory = os.getcwd()
+    os.chdir(f"{current_working_directory}/post_processing_programs/")
 
     for post_command_name in post_command_names:
         command = post_commands[post_command_name]
         os.system(f"python {command}")
+
+
 
 def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, time_limit=900, loop_limit=10, interpreter_tuple=None):
 
@@ -218,6 +228,7 @@ control_file = "control_file.tsv"
 pre_tuple = interaction.retrieve_control_data(control_file, "PRE PROCESSING")
 solve_tuple = interaction.retrieve_control_data(control_file, "SIMULATION SOLVING")
 post_tuple = interaction.retrieve_control_data(control_file, "POST PROCESSING")
+clean_up_tuple = interaction.retrieve_control_data(control_file, "")
 
 design_parameter_names = pre_tuple[1]
 joblist_tuple = create_jobs.create_jobs("kj", [[1.0], [1.0], [1.0], [-4.0], [1.0], [1.0]], design_parameter_names)
