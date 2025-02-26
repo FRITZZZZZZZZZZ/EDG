@@ -4,8 +4,13 @@ import time
 import interaction
 
 
-def pre_processing(job, editing_tuple, interpreter_tuple=None):
+def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_time_out=60):
+    """
+    This function takes care of the pre processing of the simulation. It alters input files like dat t51 and t52
+    and then moves them to the next step.
+    """
 
+    # unpack control data tuples
     control_commands, design_parameter_names = editing_tuple
     if not interpreter_tuple == None:
         interpreters, interpreter_suffixes = interpreter_tuple
@@ -20,6 +25,7 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None):
     # prepare simulation by editing job data for every design parameter
     os.chdir(f"{current_working_directory}/pre_processing_programs/")
     for parameter in design_parameter_names:
+
         # catch the comand and job
         value = job[parameter]
         command = control_commands[parameter]
@@ -37,20 +43,19 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None):
                         interpreter = ''
             else:
                 interpreter = "python"
-                os.system(f"{interpreter} {command} {value} {jobname}")
+            os.system(f"{interpreter} {command} {value} {jobname}")
         except:
-            # if the program call did not work, something was not edited, dont continue the simulation and waste time
-            success = False
-            os.chdir(f"{current_working_directory}/")
 
-    # move all generated files to the next step, next directory
-    os.system(f"python move_data.py '[dat t51 t52]' {current_working_directory}/simulation_solving_programs {jobname}")
-    
-    clean_up_types = ["dat", "t51", "t52"]
-    for file_type in clean_up_types:
-        os.remove(f"{jobname}.{file_type}")
+            # if the program call did not work, something was not edited, dont continue the simulation and waste time
+            os.chdir(f"{current_working_directory}/")
+            success = False
+            return success
+
+    # if the pre processing was successful, the files will be transfered to the next step
+    os.system(f"python move_data.py 'dat t51 t52' {current_working_directory}/simulation_solving_programs {jobname} else_delete")
     os.chdir(f"{current_working_directory}/")
-    return True
+    success = True
+    return success
 
 def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
 
@@ -146,18 +151,18 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
             pass
 
     # keep track of simulation 
-    done = None
+    success = None
     loops_passed = 0
     time_passed = 0
     last_increment = None
 
     # check for termination constraints
-    while done == None:
+    while success == None:
         time.sleep(1)
 
-        # check wheather the simulation is done
+        # check wheather the simulation is success
         if check_done(jobname, done_keyword):
-            done = True
+            success = True
         
         # check wheather the simulation exceeded its loop limit
         check_loops_result = check_loops(jobname, loop_limit, loops_passed, current_length, last_length, last_increment)
@@ -165,16 +170,16 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
             loops_passed, current_length, last_length, last_increment = check_loops_result
 
         if type(check_loops_result) == bool:
-            done = False    
+            success = False    
 
         # check wheather the time is exceeded
         if not time_limit == None:
             if time_passed >= time_limit:
-                done = False
+                success = False
             else:
                 time_passed += 1
 
-    if done == False:
+    if success == False:
         os.system(f"{stop_command}")
         os.system(f"python move_data.py {cleanup_list} {current_working_directory}/post_processing_programs {jobname}")
         os.chdir(f"{current_working_directory}/")
@@ -182,72 +187,136 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
     os.system(f"python move_data.py {cleanup_list} {current_working_directory}/post_processing_programs {jobname}")
     os.chdir(f"{current_working_directory}/")
 
-    return done
+    return success
   
-def post_processing(job, post_tuple, clean_up_tuple):
+def post_processing(job, base_name, success, post_tuple, clean_up_tuple, post_processing_time_out=60):
 
+    success = False
     jobname = job['Jobname']
     post_commands, post_command_names = post_tuple   
-    item_category, suffix_destination_data = clean_up_tuple
-    print(item_category, file_suffix, destination)
-
+    data_dict, category_names = clean_up_tuple
 
     current_working_directory = os.getcwd()
     os.chdir(f"{current_working_directory}/post_processing_programs/")
     new_working_directory = os.getcwd()
+    try:
+        if success:   
+            current_files_n = len(os.listdir(new_working_directory))
+            new_files_n = current_files_n
+            time_passed = 0 
+            for post_command_name in post_command_names:
+                command = post_commands[post_command_name]
+                os.system(f"python {command} {jobname}")
+                while not new_files_n > current_files_n:
+                    new_files_n = len(os.listdir(new_working_directory))
+                    time.sleep(1)
+                    time_passed += 1
+                    if time_passed >= post_processing_time_out:
+                        break
+                    if new_files_n > current_files_n:
+                        break
 
-    current_files_n = len(os.listdir(new_working_directory))
-    new_files_n = current_files_n
+            category_names_succesful = category_names[:-1]
+            
+            for category in category_names_succesful:
+                file_types, result_path = data_dict[category]
+                if not os.path.isdir(f"{current_working_directory}/{result_path}/{base_name}/"):
+                    os.mkdir(f"{current_working_directory}/{result_path}/{base_name}/")
+                os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name} {jobname}")
 
-    for post_command_name in post_command_names:
-        command = post_commands[post_command_name]
-        #os.system(f"python {command} {jobname}")
-        while not new_files_n > current_files_n:
-            new_files_n = len(os.listdir(new_working_directory))
-            time.sleep(1)
-            if new_files_n > current_files_n:
-                break
-
-    
+            os.chdir(f"{current_working_directory}/")
+            success = True
         
+        if not success:
+            category_names_unsuccesful = category_names[-1]
+            
+            for category in category_names_unsuccesful:
+                file_types, result_path = data_dict[category]
+                if not os.path.isdir(f"{current_working_directory}/{result_path}/{base_name}/"):
+                    os.mkdir(f"{current_working_directory}/{result_path}/{base_name}/")
+                os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name} {jobname}")
 
+            success = True
+    except:
+        success = False
 
-
+    os.chdir(f"{current_working_directory}")
+    return success
 
 
 def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple, time_limit=900, loop_limit=10, interpreter_tuple=None, joblist_archive_path="joblist_archive"):
 
+    # defining important control variables
     error_report_list = []
-
     joblist, full_header = joblist_tuple
+    current_working_directory = os.getcwd()
+
+    # make sure that the joblist file exists by forcing its generation
+    create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path, False, True)
+
+    # this variable is set to false in order for the series to wait for each simulation to finish
+    ready = True
 
     for job_index in range(len(joblist)):
-        job = joblist[job_index]
-        job['Status'] = "in progress"
-        create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path)
-#    try:
-        #pre_processing(job, pre_tuple, interpreter_tuple)
-        #solving_simulation(job, solve_tuple, time_limit, loop_limit)
-        post_processing(job, post_tuple, clean_up_tuple)
- #   except:
-        error_report_list.append(job['Jobname'])
+        if ready:
+            
+            ready = False
 
+            # pick a job from the joblist and mark its joblist entry as in progress
+            job = joblist[job_index]
+            job['Status'] = "in progress"
+            create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path)
+
+            # try solving the job
+            try:
+                # start the preprocessing and prepare the input data
+                success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple)
+                
+                # start the simulation once the preprocessing was succcsessful, append to error list else
+                if success_pre_processing:
+                    success_solving = solving_simulation(job, solve_tuple)
+                # if the preprocessing did not work, abort the job and go to the next one
+                else:
+                    error_report_list.append(job['Jobname'])
+                    ready = True
+                    continue
+
+                # if the solving has been successful, try performing the post processing
+                succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, clean_up_tuple)
+                if succes_post_processing:
+                    ready = True
+                    continue
+                else:
+                    error_report_list.append(job['Jobname'])
+                    ready = True
+                    continue
+            
+            # if anythin else goes wrong, append the job to the error list and continue the series
+            except:
+                error_report_list.append(job['Jobname'])
+                ready = True
+    
     if not len(error_report_list) == 0:
-        with open(f"{base_name}_error_report.txt", 'a') as error_report:
-            for error in error_report_list:
-                error_report.write(error + "\n")
-
-    return 
+        if os.path.isfile(f"{current_working_directory}/error_reports/{base_name}_error_report.txt"):
+            with open(f"{current_working_directory}/error_reports/{base_name}_error_report.txt", 'a') as error_report:
+                for error in error_report_list:
+                    error_report.write(error + "\n")
+        else:
+            with open(f"{current_working_directory}/error_reports/{base_name}_error_report.txt", 'w') as error_report:
+                for error in error_report_list:
+                    error_report.write(error + " failed" + "\n")
 
 
 control_file = "control_file.tsv"
 
-pre_tuple = interaction.retrieve_control_data(control_file, "PRE PROCESSING")
-solve_tuple = interaction.retrieve_control_data(control_file, "SIMULATION SOLVING")
-post_tuple = interaction.retrieve_control_data(control_file, "POST PROCESSING")
-clean_up_tuple = interaction.retrieve_control_data(control_file, "CLEAN UP")
+pre_tuple = interaction.control_data_string_dict(control_file, "PRE PROCESSING")
+solve_tuple = interaction.control_data_string_dict(control_file, "SIMULATION SOLVING")
+post_tuple = interaction.control_data_string_dict(control_file, "POST PROCESSING")
+clean_up_tuple = interaction.control_data_tuple_dict(control_file, "CLEAN UP")
 
 design_parameter_names = pre_tuple[1]
-joblist_tuple = create_jobs.create_jobs("kj", [[1.0], [1.0], [1.0], [-4.0], [1.0], [1.0]], design_parameter_names)
+joblist_tuple = create_jobs.create_jobs("Rectangular_cup", [[1.20, 1], [1.0], [1.0], [-4.0], [0.06], [1]], design_parameter_names)
 
-run_simulation_series("hallo", joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple)
+
+run_simulation_series("Rectangualr_cup", joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple)
+

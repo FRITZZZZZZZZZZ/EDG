@@ -7,9 +7,6 @@ def export_csv(argument_vector):
     except:
         pass
 
-    print("HIER ICH MACHE ETWAS")
-
-
     current_working_directory = os.getcwd()
 
     with open("SessionFileShowAndExportPost.ofs", 'w') as session_file_export:

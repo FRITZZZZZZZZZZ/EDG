@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 def edit_dat(argument_vector):
     # unpack argument vector
@@ -19,7 +20,7 @@ def edit_dat(argument_vector):
     else:
         with open(file_path_original, 'r') as file_original:
             content_original = [line for line in file_original]
-    
+
     content_edited = ""
     target_line_index = None
     with open(f"{jobname}.dat", 'w') as file_edited:

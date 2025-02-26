@@ -16,8 +16,9 @@ def edit_csv(argument_vector):
         pass
     
     # turn the header into an actual list
-    header = header_raw[1:-1].split(' ')
+    header = header_raw.split(' ')
 
+    print
 
 
     # load file

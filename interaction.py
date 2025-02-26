@@ -286,18 +286,18 @@ def get_file_design_parameter_domain(file_instruction):
             
     return design_parameter_list
 
-def retrieve_control_data(file_control, data_name, export_calls=True):
+def control_data_string_dict(file_control, data_name, export_calls=True):
     """
     This function can read the control file and will return certain sections of it as a dictionary object.
     The file will first look for the data name,
     Once it found it it will catch the lines until it reads 'END DATA'
-    Once it has the lines, it will delimit them with the tabulator '\t' 
+    Once it has the lines, it will delimit them with the tabulator '\t'
     The first entry of this list is used as the key of a dictionary entry
     The rest of this list is used as its value
     This is optimized for use in the simulate function
     """
 
-    # 
+    #
     keys = []
     values = []
     section_found = False
@@ -329,7 +329,7 @@ def retrieve_control_data(file_control, data_name, export_calls=True):
                 design_parameter_name = line_content[0]
                 design_parameter_arguments = line_content[1:]
                 control_string = ""
-                
+               
                 # filter out empty cells from the tsv file
                 for argument in design_parameter_arguments:
                     if argument == '' or argument == ' ':
@@ -337,7 +337,7 @@ def retrieve_control_data(file_control, data_name, export_calls=True):
 
                     # set the arguments apart by blank spaces, this is optimized for use in simulation
                     control_string = control_string + str(argument) + " "
-                
+               
                 # pop off the new_line character
                 control_string = control_string[:-1]
                 keys.append(design_parameter_name)
@@ -355,6 +355,54 @@ def retrieve_control_data(file_control, data_name, export_calls=True):
         return editing_commands, keys
     else:
         return editing_commands
+   
+def control_data_tuple_dict(control_file, data_name, export_calls=True):
+    keys = []
+    values = []
+    section_found = False
+    start_found = False
+
+    # open the control file
+    with open(control_file, 'r') as control_file:
+        control_content = [line for line in control_file.readlines()]
+
+    # look through all the lines  of the file
+    for line in control_content:
+        line_content = line[:-1].split('\t')
+
+        # first check for termination constraint such that END DATA will not be part of the output
+        if start_found and line_content[0] == "END DATA":
+            break
+
+        # if the first entry is the data_name, set section found to true and start data collection
+        if line_content[0] == data_name:
+            section_found = True
+
+        # if the section has been found, look for start, then collect data
+        if section_found:
+
+            # collect data in the way described earlier
+            if start_found:
+                # data name as key and data content as value
+                data_name = line_content[0]
+                line_content_tuple = tuple(line_content[1:])
+                keys.append(data_name)
+                values.append(line_content_tuple)
+
+            # declare the start to be found before collection data, such that START is not part of the output
+            if line_content[0] == "START":
+                start_found = True
+
+    # make a dictionary from the content
+    editing_commands = dict(zip(keys, values))
+
+    # choose wheather to export the keys seperatly from the dictionary
+    if export_calls:
+        return editing_commands, keys
+    else:
+        return editing_commands
+
+
 
 
 ######### machine / human interaction ##########

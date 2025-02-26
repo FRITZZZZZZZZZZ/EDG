@@ -1,6 +1,6 @@
 
             mode(Post)
-            file.open.apply("/home/engelmann/neuENSIMA/post_processing_programs/kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=Recommended, curves=OnDemand)
+            file.open.apply("/home/engelmann/neuENSIMA/post_processing_programs/kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-2_Sc_0.06_Sc_1.0.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=Recommended, curves=OnDemand)
             hide(items="process(1):Binder,Die,Punch")
             view.multiView.set(views="4 Views")
             view.multiView.setActive(views=nextView)
@@ -13,6 +13,6 @@
             setProcessActive(process=1, view="3D View 1", active=false)
             showMin()
             showMax()
-            file.export.apply("/home/engelmann/neuENSIMA/post_processing_programs/kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-4.0_Sc_1.0_Sc_1.0.csv", format="CSV/Results", append=On, objectType=Labels, marker="*", exportCoordinates=Off, title="Front Door Results")
+            file.export.apply("/home/engelmann/neuENSIMA/post_processing_programs/kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-2_Sc_0.06_Sc_1.0.csv", format="CSV/Results", append=On, objectType=Labels, marker="*", exportCoordinates=Off, title="Front Door Results")
             quit()
             

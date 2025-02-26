@@ -1,0 +1,13 @@
+$Program,OpenForm v2.23dev103525
+*Title,Front Door Results
+*Description,Labels
+*Process,1: kj_Bl_1.0_Di_1.0_Bi_1.0_Bi_-2_Sc_0.06_Sc_1.0
+
+
+
+*LabelType,MinMax,Name,IDs,Value
+"Thickness Change %-Min",00006943,  -90.53
+"Thickness Change %-Max",00008915,   12.90
+
+*Formability,Inadequate Stretch,Wrinkling,Wrinkling Tendency,Safe,Risk of Cracks,Severe Thinning,Cracks
+    0.53,   41.30,    3.34,   24.45,    0.93,    1.18,   28.28

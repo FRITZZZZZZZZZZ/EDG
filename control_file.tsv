@@ -23,10 +23,10 @@ PRE PROCESSING
 HEADER				
 DESIGN_PARAMETER_NAME	EDITING_METHOD	SETTINGS DISTRIBUTION INDIPENDENT	SETTINGS DISTRIBUTION DEPENDENT GERMAN	REQUIERED FILE
 START				
-Blank Thickness	edit_csv.py	'[index x y z]' z 0.8	KNOTENGEOMETRIE LISTENGESTEUERT	geometrie.t51
-Die Radius	make_tools.py			
+Blank Thickness	edit_csv.py	'index x y z' z 0.8	KNOTENGEOMETRIE LISTENGESTEUERT	geometrie.t51
 Binder Friction	edit_dat.py	[Fr] 0	Binder	rectangular_cup.dat
 Binder Pressure	edit_dat.py	[p] 3	Binder	rectangular_cup.dat
+Die Radius	make_tools.py
 Scale X	scale.py	x		
 Scale Y	scale.py	y
 END DATA
@@ -39,7 +39,7 @@ START
 Start Simulation Method	start_simulation.py			
 Termination Keyword	DER GESAMTE ANGEFORDERTE SPEICHER BETRAEGT	
 Stop Simulation Keyword	ofd SIGNAL STOP
-Clean Up List	'[dat t51 t52 inf log dbg out res tim xyp erg t30 t29 t28 nod ele]'
+Clean Up List	'dat t51 t52 inf log dbg out res tim xyp erg t30 t29 t28 nod ele'
 END DATA
 
 NAME				
@@ -55,11 +55,11 @@ NAME
 CLEAN UP
 HEADER
 ITEM CATEGORY	FILE SUFFIX	DESTINATION
-Error Results	'inf log out'	results/error_results
-Result Raw Folders	erg	results/results_raw_folders
-Result Png	png	results/results_png
-Result CSV	csv	results/results_csv
-Trash	'dat t51 t52 inf log dbg res tim xyp erg t30 t29 t28 nod ele'	
+START
+Result Raw Folders	erg	raw_results/erg_folders
+Result Png	png	raw_results/results_png
+Result CSV	csv	raw_results/results_csv
+Error Files	'inf log out'	raw_results/error_results
 END DATA
 
-END FILE				
+END FILE			
