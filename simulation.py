@@ -20,6 +20,14 @@ def pick_interpreter(interpreter_tuple, command=None):
     else:
         interpreter = "python"
 
+def get_allowed_files_command():
+    allowed_files = os.listdir()
+    allowed_files_command = ""
+    for file in allowed_files:
+        allowed_files_command += file + " "
+    allowed_files_command = "'" + allowed_files_command[:-1] + "'"
+    return allowed_files_command
+
 def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_time_out=60):
     """
     This function takes care of the pre processing of the simulation. It alters input files like dat t51 and t52
@@ -39,6 +47,10 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_ti
 
     # prepare simulation by editing job data for every design parameter
     os.chdir(f"{current_working_directory}/pre_processing_programs/")
+
+    # keep track of which files should be in this directory, so the cleanup function doesnt make too many casulties
+    allowed_files = get_allowed_files_command()
+
     for parameter in design_parameter_names:
 
         # catch the comand and job
@@ -50,12 +62,17 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_ti
             os.system(f"{interpreter} {command} {value} {jobname}")
         except:
             # if the program call did not work, something was not edited, dont continue the simulation and waste time
+            os.system(f"python clean_directory.py {allowed_files}")
             os.chdir(f"{current_working_directory}/")
             success = False
             return success
 
     # if the pre processing was successful, the files will be transfered to the next step
     os.system(f"python move_data.py 'dat t51 t52' {current_working_directory}/simulation_solving_programs {jobname} else_delete")
+
+    # clean up the directory, leave only allowed files here
+    os.system(f"python clean_directory.py {allowed_files}")
+
     os.chdir(f"{current_working_directory}/")
     success = True
     return success
@@ -140,8 +157,8 @@ def solving_simulation(job, solve_tuple, interpreter_tuple=None, time_limit=900,
     current_working_directory = os.getcwd()
     os.chdir(f"{current_working_directory}/simulation_solving_programs/")
 
-    # call a cleanup function to avoid data littering in this directory
-
+    # keep track of which files should be in this directory, so the cleanup function doesnt make too many casulties
+    allowed_files = get_allowed_files_command()
 
     # start the simulation
     interpreter = pick_interpreter(interpreter_tuple, start_command)
@@ -192,9 +209,13 @@ def solving_simulation(job, solve_tuple, interpreter_tuple=None, time_limit=900,
     if success == False:
         os.system(f"{stop_command}")
         os.system(f"python move_data.py {export_file_types} {current_working_directory}/post_processing_programs {jobname}")
+        # clean up the directory, leave only allowed files here
+        os.system(f"python clean_directory.py {allowed_files}")
         os.chdir(f"{current_working_directory}/")
 
     os.system(f"python move_data.py {export_file_types} {current_working_directory}/post_processing_programs {jobname}")
+    # clean up the directory, leave only allowed files here
+    os.system(f"python clean_directory.py {allowed_files}")
     os.chdir(f"{current_working_directory}/")
 
     return success
@@ -209,6 +230,9 @@ def post_processing(job, base_name, solving_success, post_tuple, interpreter_tup
     # change the working directory to carry out work in the post processing environment
     os.chdir(f"{current_working_directory}/post_processing_programs/")
     new_working_directory = os.getcwd()
+
+    # keep track of which files should be in this directory, so the cleanup function doesnt make too many casulties
+    allowed_files = get_allowed_files_command()
 
     try:
         if solving_success:   
@@ -261,9 +285,13 @@ def post_processing(job, base_name, solving_success, post_tuple, interpreter_tup
                 os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name} {jobname}")
 
     except:
+        # clean up the directory, leave only allowed files here
+        os.system(f"python clean_directory.py {allowed_files}")
         os.chdir(f"{current_working_directory}")
         return False
 
+    # clean up the directory, leave only allowed files here
+    os.system(f"python clean_directory.py {allowed_files}")
     os.chdir(f"{current_working_directory}")
     return True
 

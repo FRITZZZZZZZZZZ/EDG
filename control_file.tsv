@@ -62,11 +62,4 @@ Result CSV	csv	raw_results/results_csv
 Error Files	'inf log out'	raw_results/error_results
 END DATA
 
-NAME 
-ALLOWED FILES
-HEADER
-PROCESS STAGE	FILES NOT TO DELETE	FILE TYPES NOT TO DELETE
-START
-
-
 END FILE			
