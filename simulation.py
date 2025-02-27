@@ -248,7 +248,7 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
 
     # defining important control variables
     error_report_list = []
-    joblist, full_header = joblist_tuple
+    joblist, full_header, value_range_list = joblist_tuple
     current_working_directory = os.getcwd()
 
     # make sure that the joblist file exists by forcing its generation
@@ -264,8 +264,9 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
 
             # pick a job from the joblist and mark its joblist entry as in progress
             job = joblist[job_index]
-            job['Status'] = "in progress"
-            create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path)
+            job['Status'] = "in_progress"
+            joblist_tuple = (joblist, full_header, value_range_list)
+            create_jobs.update_joblist_files(base_name, joblist_tuple, full_header, joblist_archive_path)
 
             # try solving the job
             try:
@@ -277,19 +278,19 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                     success_solving = solving_simulation(job, solve_tuple)
                 # if the preprocessing did not work, abort the job and go to the next one
                 else:
-                    error_report_list.append(job['Jobname'])
-                    ready = True
-                    continue
-
+                    print("The pre processing was not successful, please check the control file or pre processing programs.")
+                    break
+                    
                 # if the solving has been successful, try performing the post processing
                 succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, clean_up_tuple)
                 if succes_post_processing:
+                    job['Status'] = "done"
+                    create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path)
                     ready = True
                     continue
                 else:
-                    error_report_list.append(job['Jobname'])
-                    ready = True
-                    continue
+                    print("The post processing was not successful, please check control file or post processing programs.")
+                    break
             
             # if anythin else goes wrong, append the job to the error list and continue the series
             except:
@@ -315,8 +316,9 @@ post_tuple = interaction.control_data_string_dict(control_file, "POST PROCESSING
 clean_up_tuple = interaction.control_data_tuple_dict(control_file, "CLEAN UP")
 
 design_parameter_names = pre_tuple[1]
-joblist_tuple = create_jobs.create_jobs("Rectangular_cup", [[1.20, 1], [1.0], [1.0], [-4.0], [0.06], [1]], design_parameter_names)
+
+#joblist_tuple = create_jobs.create_jobs("Rectangular_cup", [[1.20, 1], [1.0], [1.0], [-4.0], [0.06], [1]], design_parameter_names)
 
 
-run_simulation_series("Rectangualr_cup", joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple)
+#run_simulation_series("Rectangualr_cup", joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple)
 
