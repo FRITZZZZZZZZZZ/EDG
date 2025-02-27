@@ -2,7 +2,6 @@ import os
 import create_jobs
 
 
-design_parameter_names = ['Blank Thickness', 'Binder Friction', 'Binder Pressure', 'Die Radius', 'Scale X', 'Scale Y']
 csv_result_inline_keywords = ["Thickness Change %-Min", "Thickness Change %-Max"] 
 csv_result_nextline_keywords = ["*Formability"]
 csv_header = ["Thickness Change %-Min", "Thickness Change %-Max", "Inadequate Stretch", "Wrinkling", "Wrinkling Tendency", "Safe", "Risk of Cracks", "Severe Thinning", "Cracks"]

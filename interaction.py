@@ -324,6 +324,10 @@ def control_data_string_dict(file_control, data_name, export_calls=True):
 
             # collect data in the way described earlier
             if start_found:
+                
+                # this allows you to set a data tuple to none and therefore not use interpreter matching for example
+                if line_content == "END DATA" and (len(keys) == 0 or len(values) == 0):
+                    return None
 
                 # data name as key and data content as value
                 design_parameter_name = line_content[0]
@@ -380,6 +384,9 @@ def control_data_tuple_dict(control_file, data_name, export_calls=True):
 
         # if the section has been found, look for start, then collect data
         if section_found:
+            # this allows you to set a data tuple to none and therefore not use interpreter matching for example
+            if line_content == "END DATA" and len(keys) == 0 or len(values) == 0:
+                return None
 
             # collect data in the way described earlier
             if start_found:
@@ -402,6 +409,33 @@ def control_data_tuple_dict(control_file, data_name, export_calls=True):
     else:
         return editing_commands
 
+def control_data_direct_list(control_file, data_name):
+    # open the control file
+    with open(control_file, 'r') as control_file:
+        control_content = [line for line in control_file.readlines()]
+
+    section_found = False
+    start_found = False
+    direct_list = []
+
+    for line in control_content:
+
+        line = line[:-1]
+
+        if start_found and "END DATA" in line:
+            break
+
+        if data_name in line:
+            section_found = True
+                            
+        if section_found and "START" in line:
+            start_found = True
+            continue
+
+        if section_found and start_found and start_found:
+            direct_list.append(line)
+    
+    return direct_list
 
 
 
@@ -547,4 +581,8 @@ def slave_mode(file_dat_path):
         job = connection.recv()
         result_entry = simulation.simulate(job, file_dat_path, file_dat_path, "slave")
         connection.send(result_entry)
-    
+import interaction
+
+control_file = "control_file.tsv"
+
+print(control_data_direct_list(control_file, "CSV INLINE KEYWORDS"))

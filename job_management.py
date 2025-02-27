@@ -89,7 +89,7 @@ def create_jobs(job_base_name : str, value_range_list: list, header : list):
     return (joblist, full_header, value_range_list)
 
 
-def retrieve_joblist(base_name, characters_to_exclude=[" ", "'"]):
+def retrieve_joblist(base_name):
     """
     This function is used to create a joblist from a joblist.txt file. This way it is possible 
     to recover a simulation series in chase of technical failure and to not simulate something twice.

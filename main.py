@@ -2,10 +2,10 @@ import job_management
 import simulation
 import interaction
 import sys
+import create_dataset
 
 argument_vector = sys.argv
 
-print(argument_vector)
 try:
     option = argument_vector[1]
     input_file_path = argument_vector[2]
@@ -81,18 +81,19 @@ control_file_backup = r"CONTROL_FILE_BACKUP_DO_NOT_TOUCH.tsv"
 
 all_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-files, file_roles = interaction.retrieve_control_data(control_file, "REQUIERED FILES")
-editing_commands, design_parameter_names = interaction.retrieve_control_data(control_file, "SIMULATION DATA")
-action_commands, action_names = interaction.retrieve_control_data(control_file, "ACTION METHODS")
-interpreters, interpreter_suffixes = interaction.retrieve_control_data(control_file, "INTERPRETER SELECTION")
-termination_keywords, termination_keyword_names = interaction.retrieve_control_data(control_file, "TERMINATION KEYWORDS")
+files, file_roles = interaction.control_data_string_dict(control_file, "REQUIERED FILES")
+pre_tuple = interaction.control_data_string_dict(control_file, "PRE PROCESSING")
+solve_tuple = interaction.control_data_string_dict(control_file, "SIMULATION SOLVING")
+post_tuple = interaction.control_data_string_dict(control_file, "POST PROCESSING")
+sorting_tuple = interaction.control_data_tuple_dict(control_file, "FILE SORTING")
+interpreter_tuple = interaction.control_data_string_dict(control_file, "INTERPRETER SELECTION")
+csv_result_inline_keywords = interaction.control_data_direct_list(control_file, "CSL INLINE KEYWORDS")
+csv_result_nextline_keywords = interaction.control_data_direct_list(control_file, "CSV NEXTLINE KEYWORDS")
+csv_header = interaction.control_data_direct_list(control_file, "SIMULATION CSV HEADER")
 
-editing_tuple = (editing_commands, design_parameter_names)
-action_tuple = (action_commands, action_names)
-interpreter_tuple = (interpreters, interpreter_suffixes)
-termination_tuple = (termination_keywords, termination_keyword_names)
-
+design_parameter_names = pre_tuple[1]
 design_parameter_domains = [None for parameter in design_parameter_names]
+
 base_name = None
 instruction = None
 jobs_n = 1
@@ -153,9 +154,9 @@ if len(argument_vector) == 2:
                     print("\nThe control file has been reset.\n")
 
                     # if the files are reset, their information must be reloaded
-                    files, file_roles = interaction.retrieve_control_data(control_file, "REQUIERED FILES")
-                    editing_commands, design_parameter_names = interaction.retrieve_control_data(control_file, "SIMULATION DATA")
-                    action_commands, action_names = interaction.retrieve_control_data(control_file, "ACTION METHODS")
+                    files, file_roles = interaction.control_data_string_dict(control_file, "REQUIERED FILES")
+                    editing_commands, design_parameter_names = interaction.control_data_string_dict(control_file, "SIMULATION DATA")
+                    action_commands, action_names = interaction.control_data_string_dict(control_file, "ACTION METHODS")
                     instruction = None
 
                 if confirmation == "n":
@@ -239,10 +240,14 @@ if len(argument_vector) == 2:
         if instruction == "Y":
 
             # create the joblist and create a joblist backup 
-            joblist, header = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
+            joblist_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
 
             # simulate the jobs in the joblist and record failed simulations
-            all_jobs_n, errors_n, successul_n = simulation.run_simulation_series(base_name, joblist, header, editing_tuple, action_tuple, interpreter_tuple)
+            success_series = simulation.run_simulation_series(base_name, joblist_tuple, pre_tuple, post_tuple, sorting_tuple, interpreter_tuple)
+
+            # if the series was successful, create the dataset
+            if success_series:
+                create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, False)
 
             # ask howw the user wants to continue once the data has been generated
             ask_more_constraint = {

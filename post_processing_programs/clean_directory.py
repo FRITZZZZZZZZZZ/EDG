@@ -12,7 +12,7 @@ def move_data(argument_vector):
     except:
         print("Not all variables have been defined")
     
-    files_to_spare = raw_files_to_spare(' ')
+    files_to_spare = raw_files_to_spare.split(' ')
     protected_suffixes = ['py', 'exe', 'mbl', 'tsv', 'csv', 'png', 'ofs', '']
 
     current_working_directory = os.getcwd()

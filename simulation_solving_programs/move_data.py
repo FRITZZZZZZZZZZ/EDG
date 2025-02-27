@@ -14,7 +14,6 @@ def move_data(argument_vector):
         file_types = argument_vector[1]
         target_folder_path = argument_vector[2]
         jobname = argument_vector[3]
-        delete = argument_vector[4]
     except:
         print("Not all variables defined")
     
@@ -22,12 +21,8 @@ def move_data(argument_vector):
 
     for file_type in file_type_list:
         try:
-           # print(os.path.isfile(f"{jobname}.{file_type}"), "DAS WAR FÜR ", f"{jobname}{file_type}")
-            print(file_type)
             shutil.move(f"{jobname}.{file_type}", f"{target_folder_path}")
         except:
-            if delete == "else_delete":
-                os.remove(f"{jobname}.{file_type}")
             print(f"Could not move {jobname}.{file_type}.")
             
         

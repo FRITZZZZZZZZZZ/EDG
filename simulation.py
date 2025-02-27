@@ -8,17 +8,19 @@ def pick_interpreter(interpreter_tuple, command=None):
     This program takes a command and matched it to the right interpreter, it a interpreter list is passed.
     """
     if not interpreter_tuple == None and not command == None:
-        interpreters, interpreter_suffixes = interpreter_tuple
+        interpreters, language_suffixes = interpreter_tuple
         program_call = command.split(' ')[0]
-        language_suffix = program_call.split('.')[1]
-        for suffix in interpreter_suffixes:
-            if language_suffix == suffix:
+        file_suffix = program_call.split('.')[1]
+        for suffix in language_suffixes:
+            if suffix == file_suffix:
                 interpreter = interpreters[suffix]
+                return interpreter
             else:
                 # if the suffix is unknown try running the program as is
                 interpreter = ''
     else:
         interpreter = "python"
+        return interpreter
 
 def get_allowed_files_command():
     allowed_files = os.listdir()
@@ -35,8 +37,7 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_ti
     """
     # unpack control data tuples
     control_commands, design_parameter_names = editing_tuple
-    if not interpreter_tuple == None:
-        interpreters, interpreter_suffixes = interpreter_tuple
+
     jobname = job["Jobname"]
 
     # remember the current working directory
@@ -68,7 +69,7 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_ti
             return success
 
     # if the pre processing was successful, the files will be transfered to the next step
-    os.system(f"python move_data.py 'dat t51 t52' {current_working_directory}/simulation_solving_programs {jobname} else_delete")
+    os.system(f"python move_data.py 'dat t51 t52' {current_working_directory}/simulation_solving_programs {jobname}")
 
     # clean up the directory, leave only allowed files here
     os.system(f"python clean_directory.py {allowed_files}")
@@ -220,11 +221,11 @@ def solving_simulation(job, solve_tuple, interpreter_tuple=None, time_limit=900,
 
     return success
   
-def post_processing(job, base_name, solving_success, post_tuple, interpreter_tuple, post_processing_time_out=180):
+def post_processing(job, base_name, solving_success, post_tuple, file_sorting_tuple, interpreter_tuple, post_processing_time_out=180):
     # define important variables
     jobname = job['Jobname']
     post_commands, post_command_names = post_tuple   
-    file_categories, category_names = clean_up_tuple
+    file_categories, category_names = file_sorting_tuple
     current_working_directory = os.getcwd()
 
     # change the working directory to carry out work in the post processing environment
@@ -296,7 +297,7 @@ def post_processing(job, base_name, solving_success, post_tuple, interpreter_tup
     return True
 
 
-def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, time_limit=900, loop_limit=10, interpreter_tuple=None):
+def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, time_limit=900, interpreter_tuple=None, loop_limit=10):
 
     # defining important control variables
     joblist, full_header, value_range_list = joblist_tuple
@@ -318,7 +319,7 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
             else:
                 job['Status'] = "in_progress"
                 joblist_tuple = (joblist, full_header, value_range_list)
-                job_management.update_joblist_files(base_name, joblist_tuple, full_header)
+                job_management.update_joblist_files(base_name, joblist_tuple)
 
                 # try solving the job
                 try:
@@ -337,14 +338,14 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                     if not success_solving:
                         job['Status'] = "unsuccessful"
                         joblist_tuple = (joblist, full_header, value_range_list, interpreter_tuple)
-                        job_management.update_joblist_files(base_name, job)                        
+                        job_management.update_joblist_files(base_name, joblist_tuple)                        
 
                     # try performing the post processing according to the success of the simulation
-                    succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, interpreter_tuple)
+                    succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple)
                     if succes_post_processing:
                         job['Status'] = "done"
                         joblist_tuple = (joblist, full_header, value_range_list)
-                        job_management.update_joblist_files(base_name, joblist, full_header)
+                        job_management.update_joblist_files(base_name, joblist_tuple)
                         ready = True
                         continue
                     else:
@@ -358,18 +359,4 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                 
     return True
 
-
-control_file = "control_file.tsv"
-
-pre_tuple = interaction.control_data_string_dict(control_file, "PRE PROCESSING")
-solve_tuple = interaction.control_data_string_dict(control_file, "SIMULATION SOLVING")
-post_tuple = interaction.control_data_string_dict(control_file, "POST PROCESSING")
-clean_up_tuple = interaction.control_data_tuple_dict(control_file, "CLEAN UP")
-
-design_parameter_names = pre_tuple[1]
-
-#joblist_tuple = job_management.create_jobs("Rectangular_cup", [[1.20, 1], [1.0], [1.0], [-4.0], [0.06], [1]], design_parameter_names)
-
-
-#run_simulation_series("Rectangualr_cup", joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple)
 

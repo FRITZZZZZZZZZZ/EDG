@@ -1,0 +1,21 @@
+NAME
+Rectangualr_cup
+VALUE RANGES
+Blank Thickness
+1.2 1
+Binder Friction
+1.0
+Binder Pressure
+1.0
+Die Radius
+-4.0
+Scale X
+0.06
+Scale Y
+1
+HEADER
+Jobname,Status,Blank Thickness,Binder Friction,Binder Pressure,Die Radius,Scale X,Scale Y
+START
+Rectangular_cup_BlTh_1.2_BiFr_1.0_BiPr_1.0_DiRa_-4.0_ScX_0.06_ScY_1,in_progress,1.2,1.0,1.0,-4.0,0.06,1
+Rectangular_cup_BlTh_1_BiFr_1.0_BiPr_1.0_DiRa_-4.0_ScX_0.06_ScY_1,pending,1,1.0,1.0,-4.0,0.06,1
+END DATA

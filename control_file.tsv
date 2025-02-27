@@ -13,9 +13,7 @@ NAME
 INTERPRETER SELECTION				
 HEADER				
 LANGUAGE SUFFIX	INTERPRETER			
-START				
-py	python			
-java	javac			
+START					
 END DATA				
 				
 NAME				
@@ -52,7 +50,7 @@ Export CSV	export_csv.py
 END DATA			
 
 NAME
-CLEAN UP
+FILE SORTING
 HEADER
 ITEM CATEGORY	FILE SUFFIX	DESTINATION
 START
@@ -60,6 +58,39 @@ Result Raw Folders	erg	raw_results/erg_folders
 Result Png	png	raw_results/results_png
 Result CSV	csv	raw_results/results_csv
 Error Files	'inf log out'	raw_results/error_results
+END DATA
+
+NAME
+CSV INLINE KEYWORDS
+HEADER
+DIRECT LIST
+START
+Thickness Change %-Min
+Thickness Change %-Max
+END DATA
+
+NAME
+CSV NEXTLINE KEYWORDS
+HEADER
+DIRECT LIST
+START
+*Formability
+END DATA
+
+NAME
+SIMULATION CSV HEADER
+HEADER
+DIRECT LIST
+START
+Thickness Change %-Min
+Thickness Change %-Max
+Inadequate Stretch
+Wrinkling
+Wrinkling Tendency
+Safe
+Risk of Cracks
+Severe Thinning
+Cracks
 END DATA
 
 END FILE			
