@@ -1,15 +1,30 @@
-import create_jobs
+import job_management
 import os
 import time
 import interaction
 
+def pick_interpreter(interpreter_tuple, command=None):
+    """"
+    This program takes a command and matched it to the right interpreter, it a interpreter list is passed.
+    """
+    if not interpreter_tuple == None and not command == None:
+        interpreters, interpreter_suffixes = interpreter_tuple
+        program_call = command.split(' ')[0]
+        language_suffix = program_call.split('.')[1]
+        for suffix in interpreter_suffixes:
+            if language_suffix == suffix:
+                interpreter = interpreters[suffix]
+            else:
+                # if the suffix is unknown try running the program as is
+                interpreter = ''
+    else:
+        interpreter = "python"
 
 def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_time_out=60):
     """
     This function takes care of the pre processing of the simulation. It alters input files like dat t51 and t52
     and then moves them to the next step.
     """
-
     # unpack control data tuples
     control_commands, design_parameter_names = editing_tuple
     if not interpreter_tuple == None:
@@ -30,22 +45,10 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_ti
         value = job[parameter]
         command = control_commands[parameter]
         try:
-
             # match the program call with the right interpreter if wished so
-            if not interpreter_tuple == None:
-                program_call = command.split(' ')[0]
-                language_suffix = program_call.split('.')[1]
-                for suffix in interpreter_suffixes:
-                    if language_suffix == suffix:
-                        interpreter = interpreters[suffix]
-                    else:
-                        # if the suffix is unknown try running the program as is
-                        interpreter = ''
-            else:
-                interpreter = "python"
+            interpreter = pick_interpreter(interpreter_tuple, command)
             os.system(f"{interpreter} {command} {value} {jobname}")
         except:
-
             # if the program call did not work, something was not edited, dont continue the simulation and waste time
             os.chdir(f"{current_working_directory}/")
             success = False
@@ -57,7 +60,7 @@ def pre_processing(job, editing_tuple, interpreter_tuple=None, pre_processing_ti
     success = True
     return success
 
-def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
+def solving_simulation(job, solve_tuple, interpreter_tuple=None, time_limit=900, loop_limit=5):
 
     def check_done(jobname, done_keyword):
         try:
@@ -118,15 +121,18 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
 
             return (loops_passed, current_length, last_length, last_increment)
     
+    
     # unpack solve tuple, yes this seems quite inefficient but doing it that way is one way to make the control_file more human readable
-    solve_data_names = solve_tuple[1]
-    solve_data = solve_tuple[0]
-    start_command = solve_data[solve_data_names[0]]
-    done_keyword = solve_data[solve_data_names[1]]
-    stop_command  = solve_data[solve_data_names[2]]
-    cleanup_list = solve_data[solve_data_names[3]]
+    solving_commands, solving_commands_names = solve_tuple
+        # start command
+    start_command = solving_commands[solving_commands_names[0]]
+        # keywords for stopping the simulation and for when the simulation is done
+    done_keyword = solving_commands[solving_commands_names[1]]
+    stop_command  = solving_commands[solving_commands_names[2]]
+        # the list of file types to be transfered to post processing, this is a blank space delimited list in string format
+    export_file_types = solving_commands[solving_commands_names[3]].split(' ')
+    # more important variables
     jobname = job['Jobname']
-
     inf_file = None
     log_file = None
 
@@ -134,8 +140,12 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
     current_working_directory = os.getcwd()
     os.chdir(f"{current_working_directory}/simulation_solving_programs/")
 
+    # call a cleanup function to avoid data littering in this directory
+
+
     # start the simulation
-    os.system(f"python {start_command} {jobname}")
+    interpreter = pick_interpreter(interpreter_tuple, start_command)
+    os.system(f"{interpreter} {start_command} {jobname}")
 
     # wait for files to be available
     while inf_file == None or log_file == None:
@@ -181,131 +191,144 @@ def solving_simulation(job, solve_tuple, time_limit=900, loop_limit=5):
 
     if success == False:
         os.system(f"{stop_command}")
-        os.system(f"python move_data.py {cleanup_list} {current_working_directory}/post_processing_programs {jobname}")
+        os.system(f"python move_data.py {export_file_types} {current_working_directory}/post_processing_programs {jobname}")
         os.chdir(f"{current_working_directory}/")
 
-    os.system(f"python move_data.py {cleanup_list} {current_working_directory}/post_processing_programs {jobname}")
+    os.system(f"python move_data.py {export_file_types} {current_working_directory}/post_processing_programs {jobname}")
     os.chdir(f"{current_working_directory}/")
 
     return success
   
-def post_processing(job, base_name, success, post_tuple, clean_up_tuple, post_processing_time_out=60):
-
-    success = False
+def post_processing(job, base_name, solving_success, post_tuple, interpreter_tuple, post_processing_time_out=180):
+    # define important variables
     jobname = job['Jobname']
     post_commands, post_command_names = post_tuple   
-    data_dict, category_names = clean_up_tuple
-
+    file_categories, category_names = clean_up_tuple
     current_working_directory = os.getcwd()
+
+    # change the working directory to carry out work in the post processing environment
     os.chdir(f"{current_working_directory}/post_processing_programs/")
     new_working_directory = os.getcwd()
+
     try:
-        if success:   
-            current_files_n = len(os.listdir(new_working_directory))
-            new_files_n = current_files_n
+        if solving_success:   
+            
+            # use the post processing programs to gather desired data and data formats from the simulation
             time_passed = 0 
             for post_command_name in post_command_names:
                 command = post_commands[post_command_name]
-                os.system(f"python {command} {jobname}")
-                while not new_files_n > current_files_n:
-                    new_files_n = len(os.listdir(new_working_directory))
+                # pick the right interpreter to allow use of custom programs
+                interpreter = pick_interpreter(interpreter_tuple, command)
+                os.system(f"{interpreter} {command} {jobname}")
+
+                # wait for open form to export the desired file formats.                 
+                while time_passed <= post_processing_time_out:
+
+                    # This is done via time out because open form is a different process and can take some time
+                    n_files = len(os.listdir(new_working_directory))
                     time.sleep(1)
+                    new_n_files = len(os.listdir(new_working_directory))
+                    if new_n_files > n_files:
+                        break
                     time_passed += 1
                     if time_passed >= post_processing_time_out:
-                        break
-                    if new_files_n > current_files_n:
-                        break
+                        os.chdir({current_working_directory})
+                        print(f"{command} did not work.")
+                        return False
 
-            category_names_succesful = category_names[:-1]
-            
-            for category in category_names_succesful:
-                file_types, result_path = data_dict[category]
+            # sort the results according to the fact that the solving has been successful
+                # all categories but the last one do define data types and their destined directories for successful solving
+                # the very last one is reserved for the directory that stores the files of unsuccessful solving attempts
+            success_categories = category_names[:-1]
+            for category in success_categories:
+                file_types, result_path = file_categories[category]
+                # if the directory doesnt exist, create the directory to avoid "dIrEcToRY dOEsN'T eXiST" errors
                 if not os.path.isdir(f"{current_working_directory}/{result_path}/{base_name}/"):
                     os.mkdir(f"{current_working_directory}/{result_path}/{base_name}/")
+                # move the files to their destination folder
                 os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name} {jobname}")
-
-            os.chdir(f"{current_working_directory}/")
-            success = True
         
-        if not success:
-            category_names_unsuccesful = category_names[-1]
-            
-            for category in category_names_unsuccesful:
-                file_types, result_path = data_dict[category]
+        if not solving_success:
+
+            # only the last category deals with files of unsuccessful solving attempts
+            error_categories = category_names[-1]
+            for category in error_categories:
+                file_types, result_path = file_categories[category]
+                # if the directory doesnt exist, create the directory to avoid "dIrEcToRY dOEsN'T eXiST" errors
                 if not os.path.isdir(f"{current_working_directory}/{result_path}/{base_name}/"):
                     os.mkdir(f"{current_working_directory}/{result_path}/{base_name}/")
+                # move the files to the folder storing the data of unsuccessful solving atttempts
                 os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name} {jobname}")
 
-            success = True
     except:
-        success = False
+        os.chdir(f"{current_working_directory}")
+        return False
 
     os.chdir(f"{current_working_directory}")
-    return success
+    return True
 
 
-def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple, time_limit=900, loop_limit=10, interpreter_tuple=None, joblist_archive_path="joblist_archive"):
+def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, time_limit=900, loop_limit=10, interpreter_tuple=None):
 
     # defining important control variables
-    error_report_list = []
     joblist, full_header, value_range_list = joblist_tuple
-    current_working_directory = os.getcwd()
-
-    # make sure that the joblist file exists by forcing its generation
-    create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path, False, True)
-
-    # this variable is set to false in order for the series to wait for each simulation to finish
     ready = True
 
     for job_index in range(len(joblist)):
         if ready:
             
+            # to avaid rushing threy the loop, this happened at production, who knows what caused it, this way it will definitly not happen again
             ready = False
-
             # pick a job from the joblist and mark its joblist entry as in progress
             job = joblist[job_index]
-            job['Status'] = "in_progress"
-            joblist_tuple = (joblist, full_header, value_range_list)
-            create_jobs.update_joblist_files(base_name, joblist_tuple, full_header, joblist_archive_path)
 
-            # try solving the job
-            try:
-                # start the preprocessing and prepare the input data
-                success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple)
-                
-                # start the simulation once the preprocessing was succcsessful, append to error list else
-                if success_pre_processing:
-                    success_solving = solving_simulation(job, solve_tuple)
-                # if the preprocessing did not work, abort the job and go to the next one
-                else:
-                    print("The pre processing was not successful, please check the control file or pre processing programs.")
-                    break
-                    
-                # if the solving has been successful, try performing the post processing
-                succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, clean_up_tuple)
-                if succes_post_processing:
-                    job['Status'] = "done"
-                    create_jobs.update_joblist_files(base_name, joblist, full_header, joblist_archive_path)
-                    ready = True
-                    continue
-                else:
-                    print("The post processing was not successful, please check control file or post processing programs.")
-                    break
-            
-            # if anythin else goes wrong, append the job to the error list and continue the series
-            except:
-                error_report_list.append(job['Jobname'])
+            # check the jobs status and see if the job is pending, if not, go to the next one
+            if not job['Status'] == 'pending':
                 ready = True
-    
-    if not len(error_report_list) == 0:
-        if os.path.isfile(f"{current_working_directory}/error_reports/{base_name}_error_report.txt"):
-            with open(f"{current_working_directory}/error_reports/{base_name}_error_report.txt", 'a') as error_report:
-                for error in error_report_list:
-                    error_report.write(error + "\n")
-        else:
-            with open(f"{current_working_directory}/error_reports/{base_name}_error_report.txt", 'w') as error_report:
-                for error in error_report_list:
-                    error_report.write(error + " failed" + "\n")
+                continue
+
+            else:
+                job['Status'] = "in_progress"
+                joblist_tuple = (joblist, full_header, value_range_list)
+                job_management.update_joblist_files(base_name, joblist_tuple, full_header)
+
+                # try solving the job
+                try:
+                    # start the preprocessing and prepare the input data
+                    success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple, interpreter_tuple)
+                    
+                    # start the simulation once the preprocessing was succcsessful, append to error list else
+                    if success_pre_processing:
+                        success_solving = solving_simulation(job, solve_tuple)
+                    # if the preprocessing did not work, abort the job and go to the next one
+                    else:
+                        print("\nThe pre processing was not successful, please check the control file or pre processing programs.\n")
+                        return False
+                    
+                    # update the joblist on wheather the job was not solved in time or in loop limit
+                    if not success_solving:
+                        job['Status'] = "unsuccessful"
+                        joblist_tuple = (joblist, full_header, value_range_list, interpreter_tuple)
+                        job_management.update_joblist_files(base_name, job)                        
+
+                    # try performing the post processing according to the success of the simulation
+                    succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, interpreter_tuple)
+                    if succes_post_processing:
+                        job['Status'] = "done"
+                        joblist_tuple = (joblist, full_header, value_range_list)
+                        job_management.update_joblist_files(base_name, joblist, full_header)
+                        ready = True
+                        continue
+                    else:
+                        print("\nThe post processing was not successful, check control file or post processing programs.\n")
+                        return False
+                
+                # if anythin else goes wrong, append the job to the error list and continue the series
+                except:
+                    print("\nSomething went wrong.\n")
+                    return False
+                
+    return True
 
 
 control_file = "control_file.tsv"
@@ -317,7 +340,7 @@ clean_up_tuple = interaction.control_data_tuple_dict(control_file, "CLEAN UP")
 
 design_parameter_names = pre_tuple[1]
 
-#joblist_tuple = create_jobs.create_jobs("Rectangular_cup", [[1.20, 1], [1.0], [1.0], [-4.0], [0.06], [1]], design_parameter_names)
+#joblist_tuple = job_management.create_jobs("Rectangular_cup", [[1.20, 1], [1.0], [1.0], [-4.0], [0.06], [1]], design_parameter_names)
 
 
 #run_simulation_series("Rectangualr_cup", joblist_tuple, pre_tuple, solve_tuple, post_tuple, clean_up_tuple)

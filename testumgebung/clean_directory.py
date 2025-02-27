@@ -8,19 +8,19 @@ This is important, because it can happen that simulation processes are not compl
 
 def move_data(argument_vector):
     try:
-        files_not_to_delete = argument_vector[1]
-        file_types_not_to_delete = argument_vector[2]
+        also_not_delete = argument_vector[1]
+        also_not_type = argument_vector[2]
     except:
         print("Not all variables have been defined")
     
-    files_not_to_delete_names = files_not_to_delete.split(' ')
-    files_not_to_delete_suffixes = file_types_not_to_delete.split(' ')
+    files_not_to_delete_names = also_not_delete.split(' ')
+    files_not_to_delete_suffixes = also_not_type.split(' ')
 
     current_working_directory = os.getcwd()
     files_in_directory = os.listdir(f"{current_working_directory}")
 
     for file in files_in_directory:
-        if file in files_not_to_delete:
+        if file in also_not_delete:
             continue
         try:
             file_suffix = file.split('.')[1]

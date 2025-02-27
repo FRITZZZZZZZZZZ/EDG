@@ -1,4 +1,4 @@
-import create_jobs
+import job_management
 import simulation
 import interaction
 import sys
@@ -239,7 +239,7 @@ if len(argument_vector) == 2:
         if instruction == "Y":
 
             # create the joblist and create a joblist backup 
-            joblist, header = create_jobs.create_jobs(base_name, design_parameter_domains, design_parameter_names)
+            joblist, header = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
 
             # simulate the jobs in the joblist and record failed simulations
             all_jobs_n, errors_n, successul_n = simulation.run_simulation_series(base_name, joblist, header, editing_tuple, action_tuple, interpreter_tuple)
@@ -325,7 +325,7 @@ if len(argument_vector) == 3:
         loop_limit = input_content[-1]
 
         # third instruction
-        joblist, full_header = create_jobs.create_jobs(base_name, design_parameter_domains, design_parameter_names)
+        joblist, full_header = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
         simulation.run_simulation_series(base_name, joblist, full_header, editing_tuple, action_tuple, termination_tuple, time_out, loop_limit, interpreter_tuple)
 
     else:

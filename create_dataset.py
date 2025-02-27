@@ -1,6 +1,7 @@
 import os
 import create_jobs
 
+
 design_parameter_names = ['Blank Thickness', 'Binder Friction', 'Binder Pressure', 'Die Radius', 'Scale X', 'Scale Y']
 csv_result_inline_keywords = ["Thickness Change %-Min", "Thickness Change %-Max"] 
 csv_result_nextline_keywords = ["*Formability"]
@@ -95,4 +96,3 @@ def create_dataset(base_name, design_parameter_names, csv_result_inline_keywords
     
     return True
 
-create_dataset("Rectangular_cup", design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header)
