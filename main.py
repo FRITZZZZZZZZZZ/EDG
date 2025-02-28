@@ -1,5 +1,5 @@
 import job_management
-import simulation
+import simulation_management
 import interaction
 import sys
 import create_dataset
@@ -26,6 +26,7 @@ State one of the following options as your next instruction:
 -c continue
 -s slave mode
 -r reset control_file
+-o options
 exit exit 
 
 Instruction: """
@@ -42,7 +43,7 @@ ask_change_message = """
 State a design parameter name in order to redifine its value range or state -c to continue.
 List of all available design parameter names above.
 
-base_name change base name
+<base_name> change base name
 <design_parameter_name> change parameter value range
 -c continue
 
@@ -76,10 +77,11 @@ The simulation series is done running, you can now define a new series or close 
 Do you want to close the application?
 [Y/n] """
 
-control_file = r"control_file.tsv"
-control_file_backup = r"CONTROL_FILE_BACKUP_DO_NOT_TOUCH.tsv"
 
 all_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+control_file_backup = r"CONTROL_FILE_BACKUP_DO_NOT_TOUCH.tsv"
+control_file = "control_file.tsv"
 
 files, file_roles = interaction.control_data_string_dict(control_file, "REQUIERED FILES")
 pre_tuple = interaction.control_data_string_dict(control_file, "PRE PROCESSING")
@@ -87,9 +89,10 @@ solve_tuple = interaction.control_data_string_dict(control_file, "SIMULATION SOL
 post_tuple = interaction.control_data_string_dict(control_file, "POST PROCESSING")
 sorting_tuple = interaction.control_data_tuple_dict(control_file, "FILE SORTING")
 interpreter_tuple = interaction.control_data_string_dict(control_file, "INTERPRETER SELECTION")
-csv_result_inline_keywords = interaction.control_data_direct_list(control_file, "CSL INLINE KEYWORDS")
+csv_result_inline_keywords = interaction.control_data_direct_list(control_file, "CSV INLINE KEYWORDS")
 csv_result_nextline_keywords = interaction.control_data_direct_list(control_file, "CSV NEXTLINE KEYWORDS")
 csv_header = interaction.control_data_direct_list(control_file, "SIMULATION CSV HEADER")
+
 
 design_parameter_names = pre_tuple[1]
 design_parameter_domains = [None for parameter in design_parameter_names]
@@ -97,12 +100,11 @@ design_parameter_domains = [None for parameter in design_parameter_names]
 base_name = None
 instruction = None
 jobs_n = 1
+time_limit = 10
+loop_limit = 10
+processing_time_limit = 10
 
-# print basic information about the session
-# raw files to be edited and used in the simulation
-
-
-if len(argument_vector) == 2:
+if len(argument_vector) == 1:
     print(welcome_message)
 
     for role in file_roles:
@@ -128,6 +130,10 @@ if len(argument_vector) == 2:
                 'delimiters':[]
             }
             instruction = interaction.get_and_validate_input(index_message, index_constraint)
+
+            # enter options menu
+            if instruction in ["o", "-o", "options"]:
+                pass
 
             # continue with simulation series definition
             if instruction in ["-c", "continue"]:
@@ -162,22 +168,13 @@ if len(argument_vector) == 2:
                 if confirmation == "n":
                     print("\nNo changes have been done to the control_file.\n")
                     instruction = None
-
-            if instruction in ["c", "-c", "continue"]:
-                instruction = None
-                break
         
         # make sure that all design parameter ranges are declared
         while None in design_parameter_domains or base_name == None:
 
-
-
             # ask for the base name, this is the name that every result associated with the data generation will hold
             if base_name == None:
-                base_name_constraint = {
-                    'keywords':[],
-                    'allowed_characters':all_letters + ["_"]
-                }
+                base_name_constraint = {'keywords':[], 'allowed_characters':all_letters + ["_"]}
                 base_name = interaction.get_and_validate_input(base_name_message, base_name_constraint)
 
             # state value ranges for each design parameter contained in the associated control_file section
@@ -194,24 +191,17 @@ if len(argument_vector) == 2:
                 parameter_domain = design_parameter_domains[parameter_index]
                 print(f"{parameter_name}\n{parameter_domain}\nnumber of values: {len(parameter_domain)}\n")
             
-
-
             # let user change a design parameter value range
-            ask_change_constraint = {
-                'keywords':design_parameter_names + ["c", "-c", "continue", "base name"]
-            }
-            instruction = interaction.get_and_validate_input(ask_change_message, ask_change_constraint)
+            ask_change_constraint = {'keywords':design_parameter_names + ["c", "-c", "continue", "base name", "base_name", base_name]}
+            instruction = interaction.get_and_validate_input(ask_change_message, ask_change_constraint, True)
 
             # declare a parameter range as None such that the loop will run again and let you redeclare its value range
             if instruction in design_parameter_names:
                 for parameter_index in range(len(design_parameter_domains)):
                     if design_parameter_names[parameter_index] == instruction:
                         design_parameter_domains[parameter_index] = None
-            
-            if instruction == "base name":
+            if instruction in ["base name", base_name]:
                 base_name = None
-            
-            # continue on to distributed mode
             if instruction in ["c", "-c", "continue"]:
                 break
             
@@ -241,10 +231,9 @@ if len(argument_vector) == 2:
 
             # create the joblist and create a joblist backup 
             joblist_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
-
+            job_management.update_joblist_files(base_name, joblist_tuple, False)
             # simulate the jobs in the joblist and record failed simulations
-            success_series = simulation.run_simulation_series(base_name, joblist_tuple, pre_tuple, post_tuple, sorting_tuple, interpreter_tuple)
-
+            success_series = simulation_management.run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple, time_limit, loop_limit, processing_time_limit)
             # if the series was successful, create the dataset
             if success_series:
                 create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, False)
@@ -331,7 +320,8 @@ if len(argument_vector) == 3:
 
         # third instruction
         joblist, full_header = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
-        simulation.run_simulation_series(base_name, joblist, full_header, editing_tuple, action_tuple, termination_tuple, time_out, loop_limit, interpreter_tuple)
+        simulation_management.run_simulation_series(base_name, job, pre_tuple, post_tuple, sorting_tuple, time_out, loop_limit, interpreter_tuple)
 
     else:
         print("Invalid option, please restate your call!")
+

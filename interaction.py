@@ -10,6 +10,110 @@ This module implements Methods that allow EDG to interact with different entitie
 
 
 
+def request_design_parameter_domain(design_parameter_name: str):
+    """
+    This functions asks the user to state the value ranges of design parameters.
+    It has two modes of operation:
+
+    - direct declaration
+        In this mode, the user must declare the value range stating integers or floats directly.
+        The user is not to use blank spaces alongside commas to delimit the vlaues from one another.
+
+    - declaration via closed interval(mathematics like intervals)
+        In this mode, the user must define three values: upper_bound, lower_bound and stepsize.
+        The step size must be a smaller value than the difference between upper_bound to lower_bound.
+        The upper_bound and lower_bound can not be the same value.
+        The values will be spread linearly except the upper_bound which will always be included.
+        This mode is great for stating large value ranges.
+    
+    The function can also accept a single value, it will check wheather it can typecast it though.
+    """
+
+    # make sure user input is rather clean
+    input_constraints = {
+        'keywords': ["exit"],
+        'allowed_characters':  ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ",", " ", ".", "-"],
+        'disallowed_characters': [],
+        'delimiters': [",", " "]
+    }
+
+    # the request message gives clear instructions about the modes and examples of the correct input format
+    request_message = f"""
+    Define the value domain of {design_parameter_name}.
+
+    Either state each value individually:
+    <value 1>, <value_2>,<value_3>,<value_4>
+
+    OR
+
+    State a lower and upper bound and a step size 
+    to define the value range as a closed intervall:
+    <lower_bound> <upper_bound> <step_size>
+    
+    {design_parameter_name}: """
+
+    # get clean user input
+    instruction = get_and_validate_input(request_message, input_constraints)
+
+    # this is a redundant exit clause, it could be deleted but it doesnt harm anyone so why should we?
+    if instruction == "exit":
+        exit()
+    
+    # computing the desing parameter value range, this is a loop since the input can still be errornous
+    design_parameter_list = []
+    while design_parameter_list == []:
+        try:
+    
+            # direct declaration mode
+            if "," in instruction:
+
+                # accept the value range directly but check for castability
+                for value in instruction.split(','):
+                    design_parameter_list.append(float(value))
+
+            # declaration via closed interval mode
+            elif " " in instruction:
+
+                # get the requiered values
+                lower_upper_step = instruction.split(' ')
+                lower_limit = float(lower_upper_step[0])
+                upper_limit = float(lower_upper_step[1])
+                stepsize = float(lower_upper_step[2])
+
+                # catch invalid inputs that are function specific
+                if lower_limit <= upper_limit and  stepsize < (upper_limit - lower_limit):
+                    stepsize_digits = len(lower_upper_step[2])
+                    values_n = int(round(((upper_limit - lower_limit) / stepsize), stepsize_digits)) + 1
+                    design_parameter_list = [round(lower_limit + index * stepsize, stepsize_digits) for index in range(values_n)]
+                    design_parameter_list.append(upper_limit)
+                else:
+
+                    # if the constraints arent met, the instruction must be restated
+                    print("\nInvalid input, please restate your instruction. \nPerhabs you have defined a interval with length 1 as in '1 1 1'.")
+                    instruction = get_and_validate_input(request_message, input_constraints)
+            
+            # single value input
+            else:
+
+                # check wheather the value can be typecasted
+                value = float(instruction)
+                design_parameter_list.append(value)
+
+        except:
+
+            # if the function still can not process the input it will ask for it again, who knows what went wrong
+            print("\nInvalid input, please restate your instruction.")
+            instruction = get_and_validate_input(request_message, input_constraints)
+    
+    # avoid double values in design parameter range
+    design_parameter_list = list(set(design_parameter_list))
+
+    # give feedback about the value range that has been created
+    print(f"\nValues {design_parameter_name}:\n", design_parameter_list)
+    print("Mistakes can be fixed in the next step.\n")
+
+    return design_parameter_list
+
 def validate_input(user_input, input_constraints):
     """
     This function lets you filter out invalid user inputs.
@@ -162,10 +266,10 @@ def validate_input(user_input, input_constraints):
     if len(allowed_characters)>0 or len(disallowed_characters)>0:
         return True
     else:
-        print("\nInvalid input, please restate your instruction.\n")
+        print("\nInvalid input, please restate your instruction.")
         return False
         
-def get_and_validate_input(input_message, input_constraints):
+def get_and_validate_input(input_message, input_constraints, dont_repeat_message=False):
     """
     This function implements input validation it an infinite loop.
     It makes the source code of a cli tool more readable and cleaner.
@@ -177,6 +281,9 @@ def get_and_validate_input(input_message, input_constraints):
     # have a look on wheather it is a valid input or not
     while not validate_input(instruction, input_constraints):
 
+        if dont_repeat_message:
+            instruction = input("Instruction: ")
+            continue
         # while it is not valid, let user restate the input
         instruction = input(input_message)
 
@@ -310,43 +417,33 @@ def control_data_string_dict(file_control, data_name, export_calls=True):
     # look through all the lines  of the file
     for line in control_content:
         line_content = line[:-1].split('\t')
-
+        # this allows you to set a data tuple to none and therefore not use interpreter matching for example
+        if line_content[0] == "END DATA" and start_found and (len(keys) == 0 or len(values) == 0):
+            return None
         # first check for termination constraint such that END DATA will not be part of the output
         if start_found and line_content[0] == "END DATA":
             break
-
         # if the first entry is the data_name, set section found to true and start data collection
         if line_content[0] == data_name:
             section_found = True
-
         # if the section has been found, look for start, then collect data
         if section_found:
-
             # collect data in the way described earlier
             if start_found:
-                
-                # this allows you to set a data tuple to none and therefore not use interpreter matching for example
-                if line_content == "END DATA" and (len(keys) == 0 or len(values) == 0):
-                    return None
-
                 # data name as key and data content as value
                 design_parameter_name = line_content[0]
                 design_parameter_arguments = line_content[1:]
                 control_string = ""
-               
                 # filter out empty cells from the tsv file
                 for argument in design_parameter_arguments:
                     if argument == '' or argument == ' ':
                         continue
-
                     # set the arguments apart by blank spaces, this is optimized for use in simulation
                     control_string = control_string + str(argument) + " "
-               
                 # pop off the new_line character
                 control_string = control_string[:-1]
                 keys.append(design_parameter_name)
                 values.append(control_string)
-
             # declare the start to be found before collection data, such that START is not part of the output
             if line_content[0] == "START":
                 start_found = True
@@ -373,7 +470,11 @@ def control_data_tuple_dict(control_file, data_name, export_calls=True):
     # look through all the lines  of the file
     for line in control_content:
         line_content = line[:-1].split('\t')
-
+        
+        # this allows you to set a data tuple to none and therefore not use interpreter matching for example
+        if line_content[0] == "END DATA" and start_found and (len(keys) == 0 or len(values) == 0):
+            return None
+        
         # first check for termination constraint such that END DATA will not be part of the output
         if start_found and line_content[0] == "END DATA":
             break
@@ -384,9 +485,6 @@ def control_data_tuple_dict(control_file, data_name, export_calls=True):
 
         # if the section has been found, look for start, then collect data
         if section_found:
-            # this allows you to set a data tuple to none and therefore not use interpreter matching for example
-            if line_content == "END DATA" and len(keys) == 0 or len(values) == 0:
-                return None
 
             # collect data in the way described earlier
             if start_found:
@@ -443,106 +541,6 @@ def control_data_direct_list(control_file, data_name):
 
 
 
-def request_design_parameter_domain(design_parameter_name: str):
-    """
-    This functions asks the user to state the value ranges of design parameters.
-    It has two modes of operation:
-
-    - direct declaration
-        In this mode, the user must declare the value range stating integers or floats directly.
-        The user is not to use blank spaces alongside commas to delimit the vlaues from one another.
-
-    - declaration via closed interval(mathematics like intervals)
-        In this mode, the user must define three values: upper_bound, lower_bound and stepsize.
-        The step size must be a smaller value than the difference between upper_bound to lower_bound.
-        The upper_bound and lower_bound can not be the same value.
-        The values will be spread linearly except the upper_bound which will always be included.
-        This mode is great for stating large value ranges.
-    
-    The function can also accept a single value, it will check wheather it can typecast it though.
-    """
-
-    # make sure user input is rather clean
-    input_constraints = {
-        'keywords': ["exit"],
-        'allowed_characters':  ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ",", " ", "."],
-        'disallowed_characters': [],
-        'delimiters': [",", " "]
-    }
-
-    # the request message gives clear instructions about the modes and examples of the correct input format
-    request_message = f"""
-    Define the value domain of {design_parameter_name}.
-
-    Either state each value individually:
-    <value 1>, <value_2>,<value_3>,<value_4>
-
-    OR
-
-    State a lower and upper bound and a step size 
-    to define the value range as a closed intervall:
-    <lower_bound> <upper_bound> <step_size>
-    
-    {design_parameter_name}: """
-
-    # get clean user input
-    instruction = get_and_validate_input(request_message, input_constraints)
-
-    # this is a redundant exit clause, it could be deleted but it doesnt harm anyone so why should we?
-    if instruction == "exit":
-        exit()
-    
-    # computing the desing parameter value range, this is a loop since the input can still be errornous
-    design_parameter_list = []
-    while design_parameter_list == []:
-        try:
-    
-            # direct declaration mode
-            if "," in instruction:
-
-                # accept the value range directly but check for castability
-                for value in instruction.split(','):
-                    design_parameter_list.append(float(value))
-
-            # declaration via closed interval mode
-            elif " " in instruction:
-
-                # get the requiered values
-                lower_upper_step = instruction.split(' ')
-                lower_limit = float(lower_upper_step[0])
-                upper_limit = float(lower_upper_step[1])
-                stepsize = float(lower_upper_step[2])
-
-                # catch invalid inputs that are function specific
-                if lower_limit <= upper_limit and  stepsize < (upper_limit - lower_limit):
-                    stepsize_digits = len(lower_upper_step[2])
-                    values_n = int(round(((upper_limit - lower_limit) / stepsize), stepsize_digits)) + 1
-                    design_parameter_list = [round(lower_limit + index * stepsize, stepsize_digits) for index in range(values_n)]
-                    design_parameter_list.append(upper_limit)
-                else:
-
-                    # if the constraints arent met, the instruction must be restated
-                    print("\nInvalid input, please restate your instruction. \nPerhabs you have defined a interval with length 1 as in '1 1 1'.")
-                    instruction = get_and_validate_input(request_message, input_constraints)
-            
-            # single value input
-            else:
-
-                # check wheather the value can be typecasted
-                value = float(instruction)
-                design_parameter_list.append(value)
-
-        except:
-
-            # if the function still can not process the input it will ask for it again, who knows what went wrong
-            print("\nInvalid input, please restate your instruction.")
-            instruction = get_and_validate_input(request_message, input_constraints)
-            
-    # give feedback about the value range that has been created
-    print(f"\nValues {design_parameter_name}:\n", design_parameter_list)
-    print("\nMistakes can be fixed in the next step.\n\n")
-
-    return design_parameter_list
 
 
 
@@ -583,6 +581,4 @@ def slave_mode(file_dat_path):
         connection.send(result_entry)
 import interaction
 
-control_file = "control_file.tsv"
-
-print(control_data_direct_list(control_file, "CSV INLINE KEYWORDS"))
+print(control_data_string_dict("/home/engelmann/neuENSIMA/control_file.tsv", "INTERPRETER SELECTION"))

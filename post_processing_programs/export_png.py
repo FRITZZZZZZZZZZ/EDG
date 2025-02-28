@@ -10,6 +10,7 @@ def export_csv(argument_vector):
 
     current_working_directory = os.getcwd()
     print(current_working_directory)
+    print(jobname, "DAS IST DER JOBNMAME")
 
     with open("SessionFileShowAndExportPost.ofs", 'w') as session_file_export:
         session_file_export.write(

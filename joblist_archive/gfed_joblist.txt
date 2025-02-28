@@ -1,0 +1,20 @@
+NAME
+gfed
+VALUE RANGES
+Blank Thickness
+0.8
+Binder Friction
+0.06
+Binder Pressure
+-3.0
+Die Radius
+3.0
+Scale X
+1.0
+Scale Y
+1.0
+HEADER
+Jobname,Status,Blank Thickness,Binder Friction,Binder Pressure,Die Radius,Scale X,Scale Y
+START
+gfed_BlTh_0.8_BiFr_0.06_BiPr_-3.0_DiRa_3.0_ScX_1.0_ScY_1.0,unsuccessful,0.8,0.06,-3.0,3.0,1.0,1.0
+END DATA

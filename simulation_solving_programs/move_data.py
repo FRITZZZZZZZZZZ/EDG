@@ -25,6 +25,5 @@ def move_data(argument_vector):
         except:
             print(f"Could not move {jobname}.{file_type}.")
             
-        
 instructions = sys.argv
 move_data(instructions)

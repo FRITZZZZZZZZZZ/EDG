@@ -1,0 +1,20 @@
+NAME
+aberErnsthaftJetzt
+VALUE RANGES
+Blank Thickness
+0.8
+Binder Friction
+0.03
+Binder Pressure
+-3.0
+Die Radius
+4.0
+Scale X
+1.0
+Scale Y
+1.0
+HEADER
+Jobname,Status,Blank Thickness,Binder Friction,Binder Pressure,Die Radius,Scale X,Scale Y
+START
+aberErnsthaftJetzt_BlTh_0.8_BiFr_0.03_BiPr_-3.0_DiRa_4.0_ScX_1.0_ScY_1.0,in_progress,0.8,0.03,-3.0,4.0,1.0,1.0
+END DATA

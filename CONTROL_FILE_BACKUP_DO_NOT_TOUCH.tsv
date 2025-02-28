@@ -36,7 +36,7 @@ ITEM NAME	CONTENT
 START
 Start Simulation Method	start_simulation.py			
 Termination Keyword	DER GESAMTE ANGEFORDERTE SPEICHER BETRAEGT	
-Stop Simulation Keyword	ofd SIGNAL STOP
+Stop Simulation Command	ofd SIGNAL STOP
 Transfer to Post	'dat erg t51 t52 out inf log'
 END DATA
 
@@ -57,7 +57,7 @@ START
 Result Raw Folders	erg	raw_results/erg_folders
 Result Png	png	raw_results/results_png
 Result CSV	csv	raw_results/results_csv
-Error Files	'inf log out t51 t52 erg'	raw_results/error_results
+Error Files	'inf log out'	raw_results/error_results
 END DATA
 
 NAME

@@ -9,7 +9,6 @@ a pre processing phase
 """
 
 def move_data(argument_vector):
-    delete = False
     try:
         file_types = argument_vector[1]
         target_folder_path = argument_vector[2]
@@ -21,6 +20,8 @@ def move_data(argument_vector):
 
     for file_type in file_type_list:
         try:
+
+            print(os.path.isdir(f"{jobname}.{file_type}"))
             shutil.move(f"{jobname}.{file_type}", f"{target_folder_path}")
         except:
             print(f"Could not move {jobname}.{file_type}.")

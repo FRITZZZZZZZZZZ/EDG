@@ -1,0 +1,20 @@
+NAME
+lkjb
+VALUE RANGES
+Blank Thickness
+1.0
+Binder Friction
+1.0
+Binder Pressure
+1.0
+Die Radius
+-3.0
+Scale X
+1.0
+Scale Y
+1.0
+HEADER
+Jobname,Status,Blank Thickness,Binder Friction,Binder Pressure,Die Radius,Scale X,Scale Y
+START
+lkjb_BlTh_1.0_BiFr_1.0_BiPr_1.0_DiRa_-3.0_ScX_1.0_ScY_1.0,unsuccessful,1.0,1.0,1.0,-3.0,1.0,1.0
+END DATA
