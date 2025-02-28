@@ -581,4 +581,3 @@ def slave_mode(file_dat_path):
         connection.send(result_entry)
 import interaction
 
-print(control_data_string_dict("/home/engelmann/neuENSIMA/control_file.tsv", "INTERPRETER SELECTION"))

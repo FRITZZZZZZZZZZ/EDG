@@ -228,25 +228,21 @@ def post_processing(job, base_name, solving_success, post_tuple, file_sorting_tu
             time_passed = 0 
             for post_command_name in post_command_names:
                 command = post_commands[post_command_name]
-
+                n_files = len(os.listdir(new_working_directory))
                 # pick the right interpreter to allow use of custom programs
                 interpreter = pick_interpreter(interpreter_tuple, command)
                 os.system(f"{interpreter} {command} {jobname}")
-
                 # wait for open form to export the desired file formats.                 
                 while time_passed <= post_processing_time_out:
-
                     # This is done via time out because open form is a different process and can take some time
-                    n_files = len(os.listdir(new_working_directory))
                     time.sleep(1)
-                    new_n_files = len(os.listdir(new_working_directory))
-                    if new_n_files > n_files:
-                        break
                     time_passed += 1
                     if time_passed >= post_processing_time_out:
                         os.chdir({current_working_directory})
-                        print(f"{command} did not work.")
                         return False
+                    new_n_files = len(os.listdir(new_working_directory))
+                    if new_n_files > n_files:
+                        break
             os.chdir(f"{current_working_directory}")
 
             # sort the results according to the fact that the solving has been successful
@@ -320,36 +316,35 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                 job_management.update_joblist_files(base_name, joblist_tuple)
 
                 # try solving the job
-#                try:
+                try:
                     # start the preprocessing and prepare the input data
-                success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple, pre_processing_files)
-                # start the simulation once the preprocessing was succcsessful, append to error list else
-                if success_pre_processing:
-                    success_solving = solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_limit, simulation_solving_files)
-                # if the preprocessing did not work, abort the job and go to the next one
-                else:
-                    print("\nThe pre processing was not successful, please check the control file or pre processing programs.\n")
-                    return False
-                # update the joblist on wheather the job was not solved in time or in loop limit
-                if not success_solving:
-                    job['Status'] = "unsuccessful"
-                    joblist_tuple = (joblist, full_header, value_range_list)
-                    job_management.update_joblist_files(base_name, joblist_tuple)                        
+                    success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple, pre_processing_files)
+                    # start the simulation once the preprocessing was succcsessful, append to error list else
+                    if success_pre_processing:
+                        success_solving = solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_limit, simulation_solving_files)
+                    # if the preprocessing did not work, abort the job and go to the next one
+                    else:
+                        print("\nThe pre processing was not successful, please check the control file or pre processing programs.\n")
+                        return False
+                    # update the joblist on wheather the job was not solved in time or in loop limit
+                    if not success_solving:
+                        job['Status'] = "unsuccessful"
+                        joblist_tuple = (joblist, full_header, value_range_list)
+                        job_management.update_joblist_files(base_name, joblist_tuple)                        
 
-                # try performing the post processing according to the success of the simulation
-                print(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
-                succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
-                if succes_post_processing:
-                    job['Status'] = "done"
-                    joblist_tuple = (joblist, full_header, value_range_list)
-                    job_management.update_joblist_files(base_name, joblist_tuple)
-                    ready = True
-                    continue
-                else:
-                    print("\nThe post processing was not successful, check control file or post processing programs.\n")
-                    return False
+                    # try performing the post processing according to the success of the simulation
+                    succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
+                    if succes_post_processing:
+                        job['Status'] = "done"
+                        joblist_tuple = (joblist, full_header, value_range_list)
+                        job_management.update_joblist_files(base_name, joblist_tuple)
+                        ready = True
+                        continue
+                    else:
+                        print("\nThe post processing was not successful, check control file or post processing programs.\n")
+                        return False
                 # if anythin else goes wrong, append the job to the error list and continue the series
- #               except:
+                except:
                     print("\nSomething went wrong while running the simulation series.\n")
                     return False
                 

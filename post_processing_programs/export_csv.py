@@ -8,9 +8,7 @@ def export_csv(argument_vector):
         pass
 
     current_working_directory = os.getcwd()
-    print(current_working_directory)
-    print(jobname, "DAS IST DER JOBNMAME")
-    
+
     with open("SessionFileShowAndExportPost.ofs", 'w') as session_file_export:
         session_file_export.write(
             f"""
@@ -34,6 +32,7 @@ def export_csv(argument_vector):
     
     try:
         os.system(f"ofd -s SessionFileShowAndExportPost.ofs -b")
+        
     except:
         print("Export did not work.")
 

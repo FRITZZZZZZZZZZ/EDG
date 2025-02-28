@@ -29,9 +29,8 @@ def export_csv(argument_vector):
         setProcessActive(process=1, view="3D View 4", active=false)
         showMin()
         showMax()
-        takeSnapshot("3D View", filename="{current_working_directory}/{jobname}.png", format=Png, drawLogo=Off, drawBorder=Off)
-        quit()
-        """)
+        takeSnapshot("3D View", filename="{current_working_directory}/{jobname}.png", format=Png, drawLogo=Off, drawBorder=Off)quit()
+        quit()""")
     
     try:
         os.system(f"ofd -s SessionFileShowAndExportPost.ofs -b")

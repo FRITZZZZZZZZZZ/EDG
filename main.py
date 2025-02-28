@@ -100,9 +100,11 @@ design_parameter_domains = [None for parameter in design_parameter_names]
 base_name = None
 instruction = None
 jobs_n = 1
-time_limit = 10
+time_limit = 900
 loop_limit = 10
-processing_time_limit = 10
+processing_time_limit = 5
+joblist_file_exists = False
+job_tuple = None
 
 if len(argument_vector) == 1:
     print(welcome_message)
@@ -171,19 +173,43 @@ if len(argument_vector) == 1:
         
         # make sure that all design parameter ranges are declared
         while None in design_parameter_domains or base_name == None:
-
             # ask for the base name, this is the name that every result associated with the data generation will hold
             if base_name == None:
                 base_name_constraint = {'keywords':[], 'allowed_characters':all_letters + ["_"]}
                 base_name = interaction.get_and_validate_input(base_name_message, base_name_constraint)
 
-            # state value ranges for each design parameter contained in the associated control_file section
-            for parameter_index in range(len(design_parameter_names)):
-                parameter_name = design_parameter_names[parameter_index]
-                if design_parameter_domains[parameter_index] == None:
-                    new_domain = interaction.request_design_parameter_domain(parameter_name)
-                    design_parameter_domains[parameter_index] = new_domain
+                # if the base name already exists, recover its joblist
+                retrieved_job_tuple = job_management.retrieve_joblist(base_name)
+                if not retrieved_job_tuple == None:
+                    joblist_file_exists = True
+                    joblist, header, value_ranges = retrieved_job_tuple
 
+                    # check wheather the header fits the design parameter names
+                    metaless_header = header[2:]
+                    if metaless_header == design_parameter_names:
+                        # if the headers do match, set the design parameter value ranges to the retrieved value ranges
+                        design_parameter_domains = value_ranges
+                        
+                        # set all jobs that are not finished to pending
+                        for job in joblist:
+                            if job['Status'] == "in_progess":
+                                job['Status'] = "pending"
+                            else:
+                                pass
+                        job_tuple = retrieved_job_tuple
+                        
+                        
+                # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
+                else:
+                    joblist_file_exists = False
+
+            # state value ranges for each design parameter contained in the associated control_file section
+            if None in design_parameter_domains:
+                for parameter_index in range(len(design_parameter_names)):
+                    parameter_name = design_parameter_names[parameter_index]
+                    if design_parameter_domains[parameter_index] == None:
+                        new_domain = interaction.request_design_parameter_domain(parameter_name)
+                        design_parameter_domains[parameter_index] = new_domain
             # give user a summery of the simulation series
             print("\nIf you want to change a value range, just state the design Parameter name.\n Available names:\n")
             for parameter_index in range(len(design_parameter_names)):
@@ -229,11 +255,19 @@ if len(argument_vector) == 1:
 
         if instruction == "Y":
 
-            # create the joblist and create a joblist backup 
-            joblist_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
-            job_management.update_joblist_files(base_name, joblist_tuple, False)
+            if job_tuple == None:
+                # create the joblist and create a joblist backup 
+                job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
+
+            if not joblist_file_exists:
+                # if the joblist file does not yet exist or does not contain information, it should be overwritten
+                job_management.update_joblist_files(base_name, job_tuple)
+            else:
+                # if the joblist file is retrievable, information should only be added
+                job_management.update_joblist_files(base_name, job_tuple, False)
+
             # simulate the jobs in the joblist and record failed simulations
-            success_series = simulation_management.run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple, time_limit, loop_limit, processing_time_limit)
+            success_series = simulation_management.run_simulation_series(base_name, job_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple, time_limit, loop_limit, processing_time_limit)
             # if the series was successful, create the dataset
             if success_series:
                 create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, False)

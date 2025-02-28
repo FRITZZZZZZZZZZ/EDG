@@ -1,11 +1,6 @@
 import os
 import create_jobs
 
-
-csv_result_inline_keywords = ["Thickness Change %-Min", "Thickness Change %-Max"] 
-csv_result_nextline_keywords = ["*Formability"]
-csv_header = ["Thickness Change %-Min", "Thickness Change %-Max", "Inadequate Stretch", "Wrinkling", "Wrinkling Tendency", "Safe", "Risk of Cracks", "Severe Thinning", "Cracks"]
-
 def create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header,include_header=True):
     
     # define important variables
@@ -14,7 +9,11 @@ def create_dataset(base_name, design_parameter_names, csv_result_inline_keywords
     csv_result_directory_path = f"{current_working_directory}/raw_results/results_csv/{base_name}"
 
     # look through the directory and find all file names
-    csv_result_file_names = os.listdir(csv_result_directory_path)
+    try:
+        csv_result_file_names = os.listdir(csv_result_directory_path)
+    except:
+        print("No csv files to bundle up.")
+        return False
     joblist = create_jobs.retrieve_joblist(joblist_file_path)  
 
     data_set_lines = []

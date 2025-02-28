@@ -97,46 +97,67 @@ def retrieve_joblist(base_name):
 
     current_working_directory = os.getcwd()
     joblist_file_path = f"{current_working_directory}/joblist_archive/{base_name}_joblist.txt"
+    try:
+        with open(joblist_file_path, 'r') as joblist:
+            joblist_content = [line for line in joblist]
 
-    with open(joblist_file_path, 'r') as joblist:
-        joblist_content = [line for line in joblist]
+        # find value ranges
+        value_ranges_found = False
+        value_name_next = False
+        value_range_next = False
+        value_names = []
+        value_ranges = []
+        for line in joblist_content:
+            line = line[:-1]
+            if line == "HEADER":
+                break
+            if line == "VALUE RANGES":
+                value_name_next = True
+                continue
+            if value_name_next:
+                value_names.append(line)
+                value_name_next = False
+                value_range_next = True
+                continue
+            if value_range_next:
+                values = [float(value) for value in line.split(' ')]
+                value_ranges.append(values)
+                value_name_next = True
+                value_range_next = False
 
-    # find header
-    header_found = False
-    for line in joblist_content:
-        line = line[:-1]
+        # find header
+        header_found = False
+        for line in joblist_content:
+            line = line[:-1]
+            if header_found:
+                header = line.split(',')
+                break
+            if "HEADER" in line:
+                header_found = True
 
-        if header_found:
-            header = line.split(',')
-            break
+        keys = header
 
-        if "HEADER" in line:
-            header_found = True
+        # make jobs
+        job_value_list = []
+        start_found = False
+        for line in joblist_content:
+            line = line[:-1]
+            if "END DATA" in line:
+                break
+            if start_found:
+                job_values = line.split(',')
+                job_value_list.append(job_values)
+            if "START" in line:
+                start_found = True 
+        joblist = []
+        for value_list in job_value_list:
+            job = dict(zip(keys, value_list))
+            joblist.append(job)
+    except:
+        joblist = None
 
-    keys = header
+    return joblist, header, value_ranges
 
-    # make jobs
-    job_value_list = []
-    start_found = False
-    for line in joblist_content:
-        line = line[:-1]
-
-        if "END DATA" in line:
-            break
-
-        if start_found:
-            job_values = line.split(',')
-            job_value_list.append(job_values)
-
-        if "START" in line:
-            start_found = True 
-
-    joblist = []
-    for value_list in job_value_list:
-        job = dict(zip(keys, value_list))
-        joblist.append(job)
-
-    return joblist   
 
 def update_joblist_files(job_base_name : str, job_tuple, overwrite=True):
     """
@@ -181,7 +202,7 @@ def update_joblist_files(job_base_name : str, job_tuple, overwrite=True):
                 header_found = True
         
         # retrieve the existing joblist
-        existing_joblist = retrieve_joblist(job_base_name)
+        existing_joblist, header, value_ranges = retrieve_joblist(job_base_name)
 
         # combine the new and the old joblist
         combined_joblist = existing_joblist
@@ -245,3 +266,4 @@ def update_joblist_files(job_base_name : str, job_tuple, overwrite=True):
     # write all job vlaues to the content list
     with open(f"{current_working_directory}/joblist_archive/{job_base_name}_joblist.txt", 'w') as new_joblist_file:
         new_joblist_file.write(joblist_content)
+
