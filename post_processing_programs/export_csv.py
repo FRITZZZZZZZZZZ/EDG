@@ -23,7 +23,7 @@ def export_csv(argument_vector):
             view.multiView.setActive(views=nextView)
             setVariable("Scalar:No Variable", view="3D View 3")
             view.multiView.setActive(views=nextView)
-            setProcessActive(process=1, view="3D View 1", active=false)
+            setProcessActive(process=1, view="3D View 4", active=false)
             showMin()
             showMax()
             file.export.apply("{current_working_directory}/{jobname}.csv", format="CSV/Results", append=On, objectType=Labels, marker="*", exportCoordinates=Off, title="Front Door Results")

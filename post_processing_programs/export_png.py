@@ -17,7 +17,7 @@ def export_csv(argument_vector):
         f"""
         mode(Post)
         file.open.apply("{current_working_directory}/{jobname}.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=Recommended, curves=OnDemand)
-        hide(items="process(1):Blankholder,Die,Punch")
+        hide(items="process(1):Binder,Die,Punch")
         view.multiView.set(views="4 Views")
         view.multiView.setActive(views=nextView)
         setVariable("Scalar:Formability", view="3D View 2")

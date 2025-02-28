@@ -278,11 +278,13 @@ def post_processing(job, base_name, solving_success, post_tuple, file_sorting_tu
 
     except:
         # clean up the directory, leave only allowed files here
+        os.chdir(f"{current_working_directory}/post_processing_programs")
         os.system(f"python clean_directory.py {allowed_files}")
         os.chdir(f"{current_working_directory}")
         return False
 
     # clean up the directory, leave only allowed files here
+    os.chdir(f"{current_working_directory}/post_processing_programs")
     os.system(f"python clean_directory.py {allowed_files}")
     os.chdir(f"{current_working_directory}")
     return True
