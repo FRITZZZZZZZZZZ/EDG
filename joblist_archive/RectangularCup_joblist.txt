@@ -16,16 +16,16 @@ Scale Y
 HEADER
 Jobname,Status,Blank Thickness,Binder Friction,Binder Pressure,Die Radius,Scale X,Scale Y
 START
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_0.85,in_progress,0.8,0.0,-4.0,3.0,0.85,0.85
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_0.9,in_progress,0.8,0.0,-4.0,3.0,0.85,0.9
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_1.0,done,0.8,0.0,-4.0,3.0,0.85,1.0
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_0.95,in_progress,0.8,0.0,-4.0,3.0,0.85,0.95
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_0.85,done,0.8,0.0,-4.0,3.0,0.9,0.85
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_0.9,done,0.8,0.0,-4.0,3.0,0.9,0.9
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_1.0,done,0.8,0.0,-4.0,3.0,0.9,1.0
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_0.95,done,0.8,0.0,-4.0,3.0,0.9,0.95
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.85,in_progress,0.8,0.0,-4.0,3.0,1.0,0.85
-RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.9,in_progress,0.8,0.0,-4.0,3.0,1.0,0.9
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_0.85,pending,0.8,0.0,-4.0,3.0,0.85,0.85
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_0.9,pending,0.8,0.0,-4.0,3.0,0.85,0.9
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_1.0,pending,0.8,0.0,-4.0,3.0,0.85,1.0
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.85_ScY_0.95,pending,0.8,0.0,-4.0,3.0,0.85,0.95
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_0.85,pending,0.8,0.0,-4.0,3.0,0.9,0.85
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_0.9,pending,0.8,0.0,-4.0,3.0,0.9,0.9
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_1.0,pending,0.8,0.0,-4.0,3.0,0.9,1.0
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.9_ScY_0.95,pending,0.8,0.0,-4.0,3.0,0.9,0.95
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.85,pending,0.8,0.0,-4.0,3.0,1.0,0.85
+RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.9,pending,0.8,0.0,-4.0,3.0,1.0,0.9
 RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0,pending,0.8,0.0,-4.0,3.0,1.0,1.0
 RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.95,pending,0.8,0.0,-4.0,3.0,1.0,0.95
 RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_0.95_ScY_0.85,pending,0.8,0.0,-4.0,3.0,0.95,0.85

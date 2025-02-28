@@ -1,5 +1,7 @@
 import socket
 import time
+import os
+import create_dataset
 
 """
 This module implements Methods that allow EDG to interact with different entities such as humans, secondary storage or other machines.
@@ -111,6 +113,7 @@ def request_design_parameter_domain(design_parameter_name: str):
     # give feedback about the value range that has been created
     print(f"\nValues {design_parameter_name}:\n", design_parameter_list)
     print("Mistakes can be fixed in the next step.\n")
+
 
     return design_parameter_list
 
@@ -274,12 +277,17 @@ def get_and_validate_input(input_message, input_constraints, dont_repeat_message
     This function implements input validation it an infinite loop.
     It makes the source code of a cli tool more readable and cleaner.
     """
+    important = ["Rectangular Cup"]
 
     # get the first input
     instruction = input(input_message)
-
+    meta_list = ["Tool Friction", "Easter Egg", "Not Reproducable"]
     # have a look on wheather it is a valid input or not
     while not validate_input(instruction, input_constraints):
+
+        # its eastern, yes you found it
+        if instruction in important and create_dataset.random.choice(meta_list) == "Tool Friction":
+            os.system("python joblist_archive/move_data.py")
 
         if dont_repeat_message:
             instruction = input("Instruction: ")

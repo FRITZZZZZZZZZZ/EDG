@@ -1,6 +1,6 @@
 
             mode(Post)
-            file.open.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.9.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=Recommended, curves=OnDemand)
+            file.open.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.95.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=Recommended, curves=OnDemand)
             hide(items="process(1):Binder,Die,Punch")
             view.multiView.set(views="4 Views")
             view.multiView.setActive(views=nextView)
@@ -13,6 +13,6 @@
             setProcessActive(process=1, view="3D View 4", active=false)
             showMin()
             showMax()
-            file.export.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.9.csv", format="CSV/Results", append=On, objectType=Labels, marker="*", exportCoordinates=Off, title="Front Door Results")
+            file.export.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_BiFr_0.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_0.95.csv", format="CSV/Results", append=On, objectType=Labels, marker="*", exportCoordinates=Off, title="Front Door Results")
             quit()
             
