@@ -141,9 +141,9 @@ def solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_lim
     start_command = solving_commands[solving_commands_names[0]]
     # keywords for stopping the simulation and for when the simulation is done
     done_keyword = solving_commands[solving_commands_names[1]]
-    stop_command  = solving_commands[solving_commands_names[2]]
     # the list of file types to be transfered to post processing, this is a blank space delimited list in string format
     export_file_types = solving_commands[solving_commands_names[3]]
+    
     # more important variables
     jobname = job['Jobname']
     inf_file = None

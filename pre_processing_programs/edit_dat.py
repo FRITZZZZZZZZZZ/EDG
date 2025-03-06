@@ -7,12 +7,16 @@ def edit_dat(argument_vector):
     try:
         property_keyword = argument_vector[1]
         target_index = argument_vector[2]
-        element_keyword = argument_vector[3]        
-        file_path_original = argument_vector[4]
-        target_value = argument_vector[5]        
-        jobname = argument_vector[6]        
+        modification_command = argument_vector[3]
+        element_keyword = argument_vector[4]        
+        file_path_original = argument_vector[5]
+        target_value = argument_vector[6]        
+        jobname = argument_vector[7]        
     except:
         pass
+    
+    if modification_command == "negative absolute value":
+        target_value = str(-abs(float(target_value)))
 
     if os.path.exists(fr"{jobname}.dat"):
         with open(fr"{jobname}.dat", 'r') as file_original:

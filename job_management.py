@@ -97,6 +97,7 @@ def retrieve_joblist(base_name):
 
     current_working_directory = os.getcwd()
     joblist_file_path = f"{current_working_directory}/joblist_archive/{base_name}_joblist.txt"
+    
     try:
         with open(joblist_file_path, 'r') as joblist:
             joblist_content = [line for line in joblist]
@@ -153,10 +154,11 @@ def retrieve_joblist(base_name):
         for value_list in job_value_list:
             job = dict(zip(keys, value_list))
             joblist.append(job)
+        return joblist, header, value_ranges
+    
     except:
         joblist = None
 
-    return joblist, header, value_ranges
 
 
 def update_joblist_files(job_base_name : str, job_tuple, overwrite=True):

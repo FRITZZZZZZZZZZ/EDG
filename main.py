@@ -18,9 +18,7 @@ welcome_message = """
 ENSIMA Data Generator(EDG)
 
 For usage information see readme.md .
-State 'exit' to close application at any point.
-
-"""
+State 'exit' to close application at any point."""
 
 index_message = """
 State one of the following options as your next instruction:
@@ -84,7 +82,7 @@ all_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
 control_file_backup = r"CONTROL_FILE_BACKUP_DO_NOT_TOUCH.tsv"
 control_file = "control_file.tsv"
 
-files, file_roles = interaction.control_data_string_dict(control_file, "REQUIERED FILES")
+environment_tuple = interaction.control_data_string_dict(control_file, "ENVIRONMENT VARIABLES")
 pre_tuple = interaction.control_data_string_dict(control_file, "PRE PROCESSING")
 solve_tuple = interaction.control_data_string_dict(control_file, "SIMULATION SOLVING")
 post_tuple = interaction.control_data_string_dict(control_file, "POST PROCESSING")
@@ -106,20 +104,17 @@ loop_limit = 10
 processing_time_limit = 5
 joblist_file_exists = False
 job_tuple = None
+current_working_directory = os.getcwd()
+
+# set up simulation solving environment
+#os.chdir(f"{current_working_directory}/simulation_solving_programs")
+environment_variable_values, environment_variable_names = environment_tuple
+for environment_variable in environment_variable_names:
+    os.environ[environment_variable] = environment_variable_values[environment_variable]
+#os.chdir(f"{current_working_directory}")
 
 if len(argument_vector) == 1:
     print(welcome_message)
-
-    for role in file_roles:
-        try:
-            current_file = files[role]
-            with open(current_file, 'r') as file_current:
-                pass
-            file_name = files[role]
-            print(f"file {role}: {file_name}\n")
-        except:
-            print(f"\nfile {role} could not be opened, please check working directory or change in settings.\n")
-
     while True:
 
         # first menu, user can decide to enter slave mode, reset control file, continue with series definition or exit
@@ -193,11 +188,12 @@ if len(argument_vector) == 1:
                         
                         # set all jobs that are not finished to pending
                         for job in joblist:
-                            if job['Status'] == "in_progess":
+                            if not job['Status'] == "done" or not job['Status'] == "unsuccessful":
                                 job['Status'] = "pending"
                             else:
                                 pass
                         job_tuple = retrieved_job_tuple
+                        job_management.update_joblist_files(base_name, job_tuple)
                         
                         
                 # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
