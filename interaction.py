@@ -147,12 +147,21 @@ def validate_input(user_input, input_constraints):
     # catch the constrained dictionary, works with full or partial definition
     try:
         keywords = input_constraints['keywords']
+    except:
+        pass
+    try:
         allowed_characters = input_constraints['allowed_characters']
+    except:
+        pass
+    try:
         disallowed_characters = input_constraints['disallowed_characters']
+    except:
+        pass
+    try:
         delimiters = input_constraints['exclusive_delimiters']
     except:
         pass
-
+    
     # catch the users wish to exit
     if user_input == "exit":
         exit()
@@ -193,85 +202,7 @@ def validate_input(user_input, input_constraints):
     else:
         print("\nInvalid input, please restate your instruction.\n")
         return False
-    
-
-def validate_input(user_input, input_constraints):
-    """
-    This function lets you filter out invalid user inputs.
-
-    - You dont have to use all constraint types but make sure to 
-    name the constraint types correctly when declaring the constraint
-    dictionary in your program.
-    - If you dont define anything, nothing will be filtered out.
-    - Inputs containing predefined keywords will pass right through.
-    - Inputs containing anything else than allowed_characters will need to be restated.
-    - Inputs containing unallowed_characters will need to be restated.
-    - Inputs containing more than one exlusive_delimiters need to be restated.
-    
-    This function will not avoid all errornous user inputs but narrows their range
-    down dramaticly.
-    
-    Catch further invalid user inputs during the input processing function execution.
-    
-    Use this function whenever user input is needed, to document the nature of the input.
-    """
-
-    # predefine all variables needed for execution, will be ignored when it is empty list
-    keywords = []
-    allowed_characters = []
-    disallowed_characters = []
-    delimiters = []
-
-    # catch the constrained dictionary, works with full or partial definition
-    try:
-        keywords = input_constraints['keywords']
-        allowed_characters = input_constraints['allowed_characters']
-        disallowed_characters = input_constraints['disallowed_characters']
-        delimiters = input_constraints['exclusive_delimiters']
-    except:
-        pass
-
-    # catch the users wish to exit
-    if user_input == "exit":
-        exit()
-
-    # let keywords pass through
-    if user_input in keywords:
-        return True
-
-    # if allowed characters are defined, stop anything that uses characters other than allowed ones
-    if len(allowed_characters)>0:
-        for user_character in user_input:
-            if user_character in allowed_characters:
-                continue
-            else: 
-                print("\nInvalid input, please restate your instruction.")
-                return False
-    
-    # if disallowed characters are defined, stop anything that uses one of them
-    if len(disallowed_characters)>0:        
-        for user_character in user_input:
-            if user_character in disallowed_characters:
-                print("\nInvalid input, please restate your instruction.")
-                return False
-
-    # if there are two exclusive delimiters present at the same time, stop the input
-    if len(delimiters)>0:
-        both_delimiters_contained = True
-        for delimiter in delimiters:
-            both_delimiters_contained = both_delimiters_contained and delimiter in user_input
-        if both_delimiters_contained:
-            print("\nInvalid input, only use one delimitter.")
-            return False
-        
-    # if inputs are stopped based on black or white listing, allow anything that has not been stopped
-    # this enables the user to define unique names. Else, stop anything that has not been passed through
-    if len(allowed_characters)>0 or len(disallowed_characters)>0:
-        return True
-    else:
-        print("\nInvalid input, please restate your instruction.")
-        return False
-        
+            
 def get_and_validate_input(input_message, input_constraints, dont_repeat_message=False):
     """
     This function implements input validation it an infinite loop.

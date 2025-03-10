@@ -1,8 +1,0 @@
-NAME
-Rectangular_cup
-HEADER
-Blank Thickness,Binder Friction,Binder Pressure,Die Radius,Scale X,Scale Y,Thickness Change %-Min,Thickness Change %-Max,Inadequate Stretch,Wrinkling,Wrinkling Tendency,Safe,Risk of Cracks,Severe Thinning,Cracks,
-START
-1.2,1.0,1.0,-4.0,0.06,1.0,-89.37,5.75,2.34,38.51,3.86,25.15,0.97,1.11,28.06
-1.0,1.0,1.0,-4.0,0.06,1.0,-89.37,5.75,2.34,38.51,3.86,25.15,0.97,1.11,28.06
-END DATA

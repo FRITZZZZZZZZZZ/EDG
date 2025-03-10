@@ -8,25 +8,37 @@ START
 .t51	geometrie			
 .dat	rectangular_cup			
 END DATA				
-				
+
+NAME
+ENVIRONMENT VARIABLES
+HEADER
+ENVIRONMENT COMMAND
+START
+GNS_LICENSE_SERVER_TYPE	RLM
+GNS_LICENSE_SERVER	172.20.254.10
+GNS_LICENSE_SERVER_PORT_IPv6	5053
+INDEEDLIC	
+GNS_LICENSE_NODELOCKED	
+END DATA
+
 NAME				
 INTERPRETER SELECTION				
 HEADER				
 LANGUAGE SUFFIX	INTERPRETER			
 START					
 END DATA				
-				
+
 NAME				
 PRE PROCESSING				
 HEADER				
 DESIGN_PARAMETER_NAME	EDITING_METHOD	SETTINGS DISTRIBUTION INDIPENDENT	SETTINGS DISTRIBUTION DEPENDENT GERMAN	REQUIERED FILE
 START				
 Blank Thickness	edit_csv.py	'index x y z' z 0.8	KNOTENGEOMETRIE LISTENGESTEUERT	geometrie.t51
-Binder Friction	edit_dat.py	[Fr] 0	Binder	rectangular_cup.dat
-Binder Pressure	edit_dat.py	[p] 3	Binder	rectangular_cup.dat
-Die Radius	make_tools.py
 Scale X	scale.py	x		
 Scale Y	scale.py	y
+Friction	edit_dat.py	[Fr] 0 None	Binder	rectangular_cup.dat
+Pressure	edit_dat.py	[p] 3 'negative absolute value'	Binder	rectangular_cup.dat
+Die Radius	make_tools.py
 END DATA
 
 NAME
@@ -35,8 +47,8 @@ HEADER
 ITEM NAME	CONTENT			
 START
 Start Simulation Method	start_simulation.py			
-Termination Keyword	DER GESAMTE ANGEFORDERTE SPEICHER BETRAEGT	
-Stop Simulation Command	ofd SIGNAL STOP
+Successful Termination Keyword	DER GESAMTE ANGEFORDERTE SPEICHER BETRAEGT	
+Stop Simulation Keyword	ofd SIGNAL STOP
 Transfer to Post	'dat erg t51 t52 out inf log'
 END DATA
 
@@ -57,7 +69,7 @@ START
 Result Raw Folders	erg	raw_results/erg_folders
 Result Png	png	raw_results/results_png
 Result CSV	csv	raw_results/results_csv
-Error Files	'inf log out'	raw_results/error_results
+Error Files	'inf log out t51 t52 erg'	raw_results/error_results
 END DATA
 
 NAME

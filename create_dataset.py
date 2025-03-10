@@ -1,5 +1,5 @@
 import os
-import create_jobs
+import job_management
 import random
 
 
@@ -16,7 +16,7 @@ def create_dataset(base_name, design_parameter_names, csv_result_inline_keywords
     except:
         print("No csv files to bundle up.")
         return False
-    joblist = create_jobs.retrieve_joblist(joblist_file_path)  
+    joblist = job_management.retrieve_joblist(base_name)  
 
     data_set_lines = []
 

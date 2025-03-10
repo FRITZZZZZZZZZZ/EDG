@@ -1,0 +1,24 @@
+NAME
+RectangularCupTest
+VALUE RANGES
+Blank Thickness
+0.8 0.9 1.1 1.2 1.0
+Scale X
+1.0
+Scale Y
+1.0
+Friction
+0.06
+Pressure
+3.0
+Die Radius
+3.0
+HEADER
+Jobname,Status,Blank Thickness,Scale X,Scale Y,Friction,Pressure,Die Radius
+START
+RectangularCupTest_BlTh_0.8_ScX_1.0_ScY_1.0_Fr_0.06_Pr_3.0_DiRa_3.0,done,0.8,1.0,1.0,0.06,3.0,3.0
+RectangularCupTest_BlTh_0.9_ScX_1.0_ScY_1.0_Fr_0.06_Pr_3.0_DiRa_3.0,done,0.9,1.0,1.0,0.06,3.0,3.0
+RectangularCupTest_BlTh_1.1_ScX_1.0_ScY_1.0_Fr_0.06_Pr_3.0_DiRa_3.0,done,1.1,1.0,1.0,0.06,3.0,3.0
+RectangularCupTest_BlTh_1.2_ScX_1.0_ScY_1.0_Fr_0.06_Pr_3.0_DiRa_3.0,done,1.2,1.0,1.0,0.06,3.0,3.0
+RectangularCupTest_BlTh_1.0_ScX_1.0_ScY_1.0_Fr_0.06_Pr_3.0_DiRa_3.0,done,1.0,1.0,1.0,0.06,3.0,3.0
+END DATA

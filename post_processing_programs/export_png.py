@@ -14,23 +14,20 @@ def export_csv(argument_vector):
 
     with open("SessionFileShowAndExportPost.ofs", 'w') as session_file_export:
         session_file_export.write(
-        f"""
-        mode(Post)
-        file.open.apply("{current_working_directory}/{jobname}.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=Recommended, curves=OnDemand)
-        hide(items="process(1):Binder,Die,Punch")
-        view.multiView.set(views="4 Views")
-        view.multiView.setActive(views=nextView)
-        setVariable("Scalar:Formability", view="3D View 2")
-        flcCreateKeeler(materialName="Keeler 1", thickness="0.8", n="0.2", r=1)
-        flcAddItem(flc="Keeler 1", item="process(1):Blank")
-        view.multiView.setActive(views=nextView)
-        setVariable("Scalar:No Variable", view="3D View 3")
-        view.multiView.setActive(views=nextView)
-        setProcessActive(process=1, view="3D View 4", active=false)
-        showMin()
-        showMax()
-        takeSnapshot("3D View", filename="{current_working_directory}/{jobname}.png", format=Png, drawLogo=Off, drawBorder=Off)quit()
-        quit()""")
+            f"""
+            mode(Post)
+            file.open.apply("{current_working_directory}/{jobname}.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=All, curves=OnDemand)
+            showMin()
+            showMax()
+            view.multiView.setActive(views=nextView)
+            setVariable("Scalar:Formability", view="3D View 2")
+            flcCreateKeeler(materialName="Keeler 1", thickness="0.8", n="0.2", r=1)
+            flcRemoveItem(item="process(1):Blank")
+            flcAddItem(flc="Keeler 1", item="process(1):Blank")
+            setOption("Snapshot/Background Color Type", value="User Defined")
+            takeSnapshot("3D View", filename="{current_working_directory}/{jobname}.png", backgroundColor=black, drawTitle=On, drawLogo=On, drawCoordSys=On, drawScale=On, drawLabel=On, drawBorder=Off)
+            quit()
+            """)
     
     try:
         os.system(f"ofd -s SessionFileShowAndExportPost.ofs -b")

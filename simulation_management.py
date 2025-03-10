@@ -330,14 +330,14 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                         return False
                     # update the joblist on wheather the job was not solved in time or in loop limit
                     if not success_solving:
-                        job['Status'] = "unsuccessful"
+                        job['Status'] = "unsuccessfull"
                         joblist_tuple = (joblist, full_header, value_range_list)
-                        job_management.update_joblist_files(base_name, joblist_tuple)                        
+                        job_management.update_joblist_files(base_name, joblist_tuple)                                   
 
                     # try performing the post processing according to the success of the simulation
                     succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
                     if succes_post_processing:
-                        job['Status'] = "done"
+                        job['Status'] = "successfull"
                         joblist_tuple = (joblist, full_header, value_range_list)
                         job_management.update_joblist_files(base_name, joblist_tuple)
                         ready = True
