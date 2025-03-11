@@ -1,0 +1,89 @@
+set var num IncrementNumber 15
+set var num EquilibriumIterations 144
+set var num ContactIterations 50
+set var num NodeNumber 18278
+set var num ElementNumber 17948
+set var num CpuNumber 4
+set var num IndeedRevisionNumber 432
+set var num Output10_IncNr 15
+set var num Output10_PostNr 2
+set var num Output20_IncNr 15
+set var num Output20_PostNr 2
+set var num Output30_IncNr 15
+set var num Output30_PostNr 2
+set var num Output40_IncNr 15
+set var num Output40_PostNr 2
+set var num Output50_IncNr 15
+set var num Output50_PostNr 2
+set var num Output60_IncNr 15
+set var num Output60_PostNr 2
+set var num Output70_IncNr 15
+set var num Output70_PostNr 2
+set var num Output80_IncNr 15
+set var num Output80_PostNr 2
+set var num Output90_IncNr 15
+set var num Output90_PostNr 2
+set var num Output100_IncNr 15
+set var num Output100_PostNr 2
+set var num Blank_1_Elementtyp 4
+set var num Blank_1_Materialmodel 1
+set var num ProcessTime 0.517917E+01
+set var num Output10_Time 0.517917E+01
+set var num Output10_RestTime 0.158208E+02
+set var num Output20_Time 0.517917E+01
+set var num Output20_RestTime 0.158208E+02
+set var num Output30_Time 0.517917E+01
+set var num Output30_RestTime 0.158208E+02
+set var num Output40_Time 0.517917E+01
+set var num Output40_RestTime 0.158208E+02
+set var num Output50_Time 0.517917E+01
+set var num Output50_RestTime 0.158208E+02
+set var num Output60_Time 0.517917E+01
+set var num Output60_RestTime 0.158208E+02
+set var num Output70_Time 0.517917E+01
+set var num Output70_RestTime 0.158208E+02
+set var num Output80_Time 0.517917E+01
+set var num Output80_RestTime 0.158208E+02
+set var num Output90_Time 0.517917E+01
+set var num Output90_RestTime 0.158208E+02
+set var num Output100_Time 0.517917E+01
+set var num Output100_RestTime 0.158208E+02
+set var num Blank_1_Thickness 0.800000E+00
+set var num Blank_1_RollingAngle 0.000000E+00
+set var num Tool_1_FX_MAX -0.567023E+02
+set var num Tool_1_FY_MAX 0.345018E+03
+set var num Tool_1_FZ_MAX 0.801767E+05
+set var num Tool_1_FT_MAX 0.801774E+05
+set var num Tool_2_FX_MAX 0.415584E+02
+set var num Tool_2_FY_MAX -0.184219E+03
+set var num Tool_2_FZ_MAX -0.581689E+05
+set var num Tool_2_FT_MAX 0.581692E+05
+set var num Tool_3_FX_MAX -0.777790E+01
+set var num Tool_3_FY_MAX 0.733809E+01
+set var num Tool_3_FZ_MAX -0.285302E+05
+set var num Tool_3_FT_MAX 0.285302E+05
+set var str ins SimulationName "RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.03_Pr_3.0_DiRa_3.0"
+set var str ins IndeedVersionName "OFSOLV 1.0.3"
+set var str ins Platform "LINUX"
+set var str ins ProcessStep "OP20 - Closing Punch  20.0mm"
+set var str ins CpuTime "  00:00:48"
+set var str ins SimulationStatus "Not Finished"
+set var str ins Blank_1_Name "Blank"
+set var str ins Blank_1_Material "INPRO_ZStE340"
+set var str ins Blank_1_RollingDirection "3.000 0.000"
+set var str ins Tool_1_Name "Die"
+set var str ins Tool_2_Name "Punch"
+set var str ins Tool_3_Name "Binder"
+set var str ins CrackCrit_Red "red"
+set var str ins CrackCrit_Yellow "white"
+set var str ins CrackCrit_Green "white"
+set var num THINNING_MIN -0.225391E+02
+set var num THINNING_MAX 0.426955E+01
+set var num PSTRAIN1_MID_MIN -0.205196E-03
+set var num PSTRAIN1_MID_MAX 0.193108E+00
+set var num PSTRAIN2_MID_MIN -0.150382E+00
+set var num PSTRAIN2_MID_MAX 0.948427E-01
+set var num PSTRAIN3_MID_MIN -0.255597E+00
+set var num PSTRAIN3_MID_MAX 0.328581E-01
+set var num FLCDIST_MID_MIN 0.100000E+03
+set var num FLCDIST_MID_MAX 0.100000E+03

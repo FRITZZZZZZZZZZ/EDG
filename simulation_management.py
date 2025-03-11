@@ -273,7 +273,7 @@ def post_processing(job, base_name, solving_success, post_tuple, file_sorting_tu
 
             # move the files to the folder storing the data of unsuccessful solving atttempts
             os.chdir(f"{current_working_directory}/post_processing_programs")
-            os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name} {jobname}")
+            os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name}/{jobname} {jobname}")
             os.chdir(f"{current_working_directory}")
 
     except:
@@ -321,6 +321,7 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                 try:
                     # start the preprocessing and prepare the input data
                     success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple, pre_processing_files)
+
                     # start the simulation once the preprocessing was succcsessful, append to error list else
                     if success_pre_processing:
                         success_solving = solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_limit, simulation_solving_files)
@@ -328,23 +329,28 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                     else:
                         print("\nThe pre processing was not successful, please check the control file or pre processing programs.\n")
                         return False
-                    # update the joblist on wheather the job was not solved in time or in loop limit
+                    
+                    # if the solving was not successfull, the success of the post processing is not important
                     if not success_solving:
                         job['Status'] = "unsuccessfull"
                         joblist_tuple = (joblist, full_header, value_range_list)
-                        job_management.update_joblist_files(base_name, joblist_tuple)                                   
+                        job_management.update_joblist_files(base_name, joblist_tuple)                                
 
                     # try performing the post processing according to the success of the simulation
                     succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
+                    # if the post processing is successfull, mark the job as successfull and continue with the simulation
                     if succes_post_processing:
-                        job['Status'] = "successfull"
+                        if success_solving:
+                            job['Status'] = "successfull"
                         joblist_tuple = (joblist, full_header, value_range_list)
                         job_management.update_joblist_files(base_name, joblist_tuple)
                         ready = True
                         continue
                     else:
+                        # if there are problems with the post processing, stop the series
                         print("\nThe post processing was not successful, check control file or post processing programs.\n")
                         return False
+                    
                 # if anythin else goes wrong, append the job to the error list and continue the series
                 except:
                     print("\nSomething went wrong while running the simulation series.\n")
@@ -352,4 +358,49 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                 
     return True
 
-#post_processing({'Jobname': 'sdfg_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_1.0_ScX_1.0_ScY_1.0', 'Status': 'unsuccessful', 'Blank Thickness': 1.0, 'Binder Friction': 1.0, 'Binder Pressure': -4.0, 'Die Radius': 1.0, 'Scale X': 1.0, 'Scale Y': 1.0}, "sdfg", False, ({'Export Screenshot': 'export_png.py', 'Export CSV': 'export_csv.py'}, ['Export Screenshot', 'Export CSV']), ({'Result Raw Folders': ('erg', 'raw_results/erg_folders'), 'Result Png': ('png', 'raw_results/results_png'), 'Result CSV': ('csv', 'raw_results/results_csv'), 'Error Files': ("'inf log out'", 'raw_results/error_results')}, ['Result Raw Folders', 'Result Png', 'Result CSV', 'Error Files']), None, 10, ['move_data.py', 'clean_directory.py', 'SessionFileShowAndExportPost.ofs', 'export_csv.py', 'dsfjkh_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0.log', 'dsfjkh_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0.t51', 'dsfjkh_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0.inf', 'export_png.py', 'dsfjkh_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0.erg', 'dsfjkh_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0.t52', 'dsfjkh_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0.dat', 'dsfjkh_BlTh_1.0_BiFr_1.0_BiPr_-4.0_DiRa_3.0_ScX_1.0_ScY_1.0.out'])
+def simulate(job, base_name, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple=None, time_limit=900, loop_limit=10, processing_time_limit=60):
+    """
+    This is a function which can be used to simulate a single job, it is utilized by simulation slaves and will not
+    update any jobfiles. It returns False if the simulation failes and returns the jobname if the simulation is successfull.
+    
+    This jobname can then be used to create a single dataset line by invocing create_dataset_single line with the jobname.
+    """
+
+    # catch the directory states such that its clear which files are allowed in the directories, all other files will be deleted
+    current_working_directory = os.getcwd()
+    pre_processing_files = os.listdir(f"{current_working_directory}/pre_processing_programs")
+    simulation_solving_files = os.listdir(f"{current_working_directory}/simulation_solving_programs")
+    post_processing_files = os.listdir(f"{current_working_directory}/post_processing_programs")
+    jobname = job['Jobname']
+
+    # try solving the job
+    try:
+        # start the preprocessing and prepare the input data
+        success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple, pre_processing_files)
+
+        # start the simulation once the preprocessing was succcsessful, append to error list else
+        if success_pre_processing:
+            success_solving = solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_limit, simulation_solving_files)
+        # if the preprocessing did not work, abort the job and go to the next one
+        else:
+            print("\nThe pre processing was not successful, please check the control file or pre processing programs.\n")
+            return False
+        
+        # if the solving was not successfull, the success of the post processing is not important
+        if not success_solving:
+            return False                               
+
+        # try performing the post processing according to the success of the simulation
+        succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
+        # if the post processing is successfull, mark the job as successfull and continue with the simulation
+        if succes_post_processing:
+            return jobname
+        else:
+            # if there are problems with the post processing, stop the series
+            print("\nThe post processing was not successful, check control file or post processing programs.\n")
+            return False
+        
+    # if anythin else goes wrong, append the job to the error list and continue the series
+    except:
+        print("\nSomething went wrong while running the simulation series.\n")
+        return False

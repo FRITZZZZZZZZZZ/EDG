@@ -29,8 +29,9 @@ Instruction: """
 option_message = """
 - To alter a timer, first state the name of the timer, like so: 'simulation timer'.
 Then in the next step, state the number of seconds it should last, like so: '900'.
-- To alter the loop limit, first state 'loop limmit'.
+- To alter the loop limit, first state 'loop limit'.
 Then in the next step, state the number of loops the simulation is allowed to make, like so '5'.
+- To append a header to the finished dataset, state 'dataset header'.
 - To reset the control file, state '-r'.
 - To exit the option menu, state '-c'.
 
@@ -102,12 +103,14 @@ instruction = None
 base_name = None
 joblist_file_exists = False
 design_parameter_names = pre_tuple[1]
+full_header = ['Jobname', 'Status'] + design_parameter_names
 design_parameter_domains = [None for parameter in design_parameter_names]
-jobs_n = 1
 job_tuple = None
+jobs_n = 1
 simulation_time_limit = 900
 simulation_loop_limit = 10
 processing_time_limit = 5
+dataset_header = False
 
 # set up simulation solving environment
 environment_variable_values, environment_variable_names = environment_tuple
@@ -145,7 +148,7 @@ while True:
                 # list the alterable elements
                 print(f"\nsimulation timer: {simulation_time_limit}s\nsimulation loop limit: {simulation_loop_limit}\nprocessing timer: {processing_time_limit}s\n")
                 # let user state an element he wants to alter
-                option_constraint = {'keywords':["r", "-r", "reset", "reset control_file", "simulation timer", "simulation loop limit", "processing timer", "c", "-c", "continue"]}
+                option_constraint = {'keywords':["r", "-r", "reset", "reset control_file", "simulation timer", "simulation loop limit", "processing timer", "c", "-c", "continue", "dataset header"]}
                 instruction = interaction.get_and_validate_input(option_message, option_constraint)
 
                 # reset the simulation timer
@@ -170,6 +173,17 @@ while True:
                     integer_limit_constraint = {'allowed_characters':all_numbers_list}
                     new_simulation_loop_limit = interaction.get_and_validate_input(loop_limit_message, integer_limit_constraint)
                     simulation_loop_limit = int(new_simulation_loop_limit)
+                    instruction = None
+
+                # choose wheather to append a header to the datasset
+                if instruction == "dataset header":
+                    dataset_header_message = "\nAppend a dataset header?\n[Y/n] "
+                    dataset_header_constraint = {'keywords':['Y', 'n']}
+                    new_dataset_header = interaction.get_and_validate_input(dataset_header_message, dataset_header_constraint)
+                    if new_dataset_header == "Y":
+                        dataset_header = True
+                    if new_dataset_header == "n":
+                        dataset_header = False
                     instruction = None
 
                 # reset the control file
@@ -200,132 +214,139 @@ while True:
                     instruction = None
                     break
     
-    ###################################################### define simulaiton series
-    # define a simulation series or recover a series by stating a base name that already exists
-    while None in design_parameter_domains or base_name == None:
+        ###################################################### define simulaiton series
+        # define a simulation series or recover a series by stating a base name that already exists
+        while None in design_parameter_domains or base_name == None:
 
-        # ask for the base name, this is the name that every result associated with the data generation will hold
-        if base_name == None:
-            base_name_constraint = {'allowed_characters':all_letters_list + ["_"]}
-            base_name = interaction.get_and_validate_input(base_name_message, base_name_constraint)
+            # ask for the base name, this is the name that every result associated with the data generation will hold
+            if base_name == None:
+                base_name_constraint = {'allowed_characters':all_letters_list + ["_"]}
+                base_name = interaction.get_and_validate_input(base_name_message, base_name_constraint)
 
-            # if the base name already exists, recover its joblist
-            retrieved_job_tuple = job_management.retrieve_joblist(base_name)
-            if not retrieved_job_tuple == None:
-                joblist_file_exists = True
-                joblist, header, value_ranges = retrieved_job_tuple
-                # check wheather the header fits the design parameter names
-                metaless_header = header[2:]
-                if metaless_header == design_parameter_names:
-                    # if the headers do match, set the design parameter value ranges to the retrieved value ranges
-                    design_parameter_domains = value_ranges
-                    # set all jobs that are not finished to pending
-                    for job in joblist:
-                        if job['Status'] == "in_progress": 
-                            job['Status'] = "pending"
-                        else:
-                            pass
-                    job_tuple = retrieved_job_tuple
-                    job_management.update_joblist_files(base_name, job_tuple)
-            # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
-            else:
-                joblist_file_exists = False
+                # if the base name already exists, recover its joblist
+                retrieved_job_tuple = job_management.retrieve_joblist(base_name)
+                if not retrieved_job_tuple == None:
+                    joblist_file_exists = True
+                    joblist, header, value_ranges = retrieved_job_tuple
+                    # check wheather the header fits the design parameter names
+                    metaless_header = header[2:]
+                    if metaless_header == design_parameter_names:
+                        # if the headers do match, set the design parameter value ranges to the retrieved value ranges
+                        design_parameter_domains = value_ranges
+                        # set all jobs that are not finished to pending
+                        for job in joblist:
+                            if job['Status'] == "in_progress": 
+                                job['Status'] = "pending"
+                            else:
+                                pass
+                        job_tuple = retrieved_job_tuple
+                        job_management.update_joblist_files(base_name, job_tuple)
+                # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
+                else:
+                    joblist_file_exists = False
 
-        # state value ranges for each design parameter contained in the associated control_file section
-        if None in design_parameter_domains:
+            # state value ranges for each design parameter contained in the associated control_file section
+            if None in design_parameter_domains:
+                for parameter_index in range(len(design_parameter_names)):
+                    parameter_name = design_parameter_names[parameter_index]
+                    if design_parameter_domains[parameter_index] == None:
+                        new_domain = interaction.request_design_parameter_domain(parameter_name)
+                        design_parameter_domains[parameter_index] = new_domain
+
+            # give user a summery of the simulation series
+            print("\nIf you want to change a value range, just state the design Parameter name.\n Available names:\n")
             for parameter_index in range(len(design_parameter_names)):
                 parameter_name = design_parameter_names[parameter_index]
-                if design_parameter_domains[parameter_index] == None:
-                    new_domain = interaction.request_design_parameter_domain(parameter_name)
-                    design_parameter_domains[parameter_index] = new_domain
-
-        # give user a summery of the simulation series
-        print("\nIf you want to change a value range, just state the design Parameter name.\n Available names:\n")
-        for parameter_index in range(len(design_parameter_names)):
-            parameter_name = design_parameter_names[parameter_index]
-            parameter_domain = design_parameter_domains[parameter_index]
-            print(f"{parameter_name}\n{parameter_domain}\nnumber of values: {len(parameter_domain)}\n")
-        
-        # let user change a design parameter value range
-        ask_change_constraint = {'keywords':design_parameter_names + ["c", "-c", "continue", "base name", "base_name", base_name, "run again"]}
-        instruction = interaction.get_and_validate_input(ask_change_message, ask_change_constraint, True)
-        # declare a parameter range as None such that the loop will run again and let you redeclare its value range
-        if instruction in design_parameter_names:
-            for parameter_index in range(len(design_parameter_domains)):
-                if design_parameter_names[parameter_index] == instruction:
-                    design_parameter_domains[parameter_index] = None
-        # reset the base name
-        if instruction in ["base name", base_name]:
-            base_name = None
-        # reset the joblist in order to re run the simulation series
-        if instruction == ["r", "-r"]:
-            try:
-                job_csv_results = os.listdir(f"raw_results/results_csv/{base_name}")
-                for job in joblist:
-                    jobname = job['Jobname']
-                    if f"{jobname}.csv" in job_csv_results:
-                        continue
-                    elif job['Status'] == "unsuccessfull":
-                        continue
-                    else:
-                        job['Status'] = "pending"
-                job_tuple = (joblist, design_parameter_names, design_parameter_domains)
-                job_management.update_joblist_files(base_name, job_tuple)
+                parameter_domain = design_parameter_domains[parameter_index]
+                print(f"{parameter_name}\n{parameter_domain}\nnumber of values: {len(parameter_domain)}\n")
+            
+            # let user change a design parameter value range
+            ask_change_constraint = {'keywords':design_parameter_names + ["c", "-c", "continue", "base name", "base_name", base_name, "r", "-r"]}
+            instruction = interaction.get_and_validate_input(ask_change_message, ask_change_constraint, True)
+            # declare a parameter range as None such that the loop will run again and let you redeclare its value range
+            if instruction in design_parameter_names:
+                for parameter_index in range(len(design_parameter_domains)):
+                    if design_parameter_names[parameter_index] == instruction:
+                        design_parameter_domains[parameter_index] = None
+            # reset the base name
+            if instruction in ["base name", base_name]:
+                base_name = None
+            # reset the joblist in order to re run the simulation series
+            if instruction in ["r", "-r"]:
+                try:
+                    job_csv_results = os.listdir(f"raw_results/results_csv/{base_name}")
+                    for job in joblist:
+                        jobname = job['Jobname']
+                        if f"{jobname}.csv" in job_csv_results:
+                            continue
+                        elif job['Status'] == "unsuccessfull":
+                            continue
+                        else:
+                            job['Status'] = "pending"
+                    job_tuple = (joblist, full_header, design_parameter_domains)
+                    job_management.update_joblist_files(base_name, job_tuple)
+                except:
+                    pass
+            # continue on to distributed mode section
+            if instruction in ["c", "-c", "continue"]:
                 break
-            except:
-                pass
-        # continue on to distributed mode section
-        if instruction in ["c", "-c", "continue"]:
+        
+        ############################################################ distributed mode
+        # ask wheather the user wants tc
+        # o enter distributed mode
+        distributed_mode_constraint = {'keywords':["Y", "n"]}
+        instruction = interaction.get_and_validate_input(ask_distributed_message, distributed_mode_constraint)
+
+        if instruction == "Y":
+            print("\nThis feature does not yet exist.\n")
+            instruction = None
+            pass
+            ############# TO DO MULTI DINGENS ##################
+        if instruction == "n":
+            instruction == None
+            pass
+
+        # compute the number of simulations and ask wheather the user wants to stat the simulation process
+        for value_range in design_parameter_domains:
+            jobs_n *= len(value_range)
+        print(f"\nIf you start the simulation series now, {jobs_n} simulation will be started.\n")
+        start_constraint = {'keywords':["Y", "n"]}
+        instruction = interaction.get_and_validate_input(ask_start_message, start_constraint)
+
+        if instruction == "Y":
+
+            # create the joblist and create a joblist backup 
+            if job_tuple == None:
+                job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
+            # if the joblist file does not yet exist or does not contain information, it should be overwritten
+            if not joblist_file_exists:
+                job_management.update_joblist_files(base_name, job_tuple)
+            else:
+                # if the joblist file is retrievable, information should only be added
+                job_management.update_joblist_files(base_name, job_tuple, False)
+
+            # simulate the jobs in the joblist and record failed simulations
+            success_series = simulation_management.run_simulation_series(base_name, job_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple, simulation_time_limit, simulation_loop_limit, processing_time_limit)
+            # if the series was successful, create the dataset
+            if success_series:
+                create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, dataset_header)
+                print(f"The data creation has been successfull, your dataset resides at complete_datasets/{base_name}.csv .")
+            if not success_series:
+                print("Something went wrong while running the simulation series, check the control file or editing programs.")
+
+        # ask how the user wants to continue once the data has been generated
+        ask_more_constraint = {'keywords':["Y", "n"]}
+        instruction = interaction.get_and_validate_input(ask_more_message, ask_more_constraint)
+        # let user exit the application 
+        if instruction == "Y":
+            print("\nTschüss!\n")
+            exit()
+        if instruction == "n":
+            instruction = None
+            base_name = None
+            joblist_file_exists = False
+            design_parameter_names = pre_tuple[1]
+            design_parameter_domains = [None for parameter in design_parameter_names]
+            job_tuple = None
+            jobs_n = 1
             break
-     
-    ############################################################ distributed mode
-    # ask wheather the user wants to enter distributed mode
-    distributed_mode_constraint = {'keywords':["Y", "n"]}
-    instruction = interaction.get_and_validate_input(ask_distributed_message, distributed_mode_constraint)
-
-    if instruction == "Y":
-        print("\nThis feature does not yet exist.\n")
-        instruction = None
-        pass
-        ############# TO DO MULTI DINGENS ##################
-    if instruction == "n":
-        instruction == None
-        pass
-
-    # compute the number of simulations and ask wheather the user wants to stat the simulation process
-    for value_range in design_parameter_domains:
-        jobs_n *= len(value_range)
-    print(f"\nIf you start the simulation series now, {jobs_n} simulation will be started.\n")
-    start_constraint = {'keywords':["Y", "n"]}
-    instruction = interaction.get_and_validate_input(ask_start_message, start_constraint)
-
-    if instruction == "Y":
-
-        # create the joblist and create a joblist backup 
-        if job_tuple == None:
-            job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
-        # if the joblist file does not yet exist or does not contain information, it should be overwritten
-        if not joblist_file_exists:
-            job_management.update_joblist_files(base_name, job_tuple)
-        else:
-            # if the joblist file is retrievable, information should only be added
-            job_management.update_joblist_files(base_name, job_tuple, False)
-
-        # simulate the jobs in the joblist and record failed simulations
-        success_series = simulation_management.run_simulation_series(base_name, job_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple, simulation_time_limit, simulation_loop_limit, processing_time_limit)
-        # if the series was successful, create the dataset
-        if success_series:
-            create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, False)
-            print(f"The data creation has been successfull, your dataset resides at complete_datasets/{base_name}.csv .")
-        if not success_series:
-            print("Something went wrong while running the simulation series, check the control file or editing programs.")
-
-    # ask how the user wants to continue once the data has been generated
-    ask_more_constraint = {'keywords':["Y", "n"]}
-    instruction = interaction.get_and_validate_input(ask_more_message, ask_more_constraint)
-    # let user exit the application 
-    if instruction == "Y":
-        print("\nTschüss!\n")
-        exit()
-    if instruction == "n":
-        pass

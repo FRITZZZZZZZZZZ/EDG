@@ -9,7 +9,6 @@ a pre processing phase
 """
 
 def move_data(argument_vector):
-    delete = False
     try:
         file_types = argument_vector[1]
         target_folder_path = argument_vector[2]
