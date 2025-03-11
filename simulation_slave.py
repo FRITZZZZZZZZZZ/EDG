@@ -2,7 +2,6 @@ import socket
 import simulation_management
 
 def simulation_slave():
-
     # retrieve the slave IP address
     HOST = socket.gethostbyname(socket.gethostname())
 
@@ -23,6 +22,7 @@ def simulation_slave():
         # receive packages from the master machine
         while True:
             message = connection.recv(1024)
-            print(message)
-                
+
             connection.sendall(f"done".encode('utf-8'))
+
+print(len)

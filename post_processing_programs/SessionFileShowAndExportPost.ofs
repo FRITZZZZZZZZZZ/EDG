@@ -1,6 +1,6 @@
 
         mode(Post)
-        file.open.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.9_Fr_0.12_Pr_4.0_DiRa_5.0.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=All, curves=OnDemand)
+        file.open.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.0_Pr_3.0_DiRa_4.0.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=All, curves=OnDemand)
         showMin()
         showMax()
         view.multiView.setActive(views=nextView)
@@ -8,6 +8,6 @@
         flcCreateKeeler(materialName="Keeler 1", thickness="0.8", n="0.2", r=1)
         flcAddItem(flc="Keeler 1", item="process(1):Blank")
         view.multiView.set(views="2 Views (Left/Right)")
-        file.export.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.9_Fr_0.12_Pr_4.0_DiRa_5.0.csv", format="CSV/Results", append=Off, objectType=Labels, marker="*", exportCoordinates=Off, title="")
+        file.export.apply("/home/engelmann/neuENSIMA/post_processing_programs/RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.0_Pr_3.0_DiRa_4.0.csv", format="CSV/Results", append=Off, objectType=Labels, marker="*", exportCoordinates=Off, title="")
         quit()
         

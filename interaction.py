@@ -249,6 +249,41 @@ def get_and_validate_file_input(instruction, input_constraints):
 
 ########## machine / secondary storage interaction ##########
 
+def read_write_options(option_file_path, option_name, overwrite_content=None):
+    with open(option_file_path, 'r') as option_file:
+        option_content = [line[:-1] for line in option_file.readlines()]
+        
+    if overwrite_content == None:
+        for line in option_content:
+            line_list = line.split(' ')
+            if line_list[0] == option_name:
+                setting = line_list[1]
+                if setting == "False":
+                    return False
+                elif setting == "True":
+                    return True
+                else:
+                    return setting
+
+    if not overwrite_content == None:
+        overwrite_content = str(overwrite_content)
+        # alter the correct line
+        new_content = []
+        for line in option_content:
+            line_list = line.split(' ')
+            if line_list[0] == option_name:
+                line_list[1] = overwrite_content
+            new_line = ' '.join(line_list)
+            new_content.append(new_line + "\n")
+        # create a string to overwrite the options file with
+        new_option_content = ""
+        for new_line in new_content:
+            new_option_content += new_line
+        # write the altered content back to the option file
+        with open(option_file_path, 'w') as option_file:
+            option_file.write(new_option_content)
+
+
 def get_file_design_parameter_domain(file_instruction):
     """
     This functions asks the user to state the value ranges of design parameters.
@@ -473,13 +508,6 @@ def control_data_direct_list(control_file, data_name):
             direct_list.append(line)
     
     return direct_list
-
-
-
-######### machine / human interaction ##########
-
-
-
 
 
 

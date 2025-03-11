@@ -58,7 +58,7 @@ HEADER
 ACTION NAME	METHOD	OPTIONS		
 START				
 Export Screenshot	export_png.py		
-Export CSV	export_csv.py
+Export CSV	export_csv.py		
 END DATA			
 
 NAME

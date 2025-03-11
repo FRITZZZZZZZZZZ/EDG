@@ -1,0 +1,46 @@
+ Ein Verzeichnis "./matlib" mit Material-Dateien wurde nicht gefunden !
+ Moeglicherweise muss die Umgebungsvariable <OFSOLVMAT> entsprechend gesetz werden.
+ 
+ Executing OFSOLV 1.0.3 #432 (16.06.21) on "LINUX" with following settings
+ -----------------------------------------------------------------------------
+ Name of the input-files               -j : RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.0_Pr_3.0_DiRa_5.0
+ Name of the output-files              -o : RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.0_Pr_3.0_DiRa_5.0
+ Name of the RESTART-files             -r :  
+ Directory for the material library  -mab : ./ 
+ 
+ Number of requiered LOGICAL-memory  -szl :     200000
+ Number of requiered INTEGER-memory  -szi :    2000000
+ Number of requiered REAL*8 -memory  -szr :    4000000
+ Number of requiered tempor.-memory  -szt :    6000000
+ 
+ Level of compression                 -kg :  0
+ Number of processors used             -c :  4
+ -----------------------------------------------------------------------------
+ Maximum number of available processors   :          8
+ Number of available vector-registers     :        128
+ Maximum record length of file .t3?, .t7? :        510
+
+ The Post-files will be stored in directory "RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.0_Pr_3.0_DiRa_5.0.erg".
+
+ Start der Berechnung am : Tue Mar 11 16:28:38 2025
+
+ DER INKREMENTBLOCK  1 WIRD BEENDET, DA ALLE INKREMENTE ABGEARBEITET SIND.
+
+ DIE MAXIMALE ANZAHL DER INNEREN ITERATIONEN ERREICHT IM INKREMENT     13
+
+ WARNUNG: AUS DER SUBROUTINE VNE14A IM INKREMENT      21
+ STOFFGESETZ-ITERATION NICHT KONVERGENT.
+
+ INKREMENTNUMMER :       21
+ FATALER FEHLER WAEHREND DER NACHLAUFRECHNUNG.
+
+ DIE MAXIMALE ANZAHL DER KONTAKT ITERATIONEN ERREICHT IM INKREMENT     21
+ DIE ANALYSE WIRD FORTGESETZT.
+
+ DIE MAXIMALE ANZAHL DER INNEREN ITERATIONEN ERREICHT IM INKREMENT     22
+
+ DIE MAXIMALE ANZAHL DER KONTAKT ITERATIONEN ERREICHT IM INKREMENT     22
+ DIE ANALYSE WIRD FORTGESETZT.
+
+ DIE MAXIMALE ANZAHL DER KONTAKT ITERATIONEN ERREICHT IM INKREMENT     23
+ DIE ANALYSE WIRD FORTGESETZT.

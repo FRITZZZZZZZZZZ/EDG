@@ -1,0 +1,12 @@
+$Program,OpenForm v2.23dev103525
+*Description,Labels
+*Process,1: RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.0_Pr_3.0_DiRa_4.0
+
+
+
+*LabelType,MinMax,Name,IDs,Value
+"Thickness Change %-Min",00001907,  -85.03
+"Thickness Change %-Max",00008917,   44.54
+
+*Formability,Inadequate Stretch,Wrinkling,Wrinkling Tendency,Safe,Risk of Cracks,Severe Thinning,Cracks
+    0.10,   37.99,    5.37,   34.95,    1.40,    0.56,   19.63
