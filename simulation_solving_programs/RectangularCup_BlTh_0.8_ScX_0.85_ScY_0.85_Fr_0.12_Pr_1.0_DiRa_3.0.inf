@@ -1,0 +1,29 @@
+ Ein Verzeichnis "./matlib" mit Material-Dateien wurde nicht gefunden !
+ Moeglicherweise muss die Umgebungsvariable <OFSOLVMAT> entsprechend gesetz werden.
+ 
+ Executing OFSOLV 1.0.3 #432 (16.06.21) on "LINUX" with following settings
+ -----------------------------------------------------------------------------
+ Name of the input-files               -j : RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.12_Pr_1.0_DiRa_3.0
+ Name of the output-files              -o : RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.12_Pr_1.0_DiRa_3.0
+ Name of the RESTART-files             -r :  
+ Directory for the material library  -mab : ./ 
+ 
+ Number of requiered LOGICAL-memory  -szl :     200000
+ Number of requiered INTEGER-memory  -szi :    2000000
+ Number of requiered REAL*8 -memory  -szr :    4000000
+ Number of requiered tempor.-memory  -szt :    6000000
+ 
+ Level of compression                 -kg :  0
+ Number of processors used             -c :  4
+ -----------------------------------------------------------------------------
+ Maximum number of available processors   :          8
+ Number of available vector-registers     :        128
+ Maximum record length of file .t3?, .t7? :        510
+
+ The Post-files will be stored in directory "RectangularCup_BlTh_0.8_ScX_0.85_ScY_0.85_Fr_0.12_Pr_1.0_DiRa_3.0.erg".
+
+ Start der Berechnung am : Tue Mar 11 17:23:19 2025
+
+ DER INKREMENTBLOCK  1 WIRD BEENDET, DA ALLE INKREMENTE ABGEARBEITET SIND.
+
+ DIE MAXIMALE ANZAHL DER INNEREN ITERATIONEN ERREICHT IM INKREMENT     11

@@ -284,7 +284,7 @@ def read_write_options(option_file_path, option_name, overwrite_content=None):
             option_file.write(new_option_content)
 
 
-def get_file_design_parameter_domain(file_instruction):
+def get_file_design_parameter_domain(instruction):
     """
     This functions asks the user to state the value ranges of design parameters.
     It has two modes of operation:
@@ -302,24 +302,6 @@ def get_file_design_parameter_domain(file_instruction):
     
     The function can also accept a single value, it will check wheather it can typecast it though.
     """
-
-    # make sure user input is rather clean
-    input_constraints = {
-        'keywords': ["exit"],
-        'allowed_characters':  ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ",", " ", "."],
-        'disallowed_characters': [],
-        'delimiters': [",", " "]
-    }
-
-    # the request message gives clear instructions about the modes and examples of the correct input format
-
-
-    # get clean user input
-    instruction = get_and_validate_file_input(file_instruction, input_constraints)
-
-    # this is a redundant exit clause, it could be deleted but it doesnt harm anyone so why should we?
-    if instruction == "exit":
-        exit()
     
     # computing the desing parameter value range, this is a loop since the input can still be errornous
     design_parameter_list = []

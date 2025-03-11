@@ -14,6 +14,7 @@ def write_blank_session_file(design_parameter_names, session_file_backup_path):
             # append a list of design parameters to the session file in the correct oder
             for parameter_name in design_parameter_names:
                 new_session_file += f"{parameter_name}\n<your_design_parameter_value_range>\n"
+            new_session_file += "END DATA\n"
             design_parameter_section_found = False
         # notice once the design parameter section has been found
         if "DESIGN PARAMETER NAMES AND RANGES" in line:

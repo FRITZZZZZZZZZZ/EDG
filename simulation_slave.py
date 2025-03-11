@@ -22,7 +22,8 @@ def simulation_slave():
         # receive packages from the master machine
         while True:
             message = connection.recv(1024)
-
+            print(message)
             connection.sendall(f"done".encode('utf-8'))
 
-print(len)
+string = ""
+print(string.__sizeof__(), len(string))

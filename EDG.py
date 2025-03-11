@@ -280,10 +280,16 @@ while True:
 
         # try to catch the parameter domains from the session file
         if session_file_exists:
-            if len(command_list[3]) == len(design_parameter_names):
-                design_parameter_domains = command_list[3]
+            if not command_list[3] == None:
+                if len(command_list[3]) == len(design_parameter_names):
+                    design_parameter_domains = command_list[3]
+                    instruction = "-c"
+                    continue
+            if joblist_file_exists:
                 instruction = "-c"
                 continue
+            else:
+                pass
 
         # state value ranges for each design parameter contained in the associated control file section
         if None in design_parameter_domains:
