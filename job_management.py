@@ -268,4 +268,3 @@ def update_joblist_files(job_base_name : str, job_tuple, overwrite=True):
     # write all job vlaues to the content list
     with open(f"{current_working_directory}/joblist_archive/{job_base_name}_joblist.txt", 'w') as new_joblist_file:
         new_joblist_file.write(joblist_content)
-

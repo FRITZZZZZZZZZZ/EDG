@@ -223,7 +223,6 @@ def post_processing(job, base_name, solving_success, post_tuple, file_sorting_tu
             # change the working directory to carry out work in the post processing environment
             os.chdir(f"{current_working_directory}/post_processing_programs/")
             new_working_directory = os.getcwd()
-
             # use the post processing programs to gather desired data and data formats from the simulation
             time_passed = 0 
             for post_command_name in post_command_names:

@@ -74,6 +74,7 @@ The simulation series is done running, you can now define a new series or close 
 
 Do you want to close the application?
 [Y/n] """
+
 # user statement constraint that allows for all alphabet characters
 all_letters_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 all_numbers_list = ["0","1","2","3","4","5","6","7","8","9"]
@@ -95,7 +96,6 @@ interpreter_tuple = interaction.control_data_string_dict(control_file_path, "INT
 csv_result_inline_keywords = interaction.control_data_direct_list(control_file_path, "CSV INLINE KEYWORDS")
 csv_result_nextline_keywords = interaction.control_data_direct_list(control_file_path, "CSV NEXTLINE KEYWORDS")
 csv_header = interaction.control_data_direct_list(control_file_path, "SIMULATION CSV HEADER")
-
 
 # simulation series related data
 session_file_exists = False
@@ -147,12 +147,24 @@ while True:
             instruction = None
             break
 
-        # slave mode
+        # enter slave mode
         if instruction in ["s", "-s", "slave", "slave mode"]:
-            print("\nThis feature does not yet exist.\n")
-            instruction = None
+            # backup all pre_processing_programs
+            self_pre_processing_programs = os.listdir("pre_processing_programs")
+            for file in self_pre_processing_programs:
+                with open(file, 'rb') as self_file:
+                    with open(f"backup_{file}", 'wb') as backup_file:
+                        backup_file.write(self_file.read())
+            # enter slave mode
+                
             #interaction.slave_mode(1)
-            #exit()
+            # rollback any changes the master did to the slave machine
+            for file in self_pre_processing_programs:
+                with open(f"backup_{file}", 'rb') as backup_file:
+                    with open(file, 'wb') as self_file:
+                        self_file.write(backup_file.read())
+                os.remove(f"backup_{file}")
+            exit()
 
         # enter options menu
         if instruction in ["o", "-o", "option","options"]:
@@ -243,8 +255,8 @@ while True:
                     instruction = None
                     break
 
-    
-    ###################################################### define simulaiton series
+    ############ define simulaiton series ############
+
     # define a simulation series or recover a series by stating a base name that already exists
     while None in design_parameter_domains or base_name == None or instruction == None:
 
@@ -274,6 +286,8 @@ while True:
                             job['Status'] = "pending"
                     job_tuple = retrieved_job_tuple
                     job_management.update_joblist_files(base_name, job_tuple)
+                # export a dataset if there are already jobs done
+                create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, dataset_header)
             # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
             else:
                 joblist_file_exists = False
@@ -412,46 +426,50 @@ while True:
             break
     
     ############################################################ distributed mode
-    # ask wheather the user wants tc
-    # o enter distributed mode
     distributed_mode_constraint = {'keywords':["Y", "n"]}
     instruction = interaction.get_and_validate_input(ask_distributed_message, distributed_mode_constraint)
 
     if session_file_exists:
         if command_list[4] == None:
             instruction = "n"
-    if instruction == "Y":
-        print("\nThis feature does not yet exist.\n")
-        instruction = None
-        pass
-        ############# TO DO MULTI DINGENS ##################
-    if instruction == "n":
-        instruction == None
-        pass
-
-    # compute the number of simulations and ask wheather the user wants to stat the simulation process
-    for value_range in design_parameter_domains:
-        jobs_n *= len(value_range)
-    print(f"\nIf you start the simulation series now, {jobs_n} simulation will be started.\n")
-    start_constraint = {'keywords':["Y", "n"]}
-    instruction = interaction.get_and_validate_input(ask_start_message, start_constraint)
-    if session_file_exists:
-        if command_list[4] == None:
+        else:
             instruction = "Y"
+    
+    # enter the distributed mode
     if instruction == "Y":
-
-        # create the joblist and create a joblist backup 
+        # create the job tuple if it does not exist, update the joblist accordingly
         if job_tuple == None:
             job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
-        # if the joblist file does not yet exist or does not contain information, it should be overwritten
-        if not joblist_file_exists:
-            job_management.update_joblist_files(base_name, job_tuple)
-        else:
-            # if the joblist file is retrievable, information should only be added
-            job_management.update_joblist_files(base_name, job_tuple, False)
+        job_management.update_joblist_files(base_name, job_tuple, (not joblist_file_exists))
 
-        # simulate the jobs in the joblist and record failed simulations
-        success_series = simulation_management.run_simulation_series(base_name, job_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple, simulation_time_limit, simulation_loop_limit, processing_time_limit)
+        # collect the slave socket data
+        while instruction not in ["c", "-c", "continue"]:
+
+            slave_socket_constraint = {'keywords':["c", "-c", "continue"]}
+
+
+        
+    # stay in centralized mode
+    if instruction == "n":
+        instruction == None
+        # compute the number of simulations and ask wheather the user wants to stat the simulation process
+        for value_range in design_parameter_domains:
+            jobs_n *= len(value_range)
+        print(f"\nIf you start the simulation series now, {jobs_n} simulation will be started.\n")
+        start_constraint = {'keywords':["Y", "n"]}
+        instruction = interaction.get_and_validate_input(ask_start_message, start_constraint)
+
+        if session_file_exists:
+            if command_list[4] == None:
+                instruction = "Y"
+
+        # create the job tuple if it does not exist, update the joblist accordingly 
+        if instruction == "Y":
+            if job_tuple == None:
+                job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
+            job_management.update_joblist_files(base_name, job_tuple, (not joblist_file_exists))
+            success_series = simulation_management.run_simulation_series(base_name, job_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple, simulation_time_limit, simulation_loop_limit, processing_time_limit)
+            
         # if the series was successful, create the dataset
         if success_series:
             create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, dataset_header)
