@@ -47,9 +47,16 @@ List of all available design parameter names above.
 <design_parameter_name> change parameter value range
 -c continue
 -r reset the Simulation Series to run failes jobs again
+-p run the post processing for this joblist
 -o options
 
 Instruction: """
+ask_png_message = """
+Do you want to export an image of the result structure with every csv?
+
+Additional space is requiered.
+
+[Y/n] """
 ask_distributed_message = """
 Do you want to compute this simulation series distributedly?
 
@@ -287,7 +294,6 @@ while True:
                     job_tuple = retrieved_job_tuple
                     job_management.update_joblist_files(base_name, job_tuple)
                 # export a dataset if there are already jobs done
-                create_dataset.create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header, dataset_header)
             # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
             else:
                 joblist_file_exists = False
@@ -320,7 +326,7 @@ while True:
             print(f"{parameter_name}\n{parameter_domain}\nnumber of values: {len(parameter_domain)}\n")
         
         # let user change a design parameter value range, base name or timer
-        ask_change_constraint = {'keywords':design_parameter_names + ["c", "-c", "continue", "base name", "base_name", base_name, "r", "-r", "o", "-o", "options"]}
+        ask_change_constraint = {'keywords':design_parameter_names + ["c", "-c", "continue", "base name", "base_name", base_name, "r", "-r", "p", "-p", "-post", "post", "o", "-o", "options"]}
         instruction = interaction.get_and_validate_input(ask_change_message, ask_change_constraint, True)
         # declare a parameter range as None such that the loop will run again and let you redeclare its value range
         if instruction in design_parameter_names:
@@ -346,7 +352,20 @@ while True:
             except:
                 pass
             instruction = None
-                                
+
+        # perform the post processing
+        if instruction in ["p", "-p", "-post", "post"]:
+            
+            # ask wheather a png should be exported too, then export all csv files and png if wished so
+            png_constraint = {'keywords':["Y", "n"]}
+            instruction = interaction.get_and_validate_input(ask_png_message, png_constraint)
+
+            if instruction == "Y":
+                create_dataset.export_data(base_name, True)
+            
+            if instruction == "n":
+                create_dataset.export_data(base_name)
+           
         # give user access to all options
         if instruction in ["o", "-o", "option", "options"]:
             # enter a loop to stay inside the option menu

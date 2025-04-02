@@ -1,6 +1,81 @@
 import os
 import job_management
 import random
+import sys
+
+def export_data(base_name, png=False):
+    def export_csv(jobname, base_name):
+        current_working_directory = os.getcwd()
+
+        # check wheather the subfolder for the job already exists
+        if not os.path.isdir(f"{current_working_directory}/raw_results/results_csv/{base_name}"):
+            os.mkdir(f"{current_working_directory}/raw_results/results_csv/{base_name}")
+
+        with open("SessionFileShowAndExportPost.ofs", 'w') as session_file_export:
+            session_file_export.write(
+            f"""
+            mode(Post)
+            file.open.apply("{current_working_directory}/raw_results/erg_folders/{base_name}/{jobname}.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=All, curves=OnDemand)
+            showMin()
+            showMax()
+            view.multiView.setActive(views=nextView)
+            setVariable("Scalar:Formability", view="3D View 2")
+            flcCreateKeeler(materialName="Keeler 1", thickness="0.8", n="0.2", r=1)
+            flcAddItem(flc="Keeler 1", item="process(1):Blank")
+            view.multiView.set(views="2 Views (Left/Right)")
+            file.export.apply("{current_working_directory}/raw_results/results_csv/{base_name}/{jobname}.csv", format="CSV/Results", append=Off, objectType=Labels, marker="*", exportCoordinates=Off, title="")
+            quit()
+            """)
+        try:
+            os.system(f"ofd -s SessionFileShowAndExportPost.ofs -b")
+        except:
+            print("Export did not work.")
+    
+    def export_png(jobname, base_name):
+        current_working_directory = os.getcwd()
+
+        with open("SessionFileShowAndExportPost.ofs", 'w') as session_file_export:
+            session_file_export.write(
+            f"""
+            mode(Post)
+            file.open.apply("{current_working_directory}/raw_results/erg_folders/{base_name}/{jobname}.erg/header.bin", format="OFSolv/Results", variables=Recommended, increments=All, curves=OnDemand)
+            showMin()
+            showMax()
+            view.multiView.setActive(views=nextView)
+            setVariable("Scalar:Formability", view="3D View 2")
+            flcCreateKeeler(materialName="Keeler 1", thickness="0.8", n="0.2", r=1)
+            flcRemoveItem(item="process(1):Blank")
+            flcAddItem(flc="Keeler 1", item="process(1):Blank")
+            setOption("Snapshot/Background Color Type", value="User Defined")
+            takeSnapshot("3D View", filename="{current_working_directory}/raw_results/results_csv/{base_name}/{jobname}.png", backgroundColor=black, drawTitle=On, drawLogo=On, drawCoordSys=On, drawScale=On, drawLabel=On, drawBorder=Off)
+            quit()
+            """)
+        
+        try:
+            os.system(f"ofd -s SessionFileShowAndExportPost.ofs -b")
+        except:
+            print("Export did not work.")
+    
+    # import the job tuple
+    joblist, header, value_ranges = job_management.retrieve_joblist(base_name)  
+
+    # take note of all csv files that do not need to be generated again
+    current_working_directory = os.getcwd()
+    if not os.path.isdir(f"{current_working_directory}/raw_results/results_csv/{base_name}"):
+        os.mkdir(f"{current_working_directory}/raw_results/results_csv/{base_name}")
+        existing_files = []
+    else:
+        existing_files = os.listdir(f"{current_working_directory}/raw_results/results_csv/{base_name}")
+        jobnames_done = [filename[:-4] for filename in existing_files]
+
+    # go through the jobs and create the csv and if wished so png files
+    for job in joblist:
+        jobname = job['Jobname']
+        if jobname in jobnames_done:
+            continue
+        export_csv(jobname, base_name)
+        if png:
+            export_png(jobname, base_name)
 
 
 def create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header,include_header=True):

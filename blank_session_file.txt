@@ -1,0 +1,60 @@
+# this is a session file for the ENSIMA data generator
+# to enter instructions, follow the instructions provided by the # lead lines
+# your data has to replace the <your_data> labels underneath the corresponding instruction line
+
+# state time limit
+SIMULATION TIME LIMIT
+<your_simulation_time_limit>
+
+# state loop limit
+SIMULATION LOOP LIMIT
+<your_simulation_loop_limit>
+
+# state base_name
+BASE NAME
+<your_base_name>
+
+# state design parameter names and their corresponding value ranges by alternating between them
+# to state a value range, either state each value individually and without blank spaces: <value 1>, <value_2>,<value_3>,<value_4>
+# or State a lower and upper bound and a step size to define the value range as a closed intervall: <lower_bound> <upper_bound> <step_size>
+# delete any line between DESIGN PARAMETER NAMES AND RANGES and END DATA to not alter the design paremeter data
+
+Blank Thickness
+<your_design_parameter_value_range>
+Scale X
+<your_design_parameter_value_range>
+Scale Y
+<your_design_parameter_value_range>
+Friction
+<your_design_parameter_value_range>
+Pressure
+<your_design_parameter_value_range>
+Die Radius
+<your_design_parameter_value_range>
+END DATA
+# alternatingly state design parameter names and their value ranges
+DESIGN PARAMETER NAMES AND RANGES
+
+Blank Thickness
+<your_design_parameter_value_range>
+Scale X
+<your_design_parameter_value_range>
+Scale Y
+<your_design_parameter_value_range>
+Friction
+<your_design_parameter_value_range>
+Pressure
+<your_design_parameter_value_range>
+Die Radius
+<your_design_parameter_value_range>
+END DATA
+
+# state the port numbers and ip addresses of the slave machines you want to connect, leave empty to start the simulation in single mode
+# state the information in the following format: <port_number> <ip_address>
+# delete any line between SLAVE SOCKETS and END DATA in order to not specify and slave socket
+SLAVE SOCKETS
+<your_slave_port_number> <your_slave_ip_address>
+END DATA
+
+# state wheather the master machine should participate in the simulation, state 'Y' for yes and 'n' for no
+<your_Y_or_n>
