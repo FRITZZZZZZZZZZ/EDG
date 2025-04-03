@@ -29,7 +29,7 @@ def get_allowed_files_command(allowed_files):
     allowed_files_command = "'" + allowed_files_command[:-1] + "'"
     return allowed_files_command
 
-def pre_processing(job, editing_tuple, interpreter_tuple, allowed_files_list):
+def pre_processing(job, editing_tuple, allowed_files_list):
     """
     This function takes care of the pre processing of the simulation. It alters input files like dat t51 and t52
     and then moves them to the next step.
@@ -55,8 +55,7 @@ def pre_processing(job, editing_tuple, interpreter_tuple, allowed_files_list):
         command = control_commands[parameter]
         try:
             # match the program call with the right interpreter if wished so
-            interpreter = pick_interpreter(interpreter_tuple, command)
-            os.system(f"{interpreter} {command} {value} {jobname}")
+            os.system(f"{command} {value} {jobname}")
         except:
             # if the program call did not work, something was not edited, dont continue the simulation and waste time
             os.system(f"python clean_directory.py {allowed_files}")
@@ -74,7 +73,7 @@ def pre_processing(job, editing_tuple, interpreter_tuple, allowed_files_list):
     success = True
     return success
 
-def solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_limit, allowed_files_list):
+def solve_simulation(job, base_name, solve_tuple, time_limit, loop_limit, allowed_files_list):
 
     def check_done(jobname, done_keyword):
         try:
@@ -135,15 +134,10 @@ def solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_lim
 
             return (loops_passed, current_length, last_length, last_increment)
     
-    
     # unpack solve tuple, yes this seems quite inefficient but doing it that way is one way to make the control_file more human readable
     solving_commands, solving_commands_names = solve_tuple
-    # start command
     start_command = solving_commands[solving_commands_names[0]]
-    # keywords for stopping the simulation and for when the simulation is done
     done_keyword = solving_commands[solving_commands_names[1]]
-    # the list of file types to be transfered to post processing, this is a blank space delimited list in string format
-    export_file_types = solving_commands[solving_commands_names[3]]
     
     # more important variables
     jobname = job['Jobname']
@@ -156,8 +150,7 @@ def solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_lim
     os.chdir(f"{current_working_directory}/simulation_solving_programs/")
 
     # start the simulation
-    interpreter = pick_interpreter(interpreter_tuple, start_command)
-    os.system(f"{interpreter} {start_command} {jobname}")
+    os.system(f"{start_command} {jobname}")
 
     # wait for files to be available
     while inf_file == None or log_file == None:
@@ -172,28 +165,22 @@ def solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_lim
         except:
             pass
 
-    # keep track of simulation 
+    # keep track of simulation and check for termination constraints
     success = None
     loops_passed = 0
     time_passed = 0
     last_increment = None
-
-    # check for termination constraints
     while success == None:
         time.sleep(1)
-
         # check wheather the simulation is success
         if check_done(jobname, done_keyword):
             success = True
-        
         # check wheather the simulation exceeded its loop limit
         check_loops_result = check_loops(jobname, loop_limit, loops_passed, current_length, last_length, last_increment)
         if type(check_loops_result) == tuple:
             loops_passed, current_length, last_length, last_increment = check_loops_result
-
         if type(check_loops_result) == bool:
             success = False    
-
         # check wheather the time is exceeded
         if not time_limit == None:
             if time_passed >= time_limit:
@@ -201,7 +188,14 @@ def solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_lim
             else:
                 time_passed += 1
 
-    os.system(f"python move_data.py {export_file_types} {current_working_directory}/post_processing_programs {jobname}")
+    if success:
+        if not os.path.isdir(f"{current_working_directory}/raw_results/erg_folders/{jobname}"):
+            os.mkdir(f"{current_working_directory}/raw_results/erg_folders/{jobname}")
+        os.system(f"python move_data.py erg {current_working_directory}/raw_results/erg_folders/{jobname} {jobname}")
+    if not success:
+        if not os.path.isdir(f"{current_working_directory}/raw_results/error_results/{base_name}/{jobname}"):
+            os.mkdir(f"{current_working_directory}/raw_results/error_results/{base_name}/{jobname}")
+        os.system(f"python move_data.py 'erg t51 t52 inf log out dat' {current_working_directory}/raw_results/error_results/{jobname} {jobname}")
 
     # clean up the directory, leave only allowed files here
     os.system(f"python clean_directory.py {allowed_files}")
@@ -209,88 +203,8 @@ def solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_lim
 
     return success
   
-def post_processing(job, base_name, solving_success, post_tuple, file_sorting_tuple, interpreter_tuple, post_processing_time_out, allowed_files_list):
-    # define important variables
-    jobname = job['Jobname']
-    post_commands, post_command_names = post_tuple   
-    file_categories, category_names = file_sorting_tuple
-    current_working_directory = os.getcwd()
-    allowed_files = get_allowed_files_command(allowed_files_list)
 
-    try:
-        if solving_success:   
-            
-
-            # change the working directory to carry out work in the post processing environment
-            os.chdir(f"{current_working_directory}/post_processing_programs/")
-            new_working_directory = os.getcwd()
-            # use the post processing programs to gather desired data and data formats from the simulation
-            time_passed = 0 
-            for post_command_name in post_command_names:
-                command = post_commands[post_command_name]
-                n_files = len(os.listdir(new_working_directory))
-                # pick the right interpreter to allow use of custom programs
-                interpreter = pick_interpreter(interpreter_tuple, command)
-                os.system(f"{interpreter} {command} {jobname}")
-                # wait for open form to export the desired file formats.                 
-                while time_passed <= post_processing_time_out:
-                    # This is done via time out because open form is a different process and can take some time
-                    time.sleep(1)
-                    time_passed += 1
-                    if time_passed >= post_processing_time_out:
-                        os.chdir({current_working_directory})
-                        return False
-                    new_n_files = len(os.listdir(new_working_directory))
-                    if new_n_files > n_files:
-                        break
-            os.chdir(f"{current_working_directory}")
-
-            # sort the results according to the fact that the solving has been successful
-                # all categories but the last one do define data types and their destined directories for successful solving
-                # the very last one is reserved for the directory that stores the files of unsuccessful solving attempts
-            succes_category_names = category_names[:-1]
-            for category_name in succes_category_names:
-                file_types, result_path = file_categories[category_name]
-
-                # if the directory doesnt exist, create the directory to avoid "dIrEcToRY dOEsN'T eXiST" errors
-                if not os.path.isdir(f"{current_working_directory}/{result_path}/{base_name}/"):
-                    os.mkdir(f"{current_working_directory}/{result_path}/{base_name}/")
-
-                # move the files to their destination folder
-                os.chdir(f"{current_working_directory}/post_processing_programs")
-                os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name} {jobname}")
-                os.chdir(f"{current_working_directory}")
-
-        if not solving_success:
-
-            # only the last category_name deals with files of unsuccessful solving attempts
-            error_category = category_names[-1]
-            file_types, result_path = file_categories[error_category]
-
-            # if the directory doesnt exist, create the directory to avoid "dIrEcToRY dOEsN'T eXiST" errors
-            if not os.path.isdir(f"{current_working_directory}/{result_path}/{base_name}/"):
-                os.mkdir(f"{current_working_directory}/{result_path}/{base_name}/")
-
-            # move the files to the folder storing the data of unsuccessful solving atttempts
-            os.chdir(f"{current_working_directory}/post_processing_programs")
-            os.mkdir({current_working_directory}/{result_path}/{base_name}/{jobname})
-            os.system(f"python move_data.py {file_types} {current_working_directory}/{result_path}/{base_name}/{jobname} {jobname}")
-            os.chdir(f"{current_working_directory}")
-
-    except:
-        # clean up the directory, leave only allowed files here
-        os.chdir(f"{current_working_directory}/post_processing_programs")
-        os.system(f"python clean_directory.py {allowed_files}")
-        os.chdir(f"{current_working_directory}")
-        return False
-
-    # clean up the directory, leave only allowed files here
-    os.chdir(f"{current_working_directory}/post_processing_programs")
-    os.system(f"python clean_directory.py {allowed_files}")
-    os.chdir(f"{current_working_directory}")
-    return True
-
-def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple=None, time_limit=900, loop_limit=10, processing_time_limit=60 ):
+def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, time_limit=900, loop_limit=10, processing_time_limit=60 ):
 
     # defining important control variables
     joblist, full_header, value_range_list = joblist_tuple
@@ -300,7 +214,6 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
     current_working_directory = os.getcwd()
     pre_processing_files = os.listdir(f"{current_working_directory}/pre_processing_programs")
     simulation_solving_files = os.listdir(f"{current_working_directory}/simulation_solving_programs")
-    post_processing_files = os.listdir(f"{current_working_directory}/post_processing_programs")
 
     for job_index in range(len(joblist)):
         if ready:
@@ -319,30 +232,22 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                 # try solving the job
                 try:
                     #if the preprocessing did not work, abort the job and go to the next one
-                    success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple, pre_processing_files)
+                    success_pre_processing = pre_processing(job, pre_tuple, pre_processing_files)
                     if not success_pre_processing:
                         print("\nThe pre processing was not successful, please check the control file or pre processing programs.\n")
                         return False
                     
                     # if the solving was not successfull, the success of the post processing is not important
-                    success_solving = solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_limit, simulation_solving_files)
-                    if not success_solving:
-                        job['Status'] = "unsuccessfull"
-                        joblist_tuple = (joblist, full_header, value_range_list)
-                        job_management.update_joblist_files(base_name, joblist_tuple)                                
-
-                    # if there are problems with the post processing, stop the series
-                    succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
-                    if not succes_post_processing:
-                        print("\nThe post processing was not successful, check control file or post processing programs.\n")
-                        return False
+                    success_solving = solve_simulation(job, solve_tuple, time_limit, loop_limit, simulation_solving_files)
                     
-                    # after all is done, mark the job as successfull
+                    # label the job in the joblist
                     if success_solving:
                         job['Status'] = "successfull"
-                        joblist_tuple = (joblist, full_header, value_range_list)
-                        job_management.update_joblist_files(base_name, joblist_tuple)
-                    
+                    else:
+                        job['Status'] = "unsuccessfull"
+                    joblist_tuple = (joblist, full_header, value_range_list)
+                    job_management.update_joblist_files(base_name, joblist_tuple)                                
+
                     ready = True
                     
                 except:
@@ -350,45 +255,9 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, post
                     return False
     return True
 
-def simulate(job, base_name, pre_tuple, solve_tuple, post_tuple, sorting_tuple, interpreter_tuple=None, time_limit=900, loop_limit=10, processing_time_limit=60):
-    """
-    This is a function which can be used to simulate a single job, it is utilized by simulation slaves and will not
-    update any jobfiles. It returns False if the simulation failes and returns the jobname if the simulation is successfull.
-    
-    This jobname can then be used to create a single dataset line by invocing create_dataset_single line with the jobname.
-    """
 
-    # catch the directory states such that its clear which files are allowed in the directories, all other files will be deleted
-    current_working_directory = os.getcwd()
-    pre_processing_files = os.listdir(f"{current_working_directory}/pre_processing_programs")
-    simulation_solving_files = os.listdir(f"{current_working_directory}/simulation_solving_programs")
-    post_processing_files = os.listdir(f"{current_working_directory}/post_processing_programs")
-    jobname = job['Jobname']
-
-    # try solving the job
-    try:
-        #if the preprocessing did not work, abort the job and go to the next one
-        success_pre_processing = pre_processing(job, pre_tuple, interpreter_tuple, pre_processing_files)
-        if not success_pre_processing:
-            print("\nThe pre processing was not successful, please check the control file or pre processing programs.\n")
-            return False
-        
-        # if the solving was not successfull, the success of the post processing is not important
-        success_solving = solving_simulation(job, solve_tuple, interpreter_tuple, time_limit, loop_limit, simulation_solving_files)                               
-
-        # if there are problems with the post processing, stop the series
-        succes_post_processing = post_processing(job, base_name, success_solving, post_tuple, sorting_tuple, interpreter_tuple, processing_time_limit, post_processing_files)
-        if not succes_post_processing:
-            print("\nThe post processing was not successful, check control file or post processing programs.\n")
-            return False
-        
-    # if anything else goes wrong, append the job to the error list and continue the series
-    except:
-        print("\nSomething went wrong while running the simulation series.\n")
-        return False
 
 def simulate(job):
     print(job)
     time_dings = random.randint(3, 10)
     print("done")
-    

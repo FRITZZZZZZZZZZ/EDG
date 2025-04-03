@@ -22,23 +22,16 @@ GNS_LICENSE_NODELOCKED
 END DATA
 
 NAME				
-INTERPRETER SELECTION				
-HEADER				
-LANGUAGE SUFFIX	INTERPRETER			
-START					
-END DATA				
-
-NAME				
 PRE PROCESSING				
 HEADER				
 DESIGN_PARAMETER_NAME	EDITING_METHOD	SETTINGS DISTRIBUTION INDIPENDENT	SETTINGS DISTRIBUTION DEPENDENT GERMAN	REQUIERED FILE
 START				
-Blank Thickness	edit_csv.py	'index x y z' z 0.8	KNOTENGEOMETRIE LISTENGESTEUERT	geometrie.t51
-Scale X	scale.py	x		
-Scale Y	scale.py	y
-Friction	edit_dat.py	[Fr] 0 None	Binder	rectangular_cup.dat
-Pressure	edit_dat.py	[p] 3 'negative absolute value'	Binder	rectangular_cup.dat
-Die Radius	make_tools.py
+Blank Thickness	python edit_csv.py	'index x y z' z 0.8	KNOTENGEOMETRIE LISTENGESTEUERT	geometrie.t51
+Scale X	python scale.py	x		
+Scale Y	python scale.py	y
+Friction	python edit_dat.py	[Fr] 0 None	Binder	rectangular_cup.dat
+Pressure	python edit_dat.py	[p] 3 'negative absolute value'	Binder	rectangular_cup.dat
+Die Radius	python make_tools.py
 END DATA
 
 NAME
@@ -46,30 +39,10 @@ SIMULATION SOLVING
 HEADER
 ITEM NAME	CONTENT			
 START
-Start Simulation Method	start_simulation.py			
+Start Simulation Method	python start_simulation.py			
 Successful Termination Keyword	DER GESAMTE ANGEFORDERTE SPEICHER BETRAEGT	
 Stop Simulation Keyword	ofd SIGNAL STOP
 Transfer to Post	'dat erg t51 t52 out inf log'
-END DATA
-
-NAME				
-POST PROCESSING				
-HEADER				
-ACTION NAME	METHOD	OPTIONS		
-START				
-Export Screenshot	export_png.py		
-Export CSV	export_csv.py
-END DATA			
-
-NAME
-FILE SORTING
-HEADER
-ITEM CATEGORY	FILE SUFFIX	DESTINATION
-START
-Result Raw Folders	erg	raw_results/erg_folders
-Result Png	png	raw_results/results_png
-Result CSV	csv	raw_results/results_csv
-Error Files	'inf log out t51 t52 erg'	raw_results/error_results
 END DATA
 
 NAME
@@ -105,4 +78,4 @@ Severe Thinning
 Cracks
 END DATA
 
-END FILE			
+END FILE	
