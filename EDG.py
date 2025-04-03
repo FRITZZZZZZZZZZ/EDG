@@ -195,19 +195,19 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
             if not retrieved_job_tuple == None:
                 joblist_file_exists = True
                 joblist, header, value_ranges = retrieved_job_tuple
+                jobs_done = [jobname[:-4] for jobname in os.listdir(f"raw_results/erg_folders/{base_name}")]
                 # check wheather the header fits the design parameter names
                 metaless_header = header[2:]
                 if metaless_header == design_parameter_names:
-                    # if the headers do match, set the design parameter value ranges to the retrieved value ranges
                     design_parameter_domains = value_ranges
                     # set all jobs that are not finished to pending
                     for job in joblist:
-                        # pick the jobs up that were disrupted in the last simulation seriers
                         if job['Status'] == "in_progress": 
                             job['Status'] = "pending"
+                        if job['Jobname'] in jobs_done:
+                            job['Status'] = "successfull"
                     job_tuple = retrieved_job_tuple
                     job_management.update_joblist_files(base_name, job_tuple)
-                # export a dataset if there are already jobs done
             # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
             else:
                 joblist_file_exists = False
