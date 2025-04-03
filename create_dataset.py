@@ -73,9 +73,10 @@ def export_data(base_name, png=False):
         jobname = job['Jobname']
         if jobname in jobnames_done:
             continue
-        export_csv(jobname, base_name)
-        if png:
-            export_png(jobname, base_name)
+        if job['Status'] == 'successfull':
+            export_csv(jobname, base_name)
+            if png:
+                export_png(jobname, base_name)
 
 
 def create_dataset(base_name, design_parameter_names, csv_result_inline_keywords, csv_result_nextline_keywords, csv_header,include_header=True):

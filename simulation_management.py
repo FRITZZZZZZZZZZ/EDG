@@ -238,7 +238,7 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, time
                         return False
                     
                     # if the solving was not successfull, the success of the post processing is not important
-                    success_solving = solve_simulation(job, solve_tuple, time_limit, loop_limit, simulation_solving_files)
+                    success_solving = solve_simulation(job, base_name, solve_tuple, time_limit, loop_limit, simulation_solving_files)
                     
                     # label the job in the joblist
                     if success_solving:

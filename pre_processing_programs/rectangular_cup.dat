@@ -1,0 +1,143 @@
+$-----------------------------
+$ Part Name: Rectangular Cup
+$ 
+$ Design 1: Blank Thickness      [tb] = 0.80/0.09/1.00/1.10/1.20 [mm]
+$ Design 2: Blank x-Scale	 [Sx] = 1.00/0.95/0.90/0.85	 [-]
+$ Design 3: Blank y-Scale	 [Sy] = 1.00/0.95/0.90/0.85	 [-]
+$ Design 4: Binder Pressure	 [p]  = 1.00/2.00/3.00/4.00	 [N/mm*2]
+$ Design 5: Friction Coefficient [Fr] = 0.00/0.03/0.06/0.09/0.12 [-]
+$ Design 6: Draw Radius		 [Rd]=  3.00/4.00/5.00		 [mm]
+$-----------------------------
+TITLE
+Rectangular Cup (60x40x20 mm*3), Initial Blank (112x95 mm*2)
+
+Blank Thickness	[tb] = 0.80mm		(in .t51 file!)
+Blank Scaling	[Sx] = 1.00, [Sy] = 1.0	(in .t51 file!)
+Draw Radius	[Rd] = 3.00mm	    	(in .t52 file!)
+
+Material:	ZStE340 (210000,0.30,365.0,19.0,462.0,0.60,1.66,0.94)
+------------------------------
+ART DER BERECHNUNG
+ANALYSE
+NEUSTART
+MIT KONTAKT
+OHNE PROJEZIERTE LINIEN
+------------------------------
+MATERIALBIBLIOTHEK,1,
+1,INPRO_ZStE340,
+------------------------------
+POSTDATEN,2,1,1,
+SKALAR,2,
+DDICK
+HAUEPS,S3,
+XYPLOT,1,
+ALLE,
+------------------------------
+RESTARTDATEN,0,
+------------------------------------------------------------
+------------------------------------------------------------
+$-----------------------------
+$ Type: Closing
+$-----------------------------
+BLOCKNAME OP20 - Closing Binder p=3.0N/mm*2, 1000,
+------------------------------
+GLEICHUNGSLOESER
+CHOLESKY
+KOMPAKT,1,
+KONDITIONSZAHL
+OHNE ITERATIVES VERFAHREN
+------------------------------
+KONTAKT
+KONTROLLE,1,
+2,50,,,,,5,
+LOESEN,1,
+0.1,
+FESSELN,1,
+0.1,,,0,
+------------------------------
+STEUERUNG
+1,200,,0,
+KRAFT
+RELATIV
+0.05,
+NEWTON
+MIT LINE-SEARCH
+3,6,
+------------------------------
+WERKZEUGSTEUERUNG
+ENTLASTUNG/POSITIONIERUNG,0,
+INITIALBEWEGUNG,2,
+Blankholder
+0,0,-1,0,
+Die
+0,0, 1,0,
+GESCHWINDIGKEITEN/LASTEN,0.1,2,
+Blankholder
+$  [p] = -3.0
+14,0.,0.,-3.0,
+Die
+ 0,0.,0., 0.0,
+------------------------------
+ZEITSCHRITT,0.1,1,,,
+0.01,0.4,1E+06,1.5,,,,,10,
+------------------------------
+DAEMPFUNG,1
+Blank
+D,D,D,
+0.001,0.001,1E-06,
+------------------------------
+POSTINKREMENT,,,,,,1,
+------------------------------------------------------------
+------------------------------------------------------------
+$-----------------------------
+$ Type: Forming
+$-----------------------------
+BLOCKNAME OP20 - Closing Punch  20.0mm, 1000,
+------------------------------
+GLEICHUNGSLOESER
+CHOLESKY
+KOMPAKT,1,
+KONDITIONSZAHL
+OHNE ITERATIVES VERFAHREN
+------------------------------
+STEUERUNG
+1,200,,0,
+KRAFT
+RELATIV
+0.05,
+NEWTON
+MIT LINE-SEARCH
+3,6,
+------------------------------
+WERKZEUGSTEUERUNG
+ENTLASTUNG/POSITIONIERUNG,0,
+INITIALBEWEGUNG,1,
+Punch
+0.,0.,-1.,
+GESCHWINDIGKEITEN/LASTEN,0.1,3,
+Blankholder
+11,0.,0., 0.0,
+Die
+ 0,0.,0., 0.0,
+Punch
+ 0,0.,0.,-1.0,
+------------------------------
+ZEITSCHRITT,0.1,1,,,
+0.01,0.4,20.0,1.5,,,,,10,
+------------------------------
+REIBUNG,3,1,,
+Blankholder
+$ [Fr] = 0.06
+0.06,0.1,0,
+Die
+$ [Fr] = 0.06
+0.06,0.1,0,
+Punch
+$ [Fr] = 0.06
+0.06,0.1,0,
+------------------------------
+DAEMPFUNG,-1,
+------------------------------
+POSTINKREMENT,,,,,5.0,1,
+------------------------------------------------------------
+------------------------------------------------------------

@@ -5,7 +5,7 @@ import sys
 import create_dataset 
 import os
 import session_file_management
-import multithreaded_server
+import distribution_management
 
 def options(instruction):
     option_message = """
@@ -133,11 +133,23 @@ def index_menu(instruction):
                 with open(file, 'rb') as self_file:
                     with open(f"backup_{file}", 'wb') as backup_file:
                         backup_file.write(self_file.read())
+            self_simulation_solving_programs = os.listdir("simulation_solving_programs")
+            for file in self_simulation_solving_programs:
+                with open(file, 'rb') as self_file:
+                    with open(f"backup_{file}", 'wb') as backup_file:
+                        backup_file.write(self_file.read())
+            distribution_management.slave
+
             # enter slave mode
-                
-            #interaction.slave_mode(1)
+            distribution_management.slave()
+
             # rollback any changes the master did to the slave machine
             for file in self_pre_processing_programs:
+                with open(f"backup_{file}", 'rb') as backup_file:
+                    with open(file, 'wb') as self_file:
+                        self_file.write(backup_file.read())
+                os.remove(f"backup_{file}")
+            for file in self_simulation_solving_programs:
                 with open(f"backup_{file}", 'rb') as backup_file:
                     with open(file, 'wb') as self_file:
                         self_file.write(backup_file.read())
@@ -291,7 +303,7 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
             instruction = None
             break
 
-    return design_parameter_domains
+    return design_parameter_domains, base_name, job_tuple
 
 def distributed_mode(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists):
     ask_distributed_message = """
@@ -317,10 +329,10 @@ def distributed_mode(base_name, design_parameter_domains, design_parameter_names
         if job_tuple == None:
             job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
         job_management.update_joblist_files(base_name, job_tuple, (not joblist_file_exists))
-        multithreaded_server.multithread_server(job_tuple)
+        distribution_management.multithread_server(job_tuple)
             
 
-def central_only(jobs_n, design_parameter_domains, design_parameter_names, job_tuple):   
+def central_only(jobs_n, base_name, design_parameter_domains, design_parameter_names, job_tuple):   
     ask_start_message = f"""
     Do you want to start the data generation now?
 
@@ -420,6 +432,6 @@ State 'exit' to close application at any point.""")
 
 while True:
     index_menu(instruction)
-    design_parameter_domains = define_or_post_series(design_parameter_domains, base_name, instruction)
+    design_parameter_domains, base_name, job_tuple = define_or_post_series(design_parameter_domains, base_name, instruction)
     distributed_mode(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists)
     central_only(jobs_n, design_parameter_domains, design_parameter_names, job_tuple)

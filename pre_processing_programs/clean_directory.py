@@ -2,7 +2,7 @@ import sys
 import os
 
 
-def move_data(argument_vector):
+def clean_directory(argument_vector):
     """
     This program will delete every file other than the ones specified in its instructions. It serves as a means to avoid file littering in the precessing directories.
     This is important, because it can happen that simulation processes are not completed or create unforseen error files or such. If this happens repeadetly, the directories will overflow.
@@ -30,4 +30,4 @@ def move_data(argument_vector):
             continue
 
 instructions = sys.argv
-move_data(instructions)
+clean_directory(instructions)

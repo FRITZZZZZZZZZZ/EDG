@@ -9,7 +9,7 @@ def make_tools(instructions):
     except:
         pass
     
-    with open(r"/home/engelmann/ENSIMA/RectangularCupSingle.inp",'w') as file_rectangular_cup_input:
+    with open(r"RectangularCupSingle.inp",'w') as file_rectangular_cup_input:
         file_rectangular_cup_input.write(f"60\n40\n3\n3\n20\n{die_radius}\n20\n1.1\n1")
     
     os.system('./RectangularCupSingle.exe < RectangularCupSingle.inp')
