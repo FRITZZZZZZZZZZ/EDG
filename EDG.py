@@ -5,6 +5,7 @@ import sys
 import create_dataset 
 import os
 import session_file_management
+import multithreaded_server
 
 def options(instruction):
     option_message = """
@@ -17,6 +18,10 @@ def options(instruction):
     - To exit the option menu, state '-c'.
 
     Instruction: """
+    ask_reset_message = """
+    Do you really want to reset the control file?
+    
+    [Y/n] """
     while instruction == None:
         # list the alterable elements
         with open(option_file_path, 'r') as option_file:
@@ -288,7 +293,7 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
 
     return design_parameter_domains
 
-def distribute_or_not(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists):
+def distributed_mode(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists):
     ask_distributed_message = """
     Do you want to compute this simulation series distributedly?
 
@@ -312,11 +317,8 @@ def distribute_or_not(base_name, design_parameter_domains, design_parameter_name
         if job_tuple == None:
             job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
         job_management.update_joblist_files(base_name, job_tuple, (not joblist_file_exists))
-
-        # collect the slave socket data
-        while instruction not in ["c", "-c", "continue"]:
-
-            slave_socket_constraint = {'keywords':["c", "-c", "continue"]}
+        multithreaded_server.multithread_server(job_tuple)
+            
 
 def central_only(jobs_n, design_parameter_domains, design_parameter_names, job_tuple):   
     ask_start_message = f"""
@@ -353,7 +355,7 @@ def central_only(jobs_n, design_parameter_domains, design_parameter_names, job_t
     if not success_series:
         print("Something went wrong while running the simulation series, check the control file or editing programs.")
 
-
+######################################################## RETRIVAL OF DATA AND VARIABLE INITIALISATION ##################################################
 
 # user statement constraint that allows for all alphabet characters
 all_letters_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -408,16 +410,16 @@ environment_variable_values, environment_variable_names = environment_tuple
 for environment_variable in environment_variable_names:
     os.environ[environment_variable] = environment_variable_values[environment_variable]
 
-#####################################################################################################################################################
-
-# start of the dialogue
 print("""
 ENSIMA Data Generator(EDG)
 
 For usage information see readme.md .
 State 'exit' to close application at any point.""")
+
+##################################################### THE USER DIALOGUE STARTS HERE ##################################################################
+
 while True:
     index_menu(instruction)
     design_parameter_domains = define_or_post_series(design_parameter_domains, base_name, instruction)
-    distribute_or_not(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists)
+    distributed_mode(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists)
     central_only(jobs_n, design_parameter_domains, design_parameter_names, job_tuple)

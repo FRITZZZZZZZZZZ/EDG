@@ -4,6 +4,7 @@ import json
 import time
 import simulation_management
 import job_management
+import interaction
 
 
 def master_socket(slave_ip, slave_port, thread_index):
@@ -17,16 +18,16 @@ def master_socket(slave_ip, slave_port, thread_index):
             array_edited.append(array[array_index])
         return array_edited
 
+    local_ip = socket.gethostbyname(socket.gethostname())
+
     # control variables for socket threads
     global job_pool
-    global slave_ip_addresses
-    global slave_port_numbers
     global connected
 
     # connect to a slave machine and mark thread as connected
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            sock.bind((HOST, 0))
+            sock.bind((local_ip, 0))
             sock.connect((slave_ip, slave_port))
             connected[thread_index] = True
 
@@ -54,92 +55,126 @@ def master_socket(slave_ip, slave_port, thread_index):
         job_pool[thread_index] = "NOT AVAILABLE"
         slave_port_numbers = delete_value(slave_port_numbers, slave_port)
         slave_ip_addresses = delete_value(slave_ip_addresses, slave_ip)
+   
 
-def host_simulation(thread_index):
-    while True:
-        if job_pool[thread_index] != None:
-            job = job_pool[thread_index]
-            result = simulation_management.(job)
-            job_pool[thread_index] = None      
 
-def master_job_manager(joblist):
-    global job_pool
-    job_list_index = 0
-    while job_list_index < len(joblist):
-        job = joblist[job_list_index]
-        for job_pool_index in range(len(job_pool)):
-            if job_pool[job_pool_index] == None and not "NOT AVAILABLE":
-                job_pool[job_pool_index] = job
-                job['status'] = "in progress"
-                job_list_index += 1
+def multithread_server(job_tuple):  
+
+    def simulate_self(thread_index):
+        global job_pool
+        while True:
+            instruction = job_pool[thread_index]
+            # terminate the connection
+            if instruction == False:
+                break
+
+            if type(instruction) == dict:
+                # solve the job
+                job = instruction
+                success_solving = simulation_management.simulate(instruction)
+                # mark self as idle again
+                job_pool[thread_index] == None
+            time.sleep(1)              
+
+    def start_connection(instruction, thread_index, connected):
+        # extract slave address and port
+        try:
+            slave_ip = instruction.split(' ')[0]
+            slave_port = int(instruction.split(' ')[1])
+        except:
+            print("\nNo valid socket data found, please stick to given format.\n")
+            return False
+        # prepare the master thread environment
+        job_pool.append(None)
+        slave_ip_addresses.append(slave_ip)
+        slave_port_numbers.append(slave_port)
+        connected.append(False)
+        # increment the thread index and start the master thread
+        thread_list.append(threading.Thread(target=master_socket, args=[slave_ip, slave_port, thread_index]))
+        thread_index = thread_index + 1
+        #thread_list[-1].start()
+        return thread_index
+
+    def confirm_connections(slave_ip_addresses, slave_port_numbers, connected, thread_index, connection_time_limit=20):
+        # wait for all slaves to be connected
+        if False in connected:
+            print("Waiting for connection or connection timeout")
+            wait_counter = 0
+            while False in connected:
+                time.sleep(1)
+                wait_counter += 1
+                if wait_counter % 10 == 0:
+                    print(f"still waiting, {connection_time_limit - wait_counter} seconds to go")
+                if wait_counter > connection_time_limit:
+                    break
+        if None in job_pool:
+            for connection_index in range(thread_index):
+                if connected[thread_index] == True:
+                    print(f"Slave number {connection_index} ip {slave_ip_addresses[connection_index]} port {slave_port_numbers[connection_index]} is connected.")
+                else:
+                    print(f"Slave number {connection_index} ip {slave_ip_addresses[connection_index]} port {slave_port_numbers[connection_index]} is NOT connected.")
+        else:
+            print("No Slave could be connected")
+
+    def connect_slave_machines(slave_ip_addresses, slave_port_numbers, connected, thread_index):
+        while True:
+            while True:
+                # get the socket information from the user
+                slave_socket_constraint = {'keywords':["c", "-c", "continue"], 'allowed_characters': ["0","1","2","3","4","5","6","7","8","9", ".", " "]}
+                instruction = interaction.get_and_validate_input(ask_slave_socket, slave_socket_constraint)
+                # exit and append the job manager
+                if instruction == "c" and len(slave_ip_addresses)>0 and len(slave_port_numbers)>0:
+                    confirm_connections(slave_ip_addresses, slave_port_numbers, connected, thread_index)
+                    # allow reconnection
+                    reconnect_constraint = {'keywords':["Y", "n"]}
+                    instruction = interaction.get_and_validate_input("\nDo you want to try and reconnect a slave machine?\n\n[Y/n] ", reconnect_constraint)
+                    if instruction == "Y":
+                        continue
+                    if instruction == "n":
+                        break
+                # try to establish the connection to the slave machine
+                thread_index = start_connection(instruction, thread_index, connected)
+        
+            # let user decide to use master machine for simulation too
+            simulate_self_constraint = {'keywords':["Y", "n"]}
+            instruction = interaction.get_and_validate_input("\nWould you like to use the local machine for simulation as well?\nThis may slow down your machine.\n\n[Y/n] ", simulate_self_constraint)
+            
+            if instruction == "Y":
+                job_pool.append(None)
+                # increment the thread index and start the master thread
+                thread_list.append(threading.Thread(target=simulate_self, args=[thread_index]))
+                thread_index = thread_index + 1
+                thread_list[-1].start()
+            
+            if instruction == "n":
+                pass
+                
+            # let user decide to make any last changes
+            ask_start = "\nDo you want to start the data generation now?\nYou can edit your past choices when stating 'n'.\n\n[Y/n] "
+            start_constraint = {'keywords':["Y", "n"]}
+            instruction = interaction.get_and_validate_input(ask_start, start_constraint)
+
+            if instruction == "Y":
+                return
+            
+            if instruction == "n":
                 continue
-        if job_list_index == len(joblist):
-            break
 
-def multithread_server():            
-    HOST = socket.gethostbyname(socket.gethostname())
+    ask_slave_socket = """
+    State IP Adress and Port number of EDG Slave in the exact Format <IP_Adress> <Port_Number>, state '-c' to continue.
+    <IP_Adress> <Port_Number>: """
+
+    joblist, full_header, value_range_list = job_tuple
+    local_ip = socket.gethostbyname(socket.gethostname())
 
     thread_list = []
     job_pool = []
-    thread_control = []
     slave_ip_addresses = []
     slave_port_numbers = []
     connected = []
     thread_index = 0
-    done = False
-    Start = False
-    joblist = create_jobs("jobname", "pending",[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3])
+
     # create the master slave connections
-    while not done:
-        print("\nState IP Adress and Port number of EDG Slave in the exact Format <IP_Adress> <Port_Number>, state 'done' to continue.\n")
-        instruction = input("<IP_Adress> <Port_Number>: ")
-        try:
-            if instruction == "done":
-                done = True
-                thread_list.append(threading.Thread(target=master_job_manager, args=[joblist]))
-                break
-            slave_ip = instruction.split(' ')[0]
-            slave_port = int(instruction.split(' ')[1])
-            job_pool.append(None)
-            thread_control.append(True)
-            slave_ip_addresses.append(slave_ip)
-            slave_port_numbers.append(slave_port)
-            connected.append(False)
-            thread_list.append(threading.Thread(target=master_socket, args=[slave_ip, slave_port, thread_index]))
-            thread_index += 1
-            thread_list[-1].start()
-        except:
-            print("invalid input")
-            print("State IP Adress and Port number of EDG Slave in the exact Format <IP_Adress> <Port_Number> or state 'exit' to exit.")
-            instruction = input("<IP_Adress> <Port_Number>: ")
-    # wait for all slaves to be connected
-    if False in connected:
-        print("Waiting for connection or connection timeout")
-        wait_counter = 0
-        while False in connected:
-            time.sleep(0.02)
-            wait_counter += 1
-            if wait_counter % 50 == 0:
-                print(f"still waiting, {int((500 - wait_counter)/50)} seconds to go")
-            if wait_counter > 500:
-                break
-    # allow changes to slave cluster and allow self participation
-    if None in job_pool:
-        for connection_index in range(len(slave_ip_addresses)):
-            print(f"slave number {connection_index} ip {slave_ip_addresses[connection_index]} port {slave_port_numbers[connection_index]}")
-        instruction = input("Do you want to use the host machine to generate Data too?\nThis option may slow down your machine and be very power hungry!\n[Y/n]")
-        if instruction == "Y":
-            job_pool.append(None)
-            thread_control.append(True)
-            thread_list.append(threading.Thread(target=host_simulation, args=[thread_index]))
-            thread_index += 1
-            thread_list[-1].start()
-        instruction = input("Do you want to start the data generation process?[Y/n]")
-        if instruction == "Y":
-            thread_list[-1].start()
-    else:
-        print("No Slave could be connected")
+    connect_slave_machines(slave_ip_addresses, slave_port_numbers, connected, thread_index)
 
-
-
-
+multithread_server((None, None, None))

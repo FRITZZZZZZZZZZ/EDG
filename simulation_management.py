@@ -1,6 +1,7 @@
 import job_management
 import os
 import time
+import random
 
 def pick_interpreter(interpreter_tuple, command=None):
     """"
@@ -385,3 +386,9 @@ def simulate(job, base_name, pre_tuple, solve_tuple, post_tuple, sorting_tuple, 
     except:
         print("\nSomething went wrong while running the simulation series.\n")
         return False
+
+def simulate(job):
+    print(job)
+    time_dings = random.randint(3, 10)
+    print("done")
+    
