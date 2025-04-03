@@ -43,7 +43,7 @@ def send_data(sock, data_path):
         # gather header and file data
         with open(file_path, 'rb') as file:
             file_data = file.read()
-        file_name = file_path.split('/')[-1]
+        file_name = file_path
 
         # send the data
         sock.send(f"__FILETRANSFER {file_name}\n__START_DATA".encode())
@@ -109,7 +109,7 @@ def send_data(sock, data_path):
     
     sock.send(end_transfer_flag)
 
-def receive_data(connection, last_message, target_directory):
+def receive_data(connection, last_message):
     """
     This function can receive files and complete directories via socket that follows the correct protocoll
     """
@@ -136,8 +136,8 @@ def receive_data(connection, last_message, target_directory):
                 request = request_section.decode()
                 directory_path = request[-1]
                 # check if the directory exists, if not create it
-                if not os.path.isdir(f"{target_directory}/{directory_path}"):
-                    os.mkdir(f"{target_directory}/{directory_path}")
+                if not os.path.isdir(f"{directory_path}"):
+                    os.mkdir(f"{directory_path}")
                 # pop the directory request section from the message and continue
                 request_end_index = request_end + len(end_inline_flag)
                 message = message[: request_start] + message[request_end_index :]
@@ -175,7 +175,7 @@ def receive_data(connection, last_message, target_directory):
                     else:
                         file_data += message[:data_end_index]
                     # write the file data to a file
-                    with open(f"{target_directory}/{file_name}", 'wb') as file:
+                    with open(f"{file_name}", 'wb') as file:
                         file.write(file_data)
                     # reinitialize the file variables and pop the file transfer from the message
                     file_transfer_end_index = message.index(end_data_flag) + len(end_data_flag)
@@ -300,8 +300,19 @@ def slave():
                 break
             previous_message = message
             message = receive_message(connection, previous_message)
-
         
+        # unpack job and solve job
+        job = json.loads(job_message)
+        jobname = job['Jobname']
+        base_name = jobname.split('_')[0]
+        success_solving = simulation_management.solve_simulation(job)
+
+        if success_solving:
+            send_data(connection, f"raw_results/erg_folders/{base_name}/{jobname}.erg")
+        
+        if not success_solving:
+            send_data(connection, f"raw_results/error_results/{base_name}/{jobname}")
+                
 
     # establish a connection find out own address bind to any open port and display socket info
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -326,11 +337,12 @@ def slave():
                 if b'__JOB' in message:
                     message = simulate_job(connection, message)
                 # end the slave mode 
-                if b'__END' in message:
+                if b'__END' == message:
                     break
                 # get the next message
                 previous_message = message
                 message = receive_message(connection, previous_message)
+                time.sleep(1)
     return    
 
 
@@ -370,7 +382,7 @@ def multithread_server(job_tuple):
         # increment the thread index and start the master thread
         thread_list.append(threading.Thread(target=master, args=[slave_ip, slave_port, thread_index]))
         thread_index = thread_index + 1
-        #thread_list[-1].start()
+        thread_list[-1].start()
         return thread_index
 
     def confirm_connections(slave_ip_addresses, slave_port_numbers, connected, thread_index, connection_time_limit=20):
@@ -455,15 +467,3 @@ def multithread_server(job_tuple):
     # create the master slave connections
     connect_slave_machines(slave_ip_addresses, slave_port_numbers, connected, thread_index)
 
-multithread_server((None, None, None))
-master_thread = threading.Thread(target=master, args=[])
-slave_thread = threading.Thread(target=slave, args=[])
-
-def run_trial():
-    master_thread.start()
-    slave_thread.start()
-
-    master_thread.join()
-    slave_thread.join()
-
-run_trial()
