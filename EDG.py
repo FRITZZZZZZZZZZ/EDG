@@ -127,33 +127,50 @@ def index_menu(instruction):
 
         # enter slave mode
         if instruction in ["s", "-s", "slave", "slave mode"]:
-            # backup all pre_processing_programs
+            # backup pre_processing_programs
             self_pre_processing_programs = os.listdir("pre_processing_programs")
             for file in self_pre_processing_programs:
-                with open(file, 'rb') as self_file:
-                    with open(f"backup_{file}", 'wb') as backup_file:
+                if "backup" in file or f"backup_{file}" in self_pre_processing_programs:
+                    continue
+                with open(f"pre_processing_programs/{file}", 'rb') as self_file:
+                    with open(f"pre_processing_programs/backup_{file}", 'wb') as backup_file:
                         backup_file.write(self_file.read())
+            # backup simulation_solving_programs
             self_simulation_solving_programs = os.listdir("simulation_solving_programs")
             for file in self_simulation_solving_programs:
-                with open(file, 'rb') as self_file:
-                    with open(f"backup_{file}", 'wb') as backup_file:
+                if "backup" in file or f"backup_{file}" in self_simulation_solving_programs:
+                    continue
+                with open(f"simulation_solving_programs/{file}", 'rb') as self_file:
+                    with open(f"simulation_solving_programs/backup_{file}", 'wb') as backup_file:
                         backup_file.write(self_file.read())
-            distribution_management.slave
+            # backup control_file
+            with open("control_file.tsv", 'rb') as self_file:
+                with open("backup_control_file.tsv", 'wb') as backup_file:
+                    backup_file.write(self_file.read())
 
             # enter slave mode
-            distribution_management.slave()
+            distribution_management.slave(base_name, solve_tuple, time_limit, loop_limit, allowed_files_list)
 
             # rollback any changes the master did to the slave machine
+            # pre_processing_programs
             for file in self_pre_processing_programs:
-                with open(f"backup_{file}", 'rb') as backup_file:
-                    with open(file, 'wb') as self_file:
-                        self_file.write(backup_file.read())
-                os.remove(f"backup_{file}")
+                if "backup" in file:
+                    with open(f"pre_processing_programs/{file}", 'rb') as backup_file:
+                        with open(f"pre_processing_programs/{file}", 'wb') as self_file:
+                            self_file.write(backup_file.read())
+                    os.remove(f"pre_processing_programs/{file}")
+            # simultion_solving_programs
             for file in self_simulation_solving_programs:
-                with open(f"backup_{file}", 'rb') as backup_file:
-                    with open(file, 'wb') as self_file:
-                        self_file.write(backup_file.read())
-                os.remove(f"backup_{file}")
+                if "backup" in file:   
+                    with open(f"simulation_solving_programs/{file}", 'rb') as backup_file:
+                        with open(f"simulation_solving_programs/{file}", 'wb') as self_file:
+                            self_file.write(backup_file.read())
+                    os.remove(f"simulation_solving_programs/{file}")
+            # control_file
+            with open(f"backup_control_file.tsv", 'rb') as backup_file:
+                with open("control_file.tsv", 'wb') as self_file:
+                    self_file.write(backup_file.read())
+            os.remove(f"backup_control_file.tsv")
             exit()
 
         # enter options menu
@@ -305,7 +322,7 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
 
     return design_parameter_domains, base_name, job_tuple
 
-def distributed_mode(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists):
+def distributed_mode(base_name, job_tuple, design_parameter_domains, design_parameter_names, joblist_file_exists):
     ask_distributed_message = """
     Do you want to compute this simulation series distributedly?
 
@@ -433,5 +450,5 @@ State 'exit' to close application at any point.""")
 while True:
     index_menu(instruction)
     design_parameter_domains, base_name, job_tuple = define_or_post_series(design_parameter_domains, base_name, instruction)
-    distributed_mode(base_name, design_parameter_domains, design_parameter_names, joblist_file_exists)
+    distributed_mode(base_name, job_tuple, design_parameter_domains, design_parameter_names, joblist_file_exists)
     central_only(jobs_n, design_parameter_domains, design_parameter_names, job_tuple)

@@ -1,11 +1,9 @@
-import json
+def hh():
+    def h():
+        global p 
+        print(p)
+    
+    h()
 
-a = {'x':"derzeit", 'c':123}
-
-n = json.dumps(a)
-
-z = json.loads(n)
-
-print(z['x'])
-
-
+p = "hallo"
+hh()

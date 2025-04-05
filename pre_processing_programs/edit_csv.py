@@ -93,4 +93,3 @@ def edit_csv(argument_vector):
     
 instruction = sys.argv
 edit_csv(instruction)
-

@@ -23,64 +23,7 @@ NEUSTART
 MIT KONTAKT
 OHNE PROJEZIERTE LINIEN
 ------------------------------
-MATERIALBIBLIOTHEK,1,
-1,INPRO_ZStE340,
-------------------------------
-POSTDATEN,2,1,1,
-SKALAR,2,
-DDICK
-HAUEPS,S3,
-XYPLOT,1,
-ALLE,
-------------------------------
-RESTARTDATEN,0,
-------------------------------------------------------------
-------------------------------------------------------------
-$-----------------------------
-$ Type: Closing
-$-----------------------------
-BLOCKNAME OP20 - Closing Binder p=3.0N/mm*2, 1000,
-------------------------------
-GLEICHUNGSLOESER
-CHOLESKY
-KOMPAKT,1,
-KONDITIONSZAHL
-OHNE ITERATIVES VERFAHREN
-------------------------------
-KONTAKT
-KONTROLLE,1,
-2,50,,,,,5,
-LOESEN,1,
-0.1,
-FESSELN,1,
-0.1,,,0,
-------------------------------
-STEUERUNG
-1,200,,0,
-KRAFT
-RELATIV
-0.05,
-NEWTON
-MIT LINE-SEARCH
-3,6,
-------------------------------
-WERKZEUGSTEUERUNG
-ENTLASTUNG/POSITIONIERUNG,0,
-INITIALBEWEGUNG,2,
-Blankholder
-0,0,-1,0,
-Die
-0,0, 1,0,
-GESCHWINDIGKEITEN/LASTEN,0.1,2,
-Blankholder
-$  [p] = -3.0
-14,0.,0.,-3.0,
-Die
- 0,0.,0., 0.0,
-------------------------------
-ZEITSCHRITT,0.1,1,,,
-0.01,0.4,1E+06,1.5,,,,,10,
-------------------------------
+MATERIALBIBLIOTHEK,--------------------------
 DAEMPFUNG,1
 Blank
 D,D,D,
