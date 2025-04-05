@@ -108,7 +108,7 @@ def options(instruction):
 def backup_files_directories(directories, files):
     for directory_path in directories:
         # backup directory
-        directory_content = os.listdir("")
+        directory_content = os.listdir(directory_path)
         for file in directory_content:
             with open(f"{directory_path}/{file}", 'rb') as self_file:
                 if not "backup" in file:
@@ -178,6 +178,34 @@ def index_menu(instruction):
             instruction = options(instruction)
     return instruction
 
+def recover_job(base_name):
+    # if the base name already exists, recover its joblist
+    retrieved_job_tuple = job_management.retrieve_joblist(base_name)
+    if not retrieved_job_tuple == None:
+        joblist_file_exists = True
+        joblist, header, value_ranges = retrieved_job_tuple
+        jobs_done = [jobname[:-4] for jobname in os.listdir(f"raw_results/erg_folders/{base_name}")]
+        # check wheather the header fits the design parameter names
+        metaless_header = header[2:]
+        if metaless_header == design_parameter_names:
+            design_parameter_domains = value_ranges
+            # set all jobs that are not finished to pending
+            for job in joblist:
+                if job['Status'] == "in_progress": 
+                    job['Status'] = "pending"
+                if job['Jobname'] in jobs_done:
+                    job['Status'] = "successfull"
+            job_tuple = retrieved_job_tuple
+            job_management.update_joblist_files(base_name, job_tuple)
+    # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
+    else:
+        joblist_file_exists = False
+
+    if joblist_file_exists:
+        return joblist, full_header, design_parameter_domains
+    
+    else:
+        return base_name
 
 def define_or_post_series(design_parameter_domains, base_name, instruction):
     base_name_message = """
@@ -218,27 +246,11 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
         if base_name == None:
             base_name_constraint = {'allowed_characters':all_letters_list + ["_"]}
             base_name = interaction.get_and_validate_input(base_name_message, base_name_constraint)
-            # if the base name already exists, recover its joblist
-            retrieved_job_tuple = job_management.retrieve_joblist(base_name)
-            if not retrieved_job_tuple == None:
-                joblist_file_exists = True
-                joblist, header, value_ranges = retrieved_job_tuple
-                jobs_done = [jobname[:-4] for jobname in os.listdir(f"raw_results/erg_folders/{base_name}")]
-                # check wheather the header fits the design parameter names
-                metaless_header = header[2:]
-                if metaless_header == design_parameter_names:
-                    design_parameter_domains = value_ranges
-                    # set all jobs that are not finished to pending
-                    for job in joblist:
-                        if job['Status'] == "in_progress": 
-                            job['Status'] = "pending"
-                        if job['Jobname'] in jobs_done:
-                            job['Status'] = "successfull"
-                    job_tuple = retrieved_job_tuple
-                    job_management.update_joblist_files(base_name, job_tuple)
-            # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
-            else:
-                joblist_file_exists = False
+            try:
+                joblist, full_header, design_parameter_domains = recover_job(base_name)
+                job_tuple = joblist, full_header, design_parameter_domains
+            except:
+                pass
 
         # try to catch the parameter domains from the session file
         if session_file_exists:
@@ -319,6 +331,7 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
             instruction = None
             break
 
+    job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
     return design_parameter_domains, base_name, job_tuple
 
 def distributed_mode(base_name, job_tuple, design_parameter_domains, design_parameter_names, joblist_file_exists):
@@ -345,7 +358,7 @@ def distributed_mode(base_name, job_tuple, design_parameter_domains, design_para
         if job_tuple == None:
             job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
         job_management.update_joblist_files(base_name, job_tuple, (not joblist_file_exists))
-        distribution_management.multithread_server(job_tuple)
+        distribution_management.multithread_server(base_name, job_tuple)
             
 
 def central_only(jobs_n, base_name, design_parameter_domains, design_parameter_names, job_tuple):   
@@ -452,4 +465,4 @@ while True:
     index_menu(instruction)
     design_parameter_domains, base_name, job_tuple = define_or_post_series(design_parameter_domains, base_name, instruction)
     distributed_mode(base_name, job_tuple, design_parameter_domains, design_parameter_names, joblist_file_exists)
-    central_only(jobs_n, design_parameter_domains, design_parameter_names, job_tuple)
+    central_only(jobs_n, base_name, design_parameter_domains, design_parameter_names, job_tuple)

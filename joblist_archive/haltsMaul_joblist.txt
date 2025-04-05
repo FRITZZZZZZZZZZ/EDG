@@ -1,0 +1,23 @@
+NAME
+haltsMaul
+VALUE RANGES
+Blank Thickness
+2.0
+Scale X
+1.0
+Scale Y
+1.0
+Friction
+1.0
+Pressure
+1.0 2.0 3.0 4.0
+Die Radius
+1.0
+HEADER
+Jobname,Status,Blank Thickness,Scale X,Scale Y,Friction,Pressure,Die Radius
+START
+haltsMaul_BlTh_2.0_ScX_1.0_ScY_1.0_Fr_1.0_Pr_1.0_DiRa_1.0,in_progress,2.0,1.0,1.0,1.0,1.0,1.0
+haltsMaul_BlTh_2.0_ScX_1.0_ScY_1.0_Fr_1.0_Pr_2.0_DiRa_1.0,pending,2.0,1.0,1.0,1.0,2.0,1.0
+haltsMaul_BlTh_2.0_ScX_1.0_ScY_1.0_Fr_1.0_Pr_3.0_DiRa_1.0,pending,2.0,1.0,1.0,1.0,3.0,1.0
+haltsMaul_BlTh_2.0_ScX_1.0_ScY_1.0_Fr_1.0_Pr_4.0_DiRa_1.0,pending,2.0,1.0,1.0,1.0,4.0,1.0
+END DATA

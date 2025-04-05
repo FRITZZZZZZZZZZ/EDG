@@ -1,9 +1,3 @@
-def hh():
-    def h():
-        global p 
-        print(p)
-    
-    h()
+f = ["erg"]
 
-p = "hallo"
-hh()
+print(f == ["erg"])

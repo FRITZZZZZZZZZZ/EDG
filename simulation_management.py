@@ -195,7 +195,7 @@ def solve_simulation(job, base_name, solve_tuple, time_limit, loop_limit, allowe
     if not success:
         if not os.path.isdir(f"{current_working_directory}/raw_results/error_results/{base_name}/{jobname}"):
             os.mkdir(f"{current_working_directory}/raw_results/error_results/{base_name}/{jobname}")
-        os.system(f"python move_data.py 'erg t51 t52 inf log out dat' {current_working_directory}/raw_results/error_results/{jobname} {jobname}")
+        os.system(f"python move_data.py 'erg t51 t52 inf log out dat' {current_working_directory}/raw_results/error_results/{base_name}{jobname} {jobname}")
 
     # clean up the directory, leave only allowed files here
     os.system(f"python clean_directory.py {allowed_files}")
