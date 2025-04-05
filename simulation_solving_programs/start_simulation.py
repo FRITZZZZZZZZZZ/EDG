@@ -8,7 +8,7 @@ def start_simulation(instructions):
     except:
         pass
     
-    os.system(f'./Indeed_1.0.3_ger_linux64.exe -j {jobname} -c 4 &')
+    os.system(f'./Indeed_1.0.3_ger_linux64.exe -j {jobname} -c 256 &')
 
 instructions = sys.argv
 start_simulation(instructions)

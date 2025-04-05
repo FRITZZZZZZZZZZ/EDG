@@ -105,6 +105,36 @@ def options(instruction):
             break
     return instruction
 
+def backup_files_directories(directories, files):
+    for directory_path in directories:
+        # backup directory
+        directory_content = os.listdir("")
+        for file in directory_content:
+            with open(f"{directory_path}/{file}", 'rb') as self_file:
+                if not "backup" in file:
+                    with open(f"{directory_path}/backup_{file}", 'wb') as backup_file:
+                        backup_file.write(self_file.read())
+    # backup file
+    for file_path in files:
+        with open(f"{file_path}", 'rb') as self_file:
+            with open(f"backup_{file_path}", 'wb') as backup_file:
+                backup_file.write(self_file.read())
+
+def unbackup_files_directories(directories, files):
+    for directory_path in directories:
+        directory_content = os.listdir(directory_path)
+        for file in directory_content:
+            if f"backup_{file}" in directory_content:
+                with open(f"backup_{file}", 'rb') as backup_file:
+                    with open(file, 'wb') as self_file:
+                        self_file.write(backup_file.read())
+                os.remove(f"backup_{file}")
+    for file_path in files:
+        with open(f"backup_{file_path}", 'rb') as backup_file:
+            with open(f"{file_path}", 'wb') as self_file:
+                self_file.write(backup_file.read())
+        os.remove(f"backup_{file_path}")
+
 def index_menu(instruction):
     index_message = """
     State one of the following options as your next instruction:
@@ -127,46 +157,18 @@ def index_menu(instruction):
 
         # enter slave mode
         if instruction in ["s", "-s", "slave", "slave mode"]:
-            # backup pre_processing_programs
-            self_pre_processing_programs = os.listdir("pre_processing_programs")
-            for file in self_pre_processing_programs:
-                with open(f"pre_processing_programs/{file}", 'rb') as self_file:
-                    if not "backup" in file:
-                        with open(f"pre_processing_programs/backup_{file}", 'wb') as backup_file:
-                            backup_file.write(self_file.read())
-            # backup simulation_solving_programs
-            self_simulation_solving_programs = os.listdir("simulation_solving_programs")
-            for file in self_simulation_solving_programs:
-                with open(f"simulation_solving_programs/{file}", 'rb') as self_file:
-                    if not "backup" in file:
-                        with open(f"simulation_solving_programs/backup_{file}", 'wb') as backup_file:
-                            backup_file.write(self_file.read())
-            # backup control_file
-            with open("control_file.tsv", 'rb') as self_file:
-                with open("backup_control_file.tsv", 'wb') as backup_file:
-                    backup_file.write(self_file.read())
 
-            # enter slave mode
-            distribution_management.slave()
+            # make backups
+            backup_files_directories(directory_backups, file_backups)
 
+            # enter slave mode and hand over the necessary informatiion for simulation solving
+            simulation_solving_files = os.listdir(f"{current_working_directory}/simulation_solving_programs")
+            distribution_management.slave(base_name, solve_tuple, simulation_time_limit, simulation_loop_limit, simulation_solving_files)
+            
             # rollback any changes the master did to the slave machine
-            # pre_processing_programs
-            for file in self_pre_processing_programs:
-                with open(f"backup_{file}", 'rb') as backup_file:
-                    with open(file, 'wb') as self_file:
-                        self_file.write(backup_file.read())
-                os.remove(f"backup_{file}")
-            # simultion_solving_programs
-            for file in self_simulation_solving_programs:
-                with open(f"backup_{file}", 'rb') as backup_file:
-                    with open(file, 'wb') as self_file:
-                        self_file.write(backup_file.read())
-                os.remove(f"backup_{file}")
-            # control_file
-            with open(f"backup_control_file.tsv", 'rb') as backup_file:
-                with open("control_file.tsv", 'wb') as self_file:
-                    self_file.write(backup_file.read())
-            os.remove(f"backup_control_file.tsv")
+            unbackup_files_directories(directory_backups, file_backups)
+
+            # turn off the slave
             exit()
 
         # enter options menu
@@ -175,6 +177,7 @@ def index_menu(instruction):
             instruction = None
             instruction = options(instruction)
     return instruction
+
 
 def define_or_post_series(design_parameter_domains, base_name, instruction):
     base_name_message = """
@@ -415,6 +418,8 @@ simulation_time_limit = int(interaction.read_write_options(option_file_path, "si
 simulation_loop_limit = int(interaction.read_write_options(option_file_path, "simulation_loop_limit"))
 processing_time_limit = int(interaction.read_write_options(option_file_path, "processing_time_limit"))
 dataset_header = interaction.read_write_options(option_file_path, "dataset_header")
+directory_backups = ["pre_processing_programs", "simulation_solving_programs"]
+file_backups = ["control_file.tsv"]
 
 # create a blank session file corresponding to the job and look for a session file in the argument vector
 session_file_management.write_blank_session_file(design_parameter_names, session_file_backup_path)
