@@ -5,13 +5,11 @@ import time
 import simulation_management
 import job_management
 import interaction
-import distribution_management
 import os
 import threading
 import socket
 import time
-import os
-import sys
+import psutil
 
 
 def receive_message(connection, previous_message):
@@ -116,7 +114,7 @@ def receive_data(connection, last_message, destination=""):
     # append a path dilimiter to destination to avoid some errors try it if you dont believe me
     if not destination == "":
         destination += "/"
-
+    
     # multi line flags
     start_transfer_flag = b'__DATATRANSFER'
     end_transfer_flag = b'__END_DATATRANSFER'
@@ -140,8 +138,8 @@ def receive_data(connection, last_message, destination=""):
                 request = request_section.decode()
                 directory_path = request.split(' ')[-1]
                 # check if the directory exists, if not create it
-                if not os.path.isdir(f"{directory_path}"):
-                    os.mkdir(f"{directory_path}")
+                if not os.path.isdir(f"{destination}{directory_path}"):
+                    os.mkdir(f"{destination}{directory_path}")
                 # pop the directory request section from the message and continue
                 request_end_index = request_end + len(end_inline_flag)
                 message = message[: request_start] + message[request_end_index :]
@@ -178,9 +176,14 @@ def receive_data(connection, last_message, destination=""):
                         file_data = message[data_start_index:data_end_index]
                     else:
                         file_data += message[:data_end_index]
-                    # write the file data to a file
-                    with open(f"{file_name}", 'wb') as file:
-                        file.write(file_data)
+                    # write the file data, if the file was contained in a unknown directory structure, disregard the structure
+                    try:
+                        with open(f"{destination}{file_name}", 'wb') as file:
+                            file.write(file_data)
+                    except:
+                        file_name = file_name.split('/')[-1]
+                        with open(f"{destination}{file_name}", 'wb') as file:
+                            file.write(file_data)
                     # reinitialize the file variables and pop the file transfer from the message
                     file_transfer_end_index = message.index(end_data_flag) + len(end_data_flag)
                     message = message[file_transfer_end_index :]
@@ -216,6 +219,26 @@ def slave(base_name, solve_tuple, time_limit, loop_limit, allowed_files_list):
     This is a function that can communicate with a master thread to receive jobs to simulate, start simulations and 
     transfer files back and forth.
     """   
+    def send_disk_space(connection, message):
+        # flags
+        start_diskspace_request_flag = b"__DISKSPACE_REQUEST"
+        end_inline_flag = b"\n"
+        
+        # fetch the whole job and turn it into a dict so the solving can be done the normal way
+        job_message = None
+        while True:
+            if start_diskspace_request_flag in message:
+                # cut out diskspace request from message
+                diskspace_request_end_index = message.index(start_diskspace_request_flag) + len(start_diskspace_request_flag)
+                diskspace_request_start_index = message.index(start_diskspace_request_flag)
+                job_message = message[diskspace_request_start_index:diskspace_request_end_index]
+                break
+            # if not fully contained, get the next message
+            previous_message = message
+            message = receive_message(connection, previous_message) 
+                
+        return message
+
     def simulate_job(connection, message):
         """
         This function takes a message containg the job flag, extracts the job data and simulates the job.
@@ -247,7 +270,9 @@ def slave(base_name, solve_tuple, time_limit, loop_limit, allowed_files_list):
         job = json.loads(job_message)
         jobname = job['Jobname']
         base_name = jobname.split('_')[0]
-        success_solving = simulation_management.solve_simulation(job, base_name, solve_tuple, time_limit, loop_limit, allowed_files_list)
+
+        success_solving = simulation_management.simulate(job, base_name, solve_tuple, time_limit, loop_limit, allowed_files_list)
+        success_solving = True
 
         if success_solving:
             with open(f"raw_results/erg_folders/{base_name}/{jobname}.erg", 'w') as test_reslt:
@@ -255,39 +280,49 @@ def slave(base_name, solve_tuple, time_limit, loop_limit, allowed_files_list):
             send_data(connection, f"raw_results/erg_folders/{base_name}/{jobname}.erg")
         
         if not success_solving:
+            pass
             send_data(connection, f"raw_results/error_results/{base_name}/{jobname}")
-                
+
+        return message                
 
     # establish a connection find out own address bind to any open port and display socket info
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        address_self = socket.gethostbyname(socket.gethostname())
-        sock.bind((address_self, 64444))
-        port_self = sock.getsockname()[1]
-        print(f"\nIP: {address_self}, PORT {port_self}")
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            address_self = socket.gethostbyname(socket.gethostname())
+            sock.bind((address_self, 0))
+            port_self = sock.getsockname()[1]
+            print(f"\nIP: {address_self}, PORT {port_self}")
 
-        # listen to and process instruction messages, each message processing function will return the rest of the message which was not of interest
-        sock.listen()
-        connection, master_address = sock.accept()
-        print("CONNECTED")
+            # listen to and process instruction messages, each message processing function will return the rest of the message which was not of interest
+            sock.listen()
+            connection, master_address = sock.accept()
+            print("CONNECTED")
 
-        with connection:
-            # if there are files missing or not the same as on the master machine, a datatransfer is done to update these files
-            previous_message = None
-            message = receive_message(connection, previous_message)
-            while True:
-                # transfer files like raw dat file or raw t51 file
-                if b'__DATATRANSFER' in message:
-                    message = receive_data(connection, message)     
-                # receive a job, simulate it and send back its result files           
-                if b'__JOB' in message:
-                    message = simulate_job(connection, message)
-                # end the slave mode 
-                if b'__END' == message:
-                    break
-                # get the next message
-                previous_message = message
+            with connection:
+                # if there are files missing or not the same as on the master machine, a datatransfer is done to update these files
+                previous_message = None
                 message = receive_message(connection, previous_message)
-                time.sleep(1)
+                while True:
+                    # state diskspace
+                    if b'__DISKSPACE_REQUEST' in message:
+                        pass
+                        #message = send_disk_space(connection, message)
+                    # transfer files like raw dat file or raw t51 file
+                    if b'__DATATRANSFER' in message:
+                        message = receive_data(connection, message)     
+                    # receive a job, simulate it and send back its result files           
+                    if b'__JOB' in message:
+                        message = simulate_job(connection, message)
+                    # end the slave mode 
+                    if b'__END' == message:
+                        break
+                    # get the next message
+                    previous_message = message
+                    message = receive_message(connection, previous_message)
+                    time.sleep(1)
+    except:
+        pass
+    print("DISCONNECTED")
     return    
 
 def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_programs", "control_file.tsv"]):  
@@ -304,10 +339,11 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
         end_connection_flag = b"__END__"
         
         # establish a connection
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            address_self = socket.gethostbyname(socket.gethostname())
-            sock.bind((address_self, 0))
-            sock.connect((slave_ip, slave_port))
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                address_self = socket.gethostbyname(socket.gethostname())
+                sock.bind((address_self, 0))
+                sock.connect((slave_ip, slave_port))
 
             # send state such that the slave machines pre processing direcory is the same as the master ones
             for data_item in cloning_list:
@@ -317,22 +353,26 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
             result_folder = f"slave_{thread_index}_results"
             if not os.path.isdir(result_folder):
                 os.mkdir(result_folder)
+            
+            # mark self as connected
             connected[thread_index] = True
 
             # wait for furthter instructions
             while True:
                 # fetch the instruction from the job pool
                 instruction = job_pool[thread_index]
-
+                
                 # terminate the connection
                 if instruction == False:
                     break
 
                 # if the instruction is a job, send it to the slave machine
                 if type(instruction) == dict:
+
                     # get jobname
-                    jobname = job['Jobname']
-                    
+                    jobname = instruction['Jobname']
+                    job = json.dumps(instruction)
+
                     # pack for transfer
                     job = json.dumps(instruction).encode()
                     sock.send(start_job_flag)
@@ -340,25 +380,42 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
                     sock.send(end_job_flag)
 
                     # receive the job result files and sort accordingly
-                    receive_data(sock, None, result_folder)
+                    message = b""
+                    while True:
+                        # transfer files like raw dat file or raw t51 file
+                        if b'__DATATRANSFER' in message:
+                            message = receive_data(sock, message, result_folder)   
+                            break  
+
+                        # get the next message
+                        previous_message = message
+                        message = receive_message(sock, previous_message)
+                        time.sleep(1)
 
                     # sort received files und update job list
                     result_files = os.listdir(result_folder)
                     result_types = [file.split('.')[-1] for file in result_files]
                     current_working_directory = os.getcwd()
 
+                    # sort the results and mark self as idle, hand the solving success to the job master
+                    if result_types == ["erg"]:
+                        if not os.path.isdir(f"{current_working_directory}/raw_results/erg_folders/{base_name}"):
+                            os.mkdir(f"{current_working_directory}/raw_results/erg_folders/{base_name}")
+                        os.system(f"python move_data_distributed.py erg {current_working_directory}/raw_results/erg_folders/{base_name} {jobname} {result_folder}")
+                        job_pool[thread_index] = "successfull"
+                    
                     if error_types in result_files:
                         if not os.path.isdir(f"{current_working_directory}/raw_results/error_results/{base_name}/{jobname}"):
                             os.mkdir(f"{current_working_directory}/raw_results/error_results/{base_name}/{jobname}")
-                        os.system(f"python move_data.py 'erg t51 t52 inf log out dat' {current_working_directory}/raw_results/error_results/{base_name}/{jobname} {jobname} {result_folder}")
-                    
-                    if result_types == ["erg"]:
-                        if not os.path.isdir(f"{current_working_directory}/raw_results/erg_folders/{jobname}"):
-                            os.mkdir(f"{current_working_directory}/raw_results/erg_folders/{jobname}")
-                        os.system(f"python move_data.py erg {current_working_directory}/raw_results/erg_folders/{jobname} {jobname} {result_folder}")
+                        os.system(f"python move_data_distributed.py 'erg t51 t52 inf log out dat' {current_working_directory}/raw_results/error_results/{base_name}/{jobname} {jobname} {result_folder}")
+                        job_pool[thread_index] = "unsuccessfull"             
 
-                    # mark self as idle again
-                    job_pool[thread_index] = None                
+                    # clean the directory, backups are still available at the reomte machine and the copy has been moved either way, now it will work
+                    for file in result_files:
+                        try:
+                            os.remove(f"{result_folder}/{file}")
+                        except:
+                            pass
 
                 time.sleep(1)   
 
@@ -367,6 +424,9 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
 
             # turn off simulation slave
             sock.send(end_connection_flag)
+
+        except:
+            pass
 
         return
         
@@ -398,26 +458,29 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
         job_pool.append(None)
         slave_ip_addresses.append(slave_ip)
         slave_port_numbers.append(slave_port)
-        connected.append(False)
+        connected.append(None)
         # increment the thread index and start the master thread
         thread_list.append(threading.Thread(target=master, args=[base_name, slave_ip, slave_port, thread_index, cloning_list]))
         thread_index = thread_index + 1
         thread_list[-1].start()
         return thread_index
 
-    def confirm_connections(slave_ip_addresses, slave_port_numbers, connected, connection_time_limit=300):
+    def confirm_connections(slave_ip_addresses, slave_port_numbers, connection_time_limit=20):
         # wait for all slaves to be connected
 
-        if False in connected:
+        global connected
+
+        if None in connected:
             print("Waiting for connection or connection timeout")
             wait_counter = 0
-            while False in connected:
+            while None in connected:
                 time.sleep(1)
                 wait_counter += 1
                 if wait_counter % 10 == 0:
                     print(f"still waiting, {connection_time_limit - wait_counter} seconds to go")
                 if wait_counter > connection_time_limit:
                     break
+        print(connected)
         if None in job_pool:
             for connection_index in range(len(connected)):
                 if connected[connection_index] == True:
@@ -437,9 +500,7 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
             while True:
                 # get the socket information from the user
                 slave_socket_constraint = {'keywords':["c", "-c", "continue"], 'allowed_characters': ["0","1","2","3","4","5","6","7","8","9", ".", " "]}
-                #instruction = interaction.get_and_validate_input(ask_slave_socket, slave_socket_constraint)
-                address_self = socket.gethostbyname(socket.gethostname())
-                instruction = address_self + " 64444"
+                instruction = interaction.get_and_validate_input(ask_slave_socket, slave_socket_constraint)
 
                 # exit and append the job manager
                 if instruction == "c" and len(slave_ip_addresses)>0 and len(slave_port_numbers)>0:
@@ -454,11 +515,10 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
 
                 # try to establish the connection to the slave machine
                 thread_index = start_connection(base_name, instruction, thread_index, connected, cloning_list)
-                break
         
             # let user decide to use master machine for simulation too
             simulate_self_constraint = {'keywords':["Y", "n"]}
-            #instruction = interaction.get_and_validate_input("\nWould you like to use the local machine for simulation as well?\nThis may slow down your machine.\n\n[Y/n] ", simulate_self_constraint)
+            instruction = interaction.get_and_validate_input("\nWould you like to use the local machine for simulation as well?\nThis may slow down your machine.\n\n[Y/n] ", simulate_self_constraint)
             
             if instruction == "Y":
                 # increment the thread index and start the master thread
@@ -473,7 +533,7 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
             # let user decide to make any last changes
             ask_start = "\nDo you want to start the data generation now?\nYou can edit your past choices when stating 'n'.\n\n[Y/n] "
             start_constraint = {'keywords':["Y", "n"]}
-            #instruction = interaction.get_and_validate_input(ask_start, start_constraint)
+            instruction = interaction.get_and_validate_input(ask_start, start_constraint)
 
             if instruction == "Y":
                 return
@@ -492,15 +552,53 @@ def multithread_server(base_name, job_tuple, cloning_list=["pre_processing_progr
     thread_index = 0
 
     # create the master slave connections
-    get_sockets(base_name, slave_ip_addresses, slave_port_numbers, connected, thread_index, cloning_list)
+    get_sockets(base_name, slave_ip_addresses, slave_port_numbers, thread_index, cloning_list)
 
     # start the distributed simulation
     joblist, full_header, value_range_list = job_tuple
     for job in joblist:
-        for slave_index in range(len(job_pool)):
-            if connected[slave_index] == True and job_pool[slave_index] == None:
-                job_pool[slave_index] = job
+        
+        next_job = False
+        while not next_job:
+            for slave_index in range(len(connected)):
+                if not connected[slave_index] == None:
+                    slave_state = job_pool[slave_index]
+                    # write back the success of the jobs solved
+                    if type(slave_state) == str:
 
+                        # find the job that has been solved in the joblist
+                        solving_success = slave_state
+                        job_index = connected[slave_index]
+                        solved_job = joblist[job_index]
+                        # update joblist
+                        solved_job['Status'] = solving_success
+                        joblist, full_header, value_range_list = job_tuple
+                        job_management.update_joblist_files(base_name, job_tuple)
+
+                        # get slave a new job
+                        job['Status'] = "in_progress"
+                        joblist, full_header, value_range_list = job_tuple
+                        job_management.update_joblist_files(base_name, job_tuple)
+                        job_pool[slave_index] = job
+                        connected[slave_index] = joblist.index(job)
+                        job_index += 1
+                        # move to the next job
+                        next_job = True
+                        break
+                    
+                    # distribute a new job to an idle slave
+                    if slave_state == None:
+                        job['Status'] = "in_progress"
+                        joblist, full_header, value_range_list = job_tuple
+                        job_management.update_joblist_files(base_name, job_tuple)
+                        job_pool[slave_index] = job
+                        connected[slave_index] = joblist.index(job)
+                        # move to the next job
+                        next_job = True
+                        break
+            time.sleep(1)
+        
 
 connected = []
 job_pool = []
+

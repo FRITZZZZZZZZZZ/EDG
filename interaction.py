@@ -33,7 +33,7 @@ def request_design_parameter_domain(design_parameter_name: str):
 
     # make sure user input is rather clean
     input_constraints = {
-        'keywords': ["exit"],
+        'keywords': ["exit", "c", "-c","cancel"],
         'allowed_characters':  ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ",", " ", ".", "-"],
         'disallowed_characters': [],
         'delimiters': [",", " "]
@@ -60,6 +60,9 @@ def request_design_parameter_domain(design_parameter_name: str):
     # this is a redundant exit clause, it could be deleted but it doesnt harm anyone so why should we?
     if instruction == "exit":
         exit()
+
+    if instruction in ["c", "-c","cancel"]:
+        return False
     
     # computing the desing parameter value range, this is a loop since the input can still be errornous
     design_parameter_list = []

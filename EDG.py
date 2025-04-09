@@ -184,28 +184,28 @@ def recover_job(base_name):
     if not retrieved_job_tuple == None:
         joblist_file_exists = True
         joblist, header, value_ranges = retrieved_job_tuple
-        jobs_done = [jobname[:-4] for jobname in os.listdir(f"raw_results/erg_folders/{base_name}")]
-        # check wheather the header fits the design parameter names
+        jobs_done = None
+        try:
+            jobs_done = [jobname[:-4] for jobname in os.listdir(f"raw_results/erg_folders/{base_name}")]
+        except:
+            pass
+        # check the header fit, then set all jobs that are not finished to pending, set all unrecordedly finished jobs to successfull
         metaless_header = header[2:]
         if metaless_header == design_parameter_names:
             design_parameter_domains = value_ranges
-            # set all jobs that are not finished to pending
             for job in joblist:
                 if job['Status'] == "in_progress": 
                     job['Status'] = "pending"
-                if job['Jobname'] in jobs_done:
-                    job['Status'] = "successfull"
+                if not jobs_done == None:
+                    if job['Jobname'] in jobs_done:
+                        job['Status'] = "successfull"
             job_tuple = retrieved_job_tuple
             job_management.update_joblist_files(base_name, job_tuple)
-    # remember that the joblist file exists, but a retrieval did not work, it must be overwritten
+        return joblist, full_header, design_parameter_domains
     else:
         joblist_file_exists = False
-
-    if joblist_file_exists:
-        return joblist, full_header, design_parameter_domains
     
-    else:
-        return base_name
+
 
 def define_or_post_series(design_parameter_domains, base_name, instruction):
     base_name_message = """
@@ -250,6 +250,7 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
                 joblist, full_header, design_parameter_domains = recover_job(base_name)
                 job_tuple = joblist, full_header, design_parameter_domains
             except:
+                print("\nJob has not been defined yet.\n")
                 pass
 
         # try to catch the parameter domains from the session file
@@ -271,7 +272,18 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
                 parameter_name = design_parameter_names[parameter_index]
                 if design_parameter_domains[parameter_index] == None:
                     new_domain = interaction.request_design_parameter_domain(parameter_name)
-                    design_parameter_domains[parameter_index] = new_domain
+                    # if the user wants to cancel the design parameter definition
+                    if new_domain == False:
+                        design_parameter_domains = [None for parameter in design_parameter_names]
+                        base_name = None
+                        break
+                    else:
+                        design_parameter_domains[parameter_index] = new_domain
+
+        # if the design parameter definition had been canceled
+        if design_parameter_domains == [None for parameter in design_parameter_names]:
+            continue
+
         # give user a summery of the simulation series
         print("\nIf you want to change a value range, just state the design Parameter name.\n Available names:\n")
         for parameter_index in range(len(design_parameter_names)):
@@ -332,9 +344,10 @@ def define_or_post_series(design_parameter_domains, base_name, instruction):
             break
 
     job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
-    return design_parameter_domains, base_name, job_tuple
 
-def distributed_mode(base_name, job_tuple, design_parameter_domains, design_parameter_names, joblist_file_exists):
+    return base_name, job_tuple
+
+def distributed_mode(base_name, job_tuple, joblist_file_exists):
     ask_distributed_message = """
     Do you want to compute this simulation series distributedly?
 
@@ -355,13 +368,16 @@ def distributed_mode(base_name, job_tuple, design_parameter_domains, design_para
     # enter the distributed mode
     if instruction == "Y":
         # create the job tuple if it does not exist, update the joblist accordingly
-        if job_tuple == None:
-            job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
         job_management.update_joblist_files(base_name, job_tuple, (not joblist_file_exists))
         distribution_management.multithread_server(base_name, job_tuple)
+        return True
+    
+    if instruction == "n":
+        return False
             
 
-def central_only(jobs_n, base_name, design_parameter_domains, design_parameter_names, job_tuple):   
+def central_only(jobs_n, base_name, job_tuple):   
+    print("ICH RUNNE JETZT TROTZDEM")
     ask_start_message = f"""
     Do you want to start the data generation now?
 
@@ -372,6 +388,7 @@ def central_only(jobs_n, base_name, design_parameter_domains, design_parameter_n
     # stay in centralized mode
     instruction = None
     # compute the number of simulations and ask wheather the user wants to stat the simulation process
+    joblist, full_header, design_parameter_domains = job_tuple
     for value_range in design_parameter_domains:
         jobs_n *= len(value_range)
     print(f"\nIf you start the simulation series now, {jobs_n} simulation will be started.\n")
@@ -384,8 +401,6 @@ def central_only(jobs_n, base_name, design_parameter_domains, design_parameter_n
 
     # create the job tuple if it does not exist, update the joblist accordingly 
     if instruction == "Y":
-        if job_tuple == None:
-            job_tuple = job_management.create_jobs(base_name, design_parameter_domains, design_parameter_names)
         job_management.update_joblist_files(base_name, job_tuple, (not joblist_file_exists))
         success_series = simulation_management.run_simulation_series(base_name, job_tuple, pre_tuple, solve_tuple, simulation_time_limit, simulation_loop_limit, processing_time_limit)
         
@@ -463,6 +478,6 @@ State 'exit' to close application at any point.""")
 
 while True:
     index_menu(instruction)
-    design_parameter_domains, base_name, job_tuple = define_or_post_series(design_parameter_domains, base_name, instruction)
-    distributed_mode(base_name, job_tuple, design_parameter_domains, design_parameter_names, joblist_file_exists)
-    central_only(jobs_n, base_name, design_parameter_domains, design_parameter_names, job_tuple)
+    base_name, job_tuple = define_or_post_series(design_parameter_domains, base_name, instruction)
+    if not distributed_mode(base_name, job_tuple, joblist_file_exists):
+        central_only(jobs_n, base_name, job_tuple)

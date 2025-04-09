@@ -22,9 +22,9 @@ def move_data(argument_vector):
 
     for file_type in file_type_list:
         try:
-            shutil.move(f"{working_directory}{jobname}.{file_type}", f"{target_folder_path}")
+            shutil.move(f"{working_directory}/{jobname}.{file_type}", f"{target_folder_path}")
         except:
-            print(f"Could not move {jobname}.{file_type}.")
+            print(f"Could not move {jobname}.{file_type} .")
             
         
 instructions = sys.argv

@@ -257,7 +257,7 @@ def run_simulation_series(base_name, joblist_tuple, pre_tuple, solve_tuple, time
 
 
 
-def simulate(job):
+def simulate(job, base_name, solve_tuple, time_limit, loop_limit, simulation_solving_files):
     print(job)
-    time_dings = random.randint(3, 10)
+    time.sleep(random.randint(5, 30))
     print("done")
